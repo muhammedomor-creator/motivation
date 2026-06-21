@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ইসলামিক লাইফ কাউন্টার ও মোティブেশনাল উক্তি</title>
+    <title>ইসলামিক লাইফ কাউন্টার ও মোটিভেশনাল উক্তি</title>
     <!-- Tailwind CSS for Responsive Layouts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Premium Icons -->
@@ -56,7 +56,52 @@
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-between p-4 md:p-8 text-slate-800">
+<body class="flex flex-col items-center justify-between p-4 md:p-8 text-slate-800 relative">
+
+    <!-- ================= RED DANGER RESET SCREEN ================= -->
+    <div id="dangerResetOverlay" class="hidden fixed inset-0 z-50 bg-gradient-to-b from-red-950 via-red-900 to-black text-white flex flex-col justify-between p-6 md:p-12 overflow-y-auto">
+        <div class="max-w-2xl mx-auto w-full text-center space-y-6 my-auto">
+            <!-- Pulse Warning Icon -->
+            <div class="animate-pulse text-red-500 text-6xl md:text-8xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            
+            <h2 class="text-2xl md:text-4xl font-extrabold text-red-100 tracking-wide serif-bengali">আপনি কি সত্যিই আপনার পথচলা মুছে ফেলতে চান?</h2>
+            
+            <p class="text-sm md:text-base text-red-300 leading-relaxed max-w-lg mx-auto">
+                আপনার নেক সিদ্ধান্ত এবং পথচলা অত্যন্ত মূল্যবান। শয়তান মানুষের ভালো কাজগুলোকে মুছে দিতে চায়। আমরা আপনাকে ৫ মিনিট গভীর চিন্তার সময় দিচ্ছি। আল্লাহর দেওয়া এই বাণীগুলোর দিকে গভীর মনোযোগ দিন।
+            </p>
+
+            <!-- Danger Special Quotes Carousel -->
+            <div class="bg-black/40 border border-red-500/20 rounded-2xl p-6 md:p-8 relative min-h-[160px] flex flex-col justify-center items-center">
+                <p id="dangerQuoteText" class="serif-bengali text-lg md:text-2xl font-bold text-red-100 leading-relaxed transition-all duration-500">
+                    "হে মুমিনগণ! তোমরা ধৈর্য ও সালাতের মাধ্যমে সাহায্য প্রার্থনা করো। নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন।"
+                </p>
+                <p id="dangerQuoteAuthor" class="text-xs md:text-sm text-red-400 italic mt-3 transition-all duration-500">
+                    — সূরা আল-বাকারাহ: ১৫৩
+                </p>
+            </div>
+
+            <!-- Danger Timer Visual -->
+            <div class="space-y-2">
+                <p class="text-xs text-red-400 uppercase tracking-widest font-semibold">চূড়ান্ত সিদ্ধান্তের বাকি সময়</p>
+                <div class="text-4xl md:text-5xl font-mono font-black text-red-500 tracking-wider" id="dangerTimerDisplay">
+                    05:00
+                </div>
+            </div>
+
+            <!-- Double Decision Controls -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 max-w-md mx-auto">
+                <button onclick="cancelResetDecision()" class="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-base md:text-lg rounded-xl shadow-lg shadow-emerald-950/40 transition duration-300 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-heart text-emerald-100"></i> না, আমি আমার সিদ্ধান্ত বদলেছি (ফিরে যান)
+                </button>
+                <button id="finalResetBtn" onclick="executeFinalReset()" disabled class="w-full py-4 px-6 bg-red-800/40 text-red-400 border border-red-900 rounded-xl font-bold transition duration-300 cursor-not-allowed">
+                    অপেক্ষা করুন... (৫ মিনিট পর সচল হবে)
+                </button>
+            </div>
+        </div>
+        <p class="text-[10px] text-center text-red-500/50 pt-6">রাহনুমা • আত্মশুদ্ধি ও হেদায়েতের অবিরাম পথচলা</p>
+    </div>
 
     <!-- Header / Navbar -->
     <header class="w-full max-w-2xl flex justify-between items-center mb-6 z-10">
@@ -203,15 +248,10 @@
                     </div>
                 </div>
 
-                <!-- Reset Timer Notification (When locked) -->
-                <div id="resetTimerContainer" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg py-2 px-4 inline-block mb-4">
-                    <span class="font-bold"><i class="fa-regular fa-clock mr-1"></i> রিসেট লক:</span> আপনি আবার <span id="resetCountdown" class="font-mono font-bold text-sm text-amber-800">05:00</span> মিনিট পর রিসেট করতে পারবেন।
-                </div>
-
                 <!-- Controls (Only Reset, Stop/Start buttons removed) -->
                 <div class="flex justify-center gap-3 mt-2">
-                    <button id="resetBtn" onclick="confirmResetCounter()" class="px-8 py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 w-full max-w-xs">
-                        <i class="fa-solid fa-rotate-left"></i> কাউন্টার রিসেট করুন
+                    <button id="resetBtn" onclick="confirmResetCounter()" class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 w-full max-w-xs">
+                        <i class="fa-solid fa-rotate-left animate-spin-slow"></i> কাউন্টার রিসেট করুন
                     </button>
                 </div>
             </div>
@@ -219,7 +259,7 @@
             <!-- Islamic Motivational Quote Carousel -->
             <div class="glass-card rounded-2xl p-6 md:p-8 relative">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest"><i class="fa-solid fa-book-open mr-1"></i> ইসলামিক বাণী ও মোティブেশন</span>
+                    <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest"><i class="fa-solid fa-book-open mr-1"></i> ইসলামিক বাণী ও মোটিভেশন</span>
                     <span id="quoteProgress" class="text-xs font-mono text-slate-400">১ / ১</span>
                 </div>
 
@@ -300,21 +340,6 @@
         </div>
     </div>
 
-    <!-- Confirm Modal for Reset -->
-    <div id="confirmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-slate-100 text-center space-y-4">
-            <div class="text-4xl text-amber-500">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <h4 class="text-lg font-bold text-slate-800">আপনি কি নিশ্চিত?</h4>
-            <p class="text-sm text-slate-600">আপনি কাউন্টারটি রিসেট করতে চাচ্ছেন। রিসেট করার পর ৫ মিনিট পর্যন্ত আপনি আর রিসেট করতে পারবেন না!</p>
-            <div class="flex gap-2">
-                <button onclick="closeConfirmModal()" class="flex-1 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg transition">বাতিল</button>
-                <button onclick="resetCounter()" class="flex-1 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition">হ্যাঁ, রিসেট করুন</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Firebase SDK & Integrated Codebase Modules -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -348,8 +373,8 @@
         window.showLoginTab = showLoginTab;
         window.logout = logout;
         window.confirmResetCounter = confirmResetCounter;
-        window.closeConfirmModal = closeConfirmModal;
-        window.resetCounter = resetCounter;
+        window.cancelResetDecision = cancelResetDecision;
+        window.executeFinalReset = executeFinalReset;
         window.nextQuote = nextQuote;
         window.prevQuote = prevQuote;
         window.handleTxtFileUpload = handleTxtFileUpload;
@@ -362,8 +387,12 @@
         let pendingPhone = null;
         let counterInterval = null;
         let counterStartTime = 0;
-        let lastResetTime = 0;
-        let resetCountdownInterval = null;
+        
+        // Safety lock states for Danger decision Screen
+        let isWaitingInDanger = false;
+        let dangerSecondsRemaining = 300; // 5 Minutes
+        let dangerInterval = null;
+        let dangerQuoteInterval = null;
 
         // Quotes State
         let localQuotes = [
@@ -373,6 +402,17 @@
             { text: "যে ব্যক্তি আল্লাহকে ভয় করবে, আল্লাহ তার জন্য কোনো পথ বের করে দেবেন এবং তাকে এমন জায়গা থেকে রিজিক দেবেন যা সে ভাবতেও পারেনি।", author: "সূরা আত-তালাক: ২-৩" },
             { text: "তোমাদের মাঝে উত্তম ঐ ব্যক্তি, যে কুরআন শেখে এবং অন্যকে শেখায়।", author: "সহীহ বুখারী" }
         ];
+
+        // Specific deeply emotional quotes to show inside the red danger decision mode
+        const dangerQuotes = [
+            { text: "হে আমাদের পালনকর্তা! সরল পথ প্রদর্শনের পর আমাদের অন্তরকে সত্যলঙ্ঘনপ্রবণ করবেন না এবং আপনার পক্ষ থেকে অনুগ্রহ দান করুন।", author: "সূরা আল ইমরান: ৮" },
+            { text: "যে ব্যক্তি আল্লাহর ওপর ভরসা করে, আল্লাহই তার জন্য যথেষ্ট হয়ে যান।", author: "সূরা আত-তালাক: ৩" },
+            { text: "আল্লাহ কোনো আত্মার ওপর তার সাধ্যের অতিরিক্ত বোঝা চাপান না।", author: "সূরা আল-বাকারাহ: ২৮৬" },
+            { text: "ক্ষমা করতে শেখো, আল্লাহও ক্ষমাশীল ও দয়াময়দের ভালোবাসেন।", author: "সূরা আন-নূর: ২২" },
+            { text: "দুনিয়ার তুচ্ছ লাভের চেয়ে পরকালের চিরস্থায়ী প্রশান্তি অতি উত্তম।", author: "সূরা আল-আলা: ১৭" }
+        ];
+        let dangerQuoteIndex = 0;
+
         let currentQuoteIndex = 0;
         let quoteAutoSlideInterval = null;
         let temporaryUploadedQuotes = [];
@@ -518,7 +558,6 @@
             }
 
             try {
-                // FIXED SEGMENTS (6 segments - EVEN, complying with Rule 1)
                 const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', pendingPhone);
                 const userDoc = await getDoc(userRef);
                 
@@ -531,7 +570,6 @@
                     phone: pendingPhone,
                     password: passVal,
                     counterStart: Date.now(),
-                    lastReset: 0,
                     createdAt: Date.now()
                 });
 
@@ -664,10 +702,8 @@
 
             // Initialize counter to run automatically (without stop button)
             counterStartTime = user.counterStart || Date.now();
-            lastResetTime = user.lastReset || 0;
 
             startCounterInterval();
-            startResetCountdown();
             syncQuotesFromDatabase();
             renderBadges();
         }
@@ -696,77 +732,120 @@
             document.getElementById('counterDisplay').innerText = `${dStr}:${hStr}:${mStr}:${sStr}`;
         }
 
+        // ---------------- DANGER MODAL AND COOLING DECISION LOCK ---------------- //
+
         function confirmResetCounter() {
-            const currentTime = Date.now();
-            const timeSinceLastReset = currentTime - lastResetTime;
-            const fiveMinutes = 5 * 60 * 1000;
-
-            if (timeSinceLastReset < fiveMinutes) {
-                const remaining = Math.ceil((fiveMinutes - timeSinceLastReset) / 1000);
-                const minutes = Math.floor(remaining / 60);
-                const seconds = remaining % 60;
-                showAlert("লক করা হয়েছে", `রিসেট সীমাবদ্ধতা! অনুগ্রহ করে আরো ${minutes} মিনিট ${seconds} সেকেন্ড অপেক্ষা করুন।`, "fa-clock", "text-amber-600");
-                return;
-            }
-
-            document.getElementById('confirmModal').classList.remove('hidden');
-        }
-
-        function closeConfirmModal() {
-            document.getElementById('confirmModal').classList.add('hidden');
-        }
-
-        async function resetCounter() {
-            closeConfirmModal();
-            lastResetTime = Date.now();
-            counterStartTime = Date.now();
+            // Trigger overlay & start 5 minutes wait
+            isWaitingInDanger = true;
+            dangerSecondsRemaining = 300; // 5 Minutes = 300 Seconds
             
+            const overlay = document.getElementById('dangerResetOverlay');
+            overlay.classList.remove('hidden');
+
+            // Set Initial Quote
+            dangerQuoteIndex = 0;
+            renderDangerQuote();
+
+            // Run Danger Timer
+            clearInterval(dangerInterval);
+            dangerInterval = setInterval(() => {
+                dangerSecondsRemaining--;
+                
+                const mins = Math.floor(dangerSecondsRemaining / 60);
+                const secs = dangerSecondsRemaining % 60;
+                document.getElementById('dangerTimerDisplay').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+                if (dangerSecondsRemaining <= 0) {
+                    clearInterval(dangerInterval);
+                    enableFinalResetBtn();
+                }
+            }, 1000);
+
+            // Rotate deeply emotional quotes every 12 seconds inside Danger Mode
+            clearInterval(dangerQuoteInterval);
+            dangerQuoteInterval = setInterval(() => {
+                dangerQuoteIndex = (dangerQuoteIndex + 1) % dangerQuotes.length;
+                renderDangerQuote();
+            }, 12000);
+        }
+
+        function renderDangerQuote() {
+            const quoteObj = dangerQuotes[dangerQuoteIndex];
+            const qText = document.getElementById('dangerQuoteText');
+            const qAuth = document.getElementById('dangerQuoteAuthor');
+            
+            qText.style.opacity = 0;
+            qAuth.style.opacity = 0;
+            
+            setTimeout(() => {
+                qText.innerText = `"${quoteObj.text}"`;
+                qAuth.innerText = quoteObj.author ? `— ${quoteObj.author}` : "— সংগৃহীত";
+                qText.style.opacity = 1;
+                qAuth.style.opacity = 1;
+            }, 500);
+        }
+
+        function enableFinalResetBtn() {
+            const btn = document.getElementById('finalResetBtn');
+            btn.disabled = false;
+            btn.innerText = "হ্যাঁ, চূড়ান্তভাবে রিসেট করুন";
+            btn.className = "w-full py-4 px-6 bg-red-600 hover:bg-red-500 text-white font-extrabold text-lg rounded-xl shadow-lg shadow-red-950/40 transition duration-300 flex items-center justify-center gap-2";
+        }
+
+        // User changes mind! Returns safely.
+        function cancelResetDecision() {
+            clearInterval(dangerInterval);
+            clearInterval(dangerQuoteInterval);
+            isWaitingInDanger = false;
+            document.getElementById('dangerResetOverlay').classList.add('hidden');
+            
+            // Re-establish buttons
+            const btn = document.getElementById('finalResetBtn');
+            btn.disabled = true;
+            btn.innerText = "অপেক্ষা করুন... (৫ মিনিট পর সচল হবে)";
+            btn.className = "w-full py-4 px-6 bg-red-800/40 text-red-400 border border-red-900 rounded-xl font-bold transition duration-300 cursor-not-allowed";
+
+            showAlert("সিদ্ধান্তের সাধুবাদ জানাই 🌸", "আপনার অবিরাম পথচলা অব্যাহত রাখা হলো। আল্লাহ আপনাকে সঠিক পথে অটল রাখুন।", "fa-heart", "text-emerald-700");
+        }
+
+        // Executes reset after the 5 minutes waiting has completed
+        async function executeFinalReset() {
+            if (dangerSecondsRemaining > 0) return;
+
+            clearInterval(dangerInterval);
+            clearInterval(dangerQuoteInterval);
+            isWaitingInDanger = false;
+            document.getElementById('dangerResetOverlay').classList.add('hidden');
+
+            // Reset Timer to now
+            counterStartTime = Date.now();
             startCounterInterval();
 
-            // Save reset state
-            const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.phone);
-            await updateDoc(userRef, {
-                counterStart: counterStartTime,
-                lastReset: lastResetTime
-            });
+            // Save state to Firebase
+            try {
+                const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.phone);
+                await updateDoc(userRef, {
+                    counterStart: counterStartTime
+                });
 
-            currentUser.lastReset = lastResetTime;
-            currentUser.counterStart = counterStartTime;
+                currentUser.counterStart = counterStartTime;
+                showAlert("কাউন্টার রিসেট হয়েছে", "আপনার কাউন্টার সফলভাবে নতুন করে শুরু হলো।", "fa-rotate", "text-emerald-700");
+                
+                // Re-establish buttons to original safe state
+                const btn = document.getElementById('finalResetBtn');
+                btn.disabled = true;
+                btn.innerText = "অপেক্ষা করুন... (৫ মিনিট পর সচল হবে)";
+                btn.className = "w-full py-4 px-6 bg-red-800/40 text-red-400 border border-red-900 rounded-xl font-bold transition duration-300 cursor-not-allowed";
 
-            startResetCountdown();
-            showAlert("সফলভাবে রিসেট", "আপনার কাউন্টার পুনরায় শূন্য থেকে শুরু করা হয়েছে।", "fa-arrows-rotate", "text-emerald-700");
-        }
-
-        function startResetCountdown() {
-            clearInterval(resetCountdownInterval);
-            const container = document.getElementById('resetTimerContainer');
-            const countdownSpan = document.getElementById('resetCountdown');
-
-            const checkTime = () => {
-                const elapsed = Date.now() - lastResetTime;
-                const limit = 5 * 60 * 1000;
-
-                if (elapsed < limit) {
-                    container.classList.remove('hidden');
-                    const diff = limit - elapsed;
-                    const mins = Math.floor(diff / 60000);
-                    const secs = Math.floor((diff % 60000) / 1000);
-                    countdownSpan.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-                } else {
-                    container.classList.add('hidden');
-                    clearInterval(resetCountdownInterval);
-                }
-            };
-
-            checkTime();
-            resetCountdownInterval = setInterval(checkTime, 1000);
+            } catch (err) {
+                showAlert("ত্রুটি", "ডাটাবেজ আপডেট করতে সমস্যা হয়েছে।", "fa-triangle-exclamation", "text-red-500");
+            }
         }
 
         // ---------------- ISLAMIC MOTIVATIONAL QUOTES & FILE UPLOAD ---------------- //
 
         async function syncQuotesFromDatabase() {
             try {
-                // FIXED PATH: 6 segments (EVEN path) -> artifacts/{appId}/public/data/quotes/uploadedQuotes
                 const quoteDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'quotes', 'uploadedQuotes');
                 const quoteDoc = await getDoc(quoteDocRef);
 
@@ -1027,7 +1106,8 @@
         function stopAllTimers() {
             clearInterval(counterInterval);
             clearInterval(quoteAutoSlideInterval);
-            clearInterval(resetCountdownInterval);
+            clearInterval(dangerInterval);
+            clearInterval(dangerQuoteInterval);
         }
 
         // Initial check on load
