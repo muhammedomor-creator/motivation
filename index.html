@@ -251,7 +251,7 @@
                 </div>
             </div>
 
-            <!-- Islamic Badges & Achievments -->
+            <!-- Islamic Badges & Achievements -->
             <div class="glass-card rounded-2xl p-6 md:p-8">
                 <h4 class="text-sm font-bold text-emerald-900 border-b border-slate-200/50 pb-2 mb-4 flex items-center gap-2">
                     <i class="fa-solid fa-award text-emerald-700"></i> আপনার অর্জিত ইসলামিক ব্যাজসমূহ
@@ -343,7 +343,7 @@
         // App ID detection
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'ramadan-planner-ddda7';
 
-        // Globals for App logic access (Explicitly Exporting to Window)
+        // Globals for App logic access (Explicitly Exporting to Window to prevent ReferenceErrors)
         window.db = db;
         window.auth = auth;
         window.appId = appId;
@@ -413,7 +413,7 @@
             { id: "muttaqeen", name: "আল-মুত্তাকীন (পরহেজগার)", desc: "কাউন্টার ৩০ দিন সচল রাখার জন্য অর্জিত।", days: 30, icon: "fa-crown", color: "text-emerald-700 bg-emerald-50" },
             { id: "mushineen", name: "আল-মুহসিনীন (সদাচারী)", desc: "কাউন্টার ৬০ দিন সচল রাখার জন্য অর্জিত।", days: 60, icon: "fa-gem", color: "text-cyan-700 bg-cyan-50" },
             { id: "muqarrabeen", name: "আল-মুকাররাবীন (নৈকট্য লাভকারী)", desc: "কাউন্টার ৯০ দিন সচল রাখার জন্য অর্জিত।", days: 90, icon: "fa-star-and-crescent", color: "text-indigo-700 bg-indigo-50" },
-            { id: "siddiqeen", name: "আস-সিদ্দীকীন (সত্যবাদী)", desc: "কাউন্টার ৩৬াস বা ১ বছর সচল রাখার জন্য অর্জিত।", days: 365, icon: "fa-award", color: "text-yellow-600 bg-yellow-50" }
+            { id: "siddiqeen", name: "আস-সিদ্দীকীন (সত্যবাদী)", desc: "কাউন্টার ৩৬৫ দিন বা ১ বছর সচল রাখার জন্য অর্জিত।", days: 365, icon: "fa-award", color: "text-yellow-600 bg-yellow-50" }
         ];
 
         // ---------------- AUTH SYSTEM FUNCTIONS ---------------- //
@@ -535,7 +535,6 @@
 
             try {
                 const appId = window.appId;
-                // Correctly referencing the window exported firebase methods
                 const userRef = window.doc(window.db, 'artifacts', appId, 'public', 'data', 'users', pendingPhone);
                 
                 // Check if user already exists
@@ -910,6 +909,7 @@
 
         function renderDots() {
             const dotsContainer = document.getElementById('quoteDots');
+            if(!dotsContainer) return;
             dotsContainer.innerHTML = '';
             
             // Maximum display 10 dots for clean UI
@@ -947,6 +947,7 @@
         // Swipe Gestures Logic for Mobile Accessibility
         function setupSliderSwipe() {
             const viewport = document.getElementById('sliderViewport');
+            if (!viewport) return;
             
             viewport.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
@@ -987,13 +988,14 @@
                     const trimmed = line.trim();
                     if (!trimmed) return;
 
-                    // Regex to strip prefix numbering such as: 1., ১২., [১], 1 - etc
-                    const cleaned = trimmed.replace(/^[\d১২৩৪৫৬৭৮৯০\s\.\-\)\]\[]+/g, '').trim();
+                    // ADVANCED REGEX PARSER:
+                    // This strip prefixes like '১.', '1.', '৪১.', '4aligned.', '[১]', '1 -' very robustly.
+                    const cleaned = trimmed.replace(/^[\d১২৩৪৫৬৭৮৯০a-zA-Z\s\.\-\)\]\[]+/g, '').trim();
                     
-                    if (cleaned) {
+                    if (cleaned && cleaned.length > 3) {
                         temporaryUploadedQuotes.push({
                             text: cleaned,
-                            author: "ব্যবহারকারীর আপলোড"
+                            author: "সংগৃহীত বাণী"
                         });
                     }
                 });
@@ -1030,21 +1032,27 @@
                     currentList = snap.data().quotes || [];
                 }
 
-                const updatedList = [...currentList, ...temporaryUploadedQuotes];
+                // Prevent duplicates based on text content
+                const existingTexts = new Set(currentList.map(q => q.text));
+                const uniqueNewQuotes = temporaryUploadedQuotes.filter(q => !existingTexts.has(q.text));
+
+                if(uniqueNewQuotes.length === 0) {
+                     showAlert("ইতিমধ্যেই যুক্ত", "ফাইলটির সমস্ত উক্তি পূর্বে থেকেই ডাটাবেজে সংরক্ষিত রয়েছে।", "fa-circle-exclamation", "text-amber-600");
+                     // Reset state
+                     resetUploaderUI(saveBtn);
+                     return;
+                }
+
+                const updatedList = [...currentList, ...uniqueNewQuotes];
                 await window.setDoc(quoteDocRef, { quotes: updatedList });
 
-                localQuotes = [...localQuotes, ...temporaryUploadedQuotes];
-                showAlert("উক্তি সংরক্ষিত", `${temporaryUploadedQuotes.length}টি নতুন উক্তি যুক্ত হয়েছে এবং স্লাইডারে সংযুক্ত হয়েছে।`, "fa-file-shield", "text-emerald-700");
+                localQuotes = [...localQuotes, ...uniqueNewQuotes];
+                showAlert("উক্তি সংরক্ষিত", `${uniqueNewQuotes.length}টি নতুন উক্তি যুক্ত হয়েছে এবং স্লাইডারে সংযুক্ত হয়েছে।`, "fa-file-shield", "text-emerald-700");
                 
-                // Reset uploader interface
-                document.getElementById('txtFileUploader').value = '';
-                document.getElementById('uploadStatusText').innerText = "ফাইল নির্বাচন করুন (.txt)";
-                saveBtn.innerText = "উক্তিগুলো ডাটাবেজে সংরক্ষণ করুন";
-                saveBtn.disabled = true;
-                saveBtn.className = "px-6 py-3 bg-slate-400 text-white font-bold rounded-xl transition cursor-not-allowed";
+                resetUploaderUI(saveBtn);
 
-                // Refresh viewport
-                currentQuoteIndex = localQuotes.length - temporaryUploadedQuotes.length;
+                // Refresh viewport to show the newly added quote
+                currentQuoteIndex = localQuotes.length - uniqueNewQuotes.length;
                 renderQuote();
 
             } catch (err) {
@@ -1052,6 +1060,14 @@
                 saveBtn.innerText = "উক্তিগুলো ডাটাবেজে সংরক্ষণ করুন";
                 saveBtn.disabled = false;
             }
+        }
+
+        function resetUploaderUI(saveBtn) {
+            document.getElementById('txtFileUploader').value = '';
+            document.getElementById('uploadStatusText').innerText = "ফাইল নির্বাচন করুন (.txt)";
+            saveBtn.innerText = "উক্তিগুলো ডাটাবেজে সংরক্ষণ করুন";
+            saveBtn.disabled = true;
+            saveBtn.className = "px-6 py-3 bg-slate-400 text-white font-bold rounded-xl transition cursor-not-allowed";
         }
 
         // ---------------- ISLAMIC BADGES & MEDALS ---------------- //
