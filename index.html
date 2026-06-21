@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ইসলামিক লাইফ কাউন্টার ও মোটিভেশনাল উক্তি</title>
+    <title>ইসলামিক লাইফ কাউন্টার ও মোティブেশনাল উক্তি</title>
     <!-- Tailwind CSS for Responsive Layouts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Premium Icons -->
@@ -208,13 +208,10 @@
                     <span class="font-bold"><i class="fa-regular fa-clock mr-1"></i> রিসেট লক:</span> আপনি আবার <span id="resetCountdown" class="font-mono font-bold text-sm text-amber-800">05:00</span> মিনিট পর রিসেট করতে পারবেন।
                 </div>
 
-                <!-- Controls -->
+                <!-- Controls (Only Reset, Stop/Start buttons removed) -->
                 <div class="flex justify-center gap-3 mt-2">
-                    <button id="startStopBtn" onclick="toggleCounter()" class="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold shadow-md transition flex items-center gap-2">
-                        <i id="startStopIcon" class="fa-solid fa-play"></i> <span id="startStopText">কাউন্টার শুরু করুন</span>
-                    </button>
-                    <button id="resetBtn" onclick="confirmResetCounter()" class="px-5 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold shadow-md transition flex items-center gap-2">
-                        <i class="fa-solid fa-rotate-left"></i> রিসেট
+                    <button id="resetBtn" onclick="confirmResetCounter()" class="px-8 py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 w-full max-w-xs">
+                        <i class="fa-solid fa-rotate-left"></i> কাউন্টার রিসেট করুন
                     </button>
                 </div>
             </div>
@@ -222,7 +219,7 @@
             <!-- Islamic Motivational Quote Carousel -->
             <div class="glass-card rounded-2xl p-6 md:p-8 relative">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest"><i class="fa-solid fa-book-open mr-1"></i> ইসলামিক বাণী ও মোটিভেশন</span>
+                    <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest"><i class="fa-solid fa-book-open mr-1"></i> ইসলামিক বাণী ও মোティブেশন</span>
                     <span id="quoteProgress" class="text-xs font-mono text-slate-400">১ / ১</span>
                 </div>
 
@@ -318,11 +315,11 @@
         </div>
     </div>
 
-    <!-- Firebase SDK Scripts -->
+    <!-- Firebase SDK & Integrated Codebase Modules -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, query, onSnapshot, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -339,56 +336,36 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        
-        // App ID detection
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'ramadan-planner-ddda7';
 
-        // Globals for App logic access (Explicitly Exporting to Window to prevent ReferenceErrors)
-        window.db = db;
-        window.auth = auth;
-        window.appId = appId;
-        window.doc = doc;
-        window.setDoc = setDoc;
-        window.getDoc = getDoc;
-        window.updateDoc = updateDoc;
+        // Bind all functions to window to avoid ReferenceError from index.html onclick properties
+        window.switchAuthTab = switchAuthTab;
+        window.sendOTPCode = sendOTPCode;
+        window.verifyAndRegister = verifyAndRegister;
+        window.handleLogin = handleLogin;
+        window.verifyAndResetPassword = verifyAndResetPassword;
+        window.showForgetPassword = showForgetPassword;
+        window.showLoginTab = showLoginTab;
+        window.logout = logout;
+        window.confirmResetCounter = confirmResetCounter;
+        window.closeConfirmModal = closeConfirmModal;
+        window.resetCounter = resetCounter;
+        window.nextQuote = nextQuote;
+        window.prevQuote = prevQuote;
+        window.handleTxtFileUpload = handleTxtFileUpload;
+        window.saveUploadedQuotes = saveUploadedQuotes;
+        window.closeModal = closeModal;
 
-        // Initial setup
-        const initAuth = async () => {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                await signInWithCustomToken(auth, __initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
-            }
-        };
-        initAuth();
-
-        // Listen for Auth changes
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // If logged in via WhatsApp user account
-                checkLocalSession();
-            } else {
-                showAuthCard();
-            }
-        });
-    </script>
-
-    <!-- App Frontend Mechanics -->
-    <script>
-        // State variables
+        // Application State
         let currentUser = null;
         let generatedOTP = null;
         let pendingPhone = null;
-        let pendingPassword = null;
-        
-        // Counter variables
         let counterInterval = null;
         let counterStartTime = 0;
-        let isCounterRunning = false;
         let lastResetTime = 0;
         let resetCountdownInterval = null;
 
-        // Custom local quote state (with dynamic load)
+        // Quotes State
         let localQuotes = [
             { text: "নিশ্চয়ই কষ্টের সাথেই স্বস্তি রয়েছে।", author: "সূরা আল-ইনশিরাহ: ৫" },
             { text: "হে ঈমানদারগণ! তোমরা ধৈর্য ও সালাতের মাধ্যমে সাহায্য প্রার্থনা করো। নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন।", author: "সূরা আল-বাকারাহ: ১৫৩" },
@@ -407,7 +384,7 @@
         // Render WhatsApp API Configuration
         const API_URL = "https://otp-api-hmrz.onrender.com/send-otp";
 
-        // Predefined Islamic Badges based on active counter days
+        // Predefined Islamic Badges
         const ISLAMIC_BADGES = [
             { id: "sabireen", name: "আস-সাবিরীন (ধৈর্যশীল)", desc: "কাউন্টার ১০ দিন সচল রাখার জন্য অর্জিত।", days: 10, icon: "fa-certificate", color: "text-amber-600 bg-amber-50" },
             { id: "muttaqeen", name: "আল-মুত্তাকীন (পরহেজগার)", desc: "কাউন্টার ৩০ দিন সচল রাখার জন্য অর্জিত।", days: 30, icon: "fa-crown", color: "text-emerald-700 bg-emerald-50" },
@@ -416,8 +393,26 @@
             { id: "siddiqeen", name: "আস-সিদ্দীকীন (সত্যবাদী)", desc: "কাউন্টার ৩৬৫ দিন বা ১ বছর সচল রাখার জন্য অর্জিত।", days: 365, icon: "fa-award", color: "text-yellow-600 bg-yellow-50" }
         ];
 
-        // ---------------- AUTH SYSTEM FUNCTIONS ---------------- //
-        
+        // Auth listeners
+        const initAuth = async () => {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        };
+        initAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                checkLocalSession();
+            } else {
+                showAuthCard();
+            }
+        });
+
+        // ---------------- AUTHENTICATION CONTROLLERS ---------------- //
+
         function switchAuthTab(tab) {
             const tabLoginBtn = document.getElementById('tabLoginBtn');
             const tabRegisterBtn = document.getElementById('tabRegisterBtn');
@@ -461,7 +456,6 @@
             switchAuthTab('login');
         }
 
-        // Send OTP using the live WhatsApp Render API
         async function sendOTPCode(type) {
             const phoneField = type === 'register' ? 'regPhone' : 'forgetPhone';
             const btnField = type === 'register' ? 'regSendOtpBtn' : 'forgetSendOtpBtn';
@@ -476,17 +470,13 @@
             sendBtn.innerText = "ওটিপি কোড পাঠানো হচ্ছে...";
             sendBtn.disabled = true;
 
-            // Generate random 6-digit OTP
             generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
             pendingPhone = phoneNumber;
 
             try {
-                // Fetch request to your live Render API
                 const response = await fetch(API_URL, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         phoneNumber: phoneNumber,
                         otpCode: generatedOTP
@@ -513,7 +503,6 @@
             }
         }
 
-        // Register Account (Save user details to Firestore)
         async function verifyAndRegister() {
             const otpVal = document.getElementById('regOTP').value.trim();
             const passVal = document.getElementById('regPass').value.trim();
@@ -528,28 +517,20 @@
                 return;
             }
 
-            if (!window.db || !window.doc || !window.setDoc || !window.getDoc) {
-                showAlert("সার্ভার সমস্যা", "ফায়ারবেস ডাটাবেজ এখনও কানেক্ট হচ্ছে, অনুগ্রহ করে ১ সেকেন্ড পর চেষ্টা করুন।", "fa-clock", "text-amber-500");
-                return;
-            }
-
             try {
-                const appId = window.appId;
-                const userRef = window.doc(window.db, 'artifacts', appId, 'public', 'data', 'users', pendingPhone);
+                // FIXED SEGMENTS (6 segments - EVEN, complying with Rule 1)
+                const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', pendingPhone);
+                const userDoc = await getDoc(userRef);
                 
-                // Check if user already exists
-                const userDoc = await window.getDoc(userRef);
                 if (userDoc.exists()) {
                     showAlert("ইতিমধ্যেই নিবন্ধিত", "এই নম্বর দিয়ে ইতিমধ্যে অ্যাকাউন্ট রয়েছে। লগইন করার চেষ্টা করুন।", "fa-circle-exclamation", "text-amber-500");
                     return;
                 }
 
-                // Create user profile
-                await window.setDoc(userRef, {
+                await setDoc(userRef, {
                     phone: pendingPhone,
                     password: passVal,
                     counterStart: Date.now(),
-                    counterRunning: true,
                     lastReset: 0,
                     createdAt: Date.now()
                 });
@@ -565,7 +546,6 @@
             }
         }
 
-        // Handle Login (Verify from Firestore)
         async function handleLogin() {
             const loginPhone = document.getElementById('loginPhone').value.trim();
             const loginPass = document.getElementById('loginPass').value.trim();
@@ -576,22 +556,16 @@
                 return;
             }
 
-            if (!window.db || !window.doc || !window.getDoc) {
-                showAlert("সার্ভার সমস্যা", "ফায়ারবেস কানেক্ট হচ্ছে, অনুগ্রহ করে একটু অপেক্ষা করুন।", "fa-clock", "text-amber-500");
-                return;
-            }
-
             loginBtn.innerText = "যাচাই করা হচ্ছে...";
             loginBtn.disabled = true;
 
             try {
-                const userRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', loginPhone);
-                const userDoc = await window.getDoc(userRef);
+                const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', loginPhone);
+                const userDoc = await getDoc(userRef);
 
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
                     if (userData.password === loginPass) {
-                        // Success Login
                         currentUser = userData;
                         localStorage.setItem('userPhoneSession', loginPhone);
                         showAlert("লগইন সফল", "রাহনুমা পোর্টালে আপনাকে স্বাগতম!", "fa-mosque", "text-emerald-700");
@@ -612,7 +586,6 @@
             }
         }
 
-        // Forget / Reset Password Engine
         async function verifyAndResetPassword() {
             const otpVal = document.getElementById('forgetOTP').value.trim();
             const newPassVal = document.getElementById('forgetNewPass').value.trim();
@@ -628,17 +601,15 @@
             }
 
             try {
-                const userRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', pendingPhone);
-                const userDoc = await window.getDoc(userRef);
+                const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', pendingPhone);
+                const userDoc = await getDoc(userRef);
 
                 if (!userDoc.exists()) {
                     showAlert("ত্রুটি", "কোনো অ্যাকাউন্ট পাওয়া যায়নি।", "fa-circle-xmark", "text-red-500");
                     return;
                 }
 
-                await window.updateDoc(userRef, {
-                    password: newPassVal
-                });
+                await updateDoc(userRef, { password: newPassVal });
 
                 showAlert("পাসওয়ার্ড পরিবর্তিত", "পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে। নতুন পাসওয়ার্ড দিয়ে লগইন করুন।", "fa-circle-check", "text-emerald-600");
                 setTimeout(() => {
@@ -651,17 +622,11 @@
             }
         }
 
-        // Check login state on load
         function checkLocalSession() {
             const savedSession = localStorage.getItem('userPhoneSession');
             if (savedSession) {
-                if (!window.db || !window.doc || !window.getDoc) {
-                    setTimeout(checkLocalSession, 500);
-                    return;
-                }
-                // Fetch fresh from DB
-                const userRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', savedSession);
-                window.getDoc(userRef).then(docSnap => {
+                const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', savedSession);
+                getDoc(userRef).then(docSnap => {
                     if (docSnap.exists()) {
                         currentUser = docSnap.data();
                         launchApp(currentUser);
@@ -689,7 +654,7 @@
             showAuthCard();
         }
 
-        // ---------------- DASHBOARD & CORE LOGIC ---------------- //
+        // ---------------- DASHBOARD LOGIC (AUTO-RUN COUNTER) ---------------- //
         
         function launchApp(user) {
             document.getElementById('authCard').classList.add('hidden');
@@ -697,73 +662,18 @@
             document.getElementById('userInfoHeader').classList.remove('hidden');
             document.getElementById('headerUserPhone').innerText = `নম্বর: ${user.phone}`;
 
-            // Initialize counter
+            // Initialize counter to run automatically (without stop button)
             counterStartTime = user.counterStart || Date.now();
-            isCounterRunning = user.counterRunning !== undefined ? user.counterRunning : true;
             lastResetTime = user.lastReset || 0;
 
-            if (isCounterRunning) {
-                startCounterInterval();
-            } else {
-                updateCounterDisplay(user.counterAccumulatedTime || 0);
-            }
-
-            // Sync resets and locks
+            startCounterInterval();
             startResetCountdown();
-            
-            // Sync Quotes
             syncQuotesFromDatabase();
-
-            // Render static/unlocked badges
             renderBadges();
-        }
-
-        // ---------------- CONTINUOUS COUNTER MANAGEMENT ---------------- //
-
-        function toggleCounter() {
-            isCounterRunning = !isCounterRunning;
-            
-            if (isCounterRunning) {
-                counterStartTime = Date.now() - (currentUser.counterAccumulatedTime || 0);
-                startCounterInterval();
-            } else {
-                clearInterval(counterInterval);
-                const accumulated = Date.now() - counterStartTime;
-                currentUser.counterAccumulatedTime = accumulated;
-                updateCounterDisplay(accumulated);
-            }
-
-            // Update Database state
-            const userRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', currentUser.phone);
-            window.updateDoc(userRef, {
-                counterRunning: isCounterRunning,
-                counterStart: counterStartTime,
-                counterAccumulatedTime: currentUser.counterAccumulatedTime || 0
-            });
-
-            updateStartStopButtonState();
-        }
-
-        function updateStartStopButtonState() {
-            const btnText = document.getElementById('startStopText');
-            const btnIcon = document.getElementById('startStopIcon');
-            const btn = document.getElementById('startStopBtn');
-
-            if (isCounterRunning) {
-                btnText.innerText = "কাউন্টার থামান";
-                btnIcon.className = "fa-solid fa-pause";
-                btn.className = "px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold shadow-md transition flex items-center gap-2";
-            } else {
-                btnText.innerText = "কাউন্টার শুরু করুন";
-                btnIcon.className = "fa-solid fa-play";
-                btn.className = "px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold shadow-md transition flex items-center gap-2";
-            }
         }
 
         function startCounterInterval() {
             clearInterval(counterInterval);
-            updateStartStopButtonState();
-
             counterInterval = setInterval(() => {
                 const totalDiff = Date.now() - counterStartTime;
                 updateCounterDisplay(totalDiff);
@@ -786,7 +696,6 @@
             document.getElementById('counterDisplay').innerText = `${dStr}:${hStr}:${mStr}:${sStr}`;
         }
 
-        // Reset Counter with 5-Minute Safety Limit
         function confirmResetCounter() {
             const currentTime = Date.now();
             const timeSinceLastReset = currentTime - lastResetTime;
@@ -812,29 +721,22 @@
             lastResetTime = Date.now();
             counterStartTime = Date.now();
             
-            if (isCounterRunning) {
-                startCounterInterval();
-            } else {
-                updateCounterDisplay(0);
-            }
+            startCounterInterval();
 
             // Save reset state
-            const userRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', currentUser.phone);
-            await window.updateDoc(userRef, {
+            const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.phone);
+            await updateDoc(userRef, {
                 counterStart: counterStartTime,
-                lastReset: lastResetTime,
-                counterAccumulatedTime: 0
+                lastReset: lastResetTime
             });
 
             currentUser.lastReset = lastResetTime;
             currentUser.counterStart = counterStartTime;
-            currentUser.counterAccumulatedTime = 0;
 
             startResetCountdown();
             showAlert("সফলভাবে রিসেট", "আপনার কাউন্টার পুনরায় শূন্য থেকে শুরু করা হয়েছে।", "fa-arrows-rotate", "text-emerald-700");
         }
 
-        // Reset cooling count visual representation
         function startResetCountdown() {
             clearInterval(resetCountdownInterval);
             const container = document.getElementById('resetTimerContainer');
@@ -863,11 +765,10 @@
         // ---------------- ISLAMIC MOTIVATIONAL QUOTES & FILE UPLOAD ---------------- //
 
         async function syncQuotesFromDatabase() {
-            if (!window.db || !window.doc || !window.getDoc) return;
             try {
-                // Fetch uploaded public quotes
-                const quoteDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'uploadedQuotes');
-                const quoteDoc = await window.getDoc(quoteDocRef);
+                // FIXED PATH: 6 segments (EVEN path) -> artifacts/{appId}/public/data/quotes/uploadedQuotes
+                const quoteDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'quotes', 'uploadedQuotes');
+                const quoteDoc = await getDoc(quoteDocRef);
 
                 if (quoteDoc.exists()) {
                     const dbQuotes = quoteDoc.data().quotes || [];
@@ -876,7 +777,7 @@
                     }
                 }
             } catch (err) {
-                console.log("উক্তি লোড করা যায়নি, ডিফল্টগুলো ব্যবহৃত হচ্ছে।");
+                console.log("উক্তি লোড করার সময় সমস্যা হয়েছে, ডিফল্টগুলো ব্যবহৃত হচ্ছে।", err);
             }
 
             initializeQuotesSlider();
@@ -894,15 +795,11 @@
             
             const displayArea = document.getElementById('quoteDisplayArea');
             displayArea.classList.remove('fade-in');
-            
-            // Reflow trigger
-            void displayArea.offsetWidth;
-            
+            void displayArea.offsetWidth; // Reflow trigger
             displayArea.classList.add('fade-in');
+            
             document.getElementById('quoteText').innerText = `"${currQuote.text}"`;
             document.getElementById('quoteAuthor').innerText = currQuote.author ? `— ${currQuote.author}` : "— সংগৃহীত";
-
-            // Update info
             document.getElementById('quoteProgress').innerText = `${currentQuoteIndex + 1} / ${localQuotes.length}`;
             renderDots();
         }
@@ -912,7 +809,6 @@
             if(!dotsContainer) return;
             dotsContainer.innerHTML = '';
             
-            // Maximum display 10 dots for clean UI
             const limit = Math.min(localQuotes.length, 10);
             for(let i=0; i<limit; i++) {
                 const dot = document.createElement('div');
@@ -935,16 +831,13 @@
 
         function setupAutoSlider() {
             clearInterval(quoteAutoSlideInterval);
-            quoteAutoSlideInterval = setInterval(() => {
-                nextQuote();
-            }, 15000); // Autoplay 15 seconds
+            quoteAutoSlideInterval = setInterval(nextQuote, 15000);
         }
 
         function resetAutoSlider() {
             setupAutoSlider();
         }
 
-        // Swipe Gestures Logic for Mobile Accessibility
         function setupSliderSwipe() {
             const viewport = document.getElementById('sliderViewport');
             if (!viewport) return;
@@ -960,15 +853,15 @@
         }
 
         function handleSwipe() {
-            const threshold = 50; // swipe length minimum
+            const threshold = 50;
             if (touchStartX - touchEndX > threshold) {
-                nextQuote(); // swipe left -> next
+                nextQuote();
             } else if (touchEndX - touchStartX > threshold) {
-                prevQuote(); // swipe right -> prev
+                prevQuote();
             }
         }
 
-        // Process Text File Upload with lines starting like: 1. বা ১.
+        // Process Text File Upload with robust line-by-line parsing
         function handleTxtFileUpload() {
             const uploader = document.getElementById('txtFileUploader');
             const statusText = document.getElementById('uploadStatusText');
@@ -989,7 +882,7 @@
                     if (!trimmed) return;
 
                     // ADVANCED REGEX PARSER:
-                    // This strip prefixes like '১.', '1.', '৪১.', '4aligned.', '[১]', '1 -' very robustly.
+                    // Strips prefixes like '১.', '1.', '৪১.', '4aligned.', '[১]', '1 -' etc
                     const cleaned = trimmed.replace(/^[\d১২৩৪৫৬৭৮৯০a-zA-Z\s\.\-\)\]\[]+/g, '').trim();
                     
                     if (cleaned && cleaned.length > 3) {
@@ -1014,7 +907,7 @@
             reader.readAsText(file);
         }
 
-        // Push uploaded quotes into Firebase Database
+        // Push uploaded quotes into Firebase Database using corrected EVEN segments Path
         async function saveUploadedQuotes() {
             if (temporaryUploadedQuotes.length === 0) return;
 
@@ -1023,10 +916,11 @@
             saveBtn.disabled = true;
 
             try {
-                const quoteDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'uploadedQuotes');
+                // FIXED EVEN SEGMENTS PATH
+                const quoteDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'quotes', 'uploadedQuotes');
                 
                 // Fetch existing to append
-                const snap = await window.getDoc(quoteDocRef);
+                const snap = await getDoc(quoteDocRef);
                 let currentList = [];
                 if (snap.exists()) {
                     currentList = snap.data().quotes || [];
@@ -1038,20 +932,19 @@
 
                 if(uniqueNewQuotes.length === 0) {
                      showAlert("ইতিমধ্যেই যুক্ত", "ফাইলটির সমস্ত উক্তি পূর্বে থেকেই ডাটাবেজে সংরক্ষিত রয়েছে।", "fa-circle-exclamation", "text-amber-600");
-                     // Reset state
                      resetUploaderUI(saveBtn);
                      return;
                 }
 
                 const updatedList = [...currentList, ...uniqueNewQuotes];
-                await window.setDoc(quoteDocRef, { quotes: updatedList });
+                await setDoc(quoteDocRef, { quotes: updatedList });
 
                 localQuotes = [...localQuotes, ...uniqueNewQuotes];
-                showAlert("উক্তি সংরক্ষিত", `${uniqueNewQuotes.length}টি নতুন উক্তি যুক্ত হয়েছে এবং স্লাইডারে সংযুক্ত হয়েছে।`, "fa-file-shield", "text-emerald-700");
+                showAlert("উক্তি সংরক্ষিত", `${uniqueNewQuotes.length}টি নতুন উক্তি সফলভাবে ডাটাবেজে আপলোড করা হয়েছে।`, "fa-file-shield", "text-emerald-700");
                 
                 resetUploaderUI(saveBtn);
 
-                // Refresh viewport to show the newly added quote
+                // Refresh viewport
                 currentQuoteIndex = localQuotes.length - uniqueNewQuotes.length;
                 renderQuote();
 
@@ -1077,7 +970,6 @@
             if (!container) return;
             container.innerHTML = '';
 
-            // Render badges states
             ISLAMIC_BADGES.forEach(badge => {
                 const isUnlocked = isBadgeUnlocked(badge.days);
                 const opacity = isUnlocked ? "opacity-100" : "opacity-40";
@@ -1115,7 +1007,6 @@
         }
 
         function evaluateBadges(elapsedMs) {
-            // Recalculate badges every second and check if new one is unlocked
             renderBadges();
         }
 
@@ -1141,9 +1032,7 @@
 
         // Initial check on load
         window.onload = function() {
-            setTimeout(() => {
-                checkLocalSession();
-            }, 1000);
+            setTimeout(checkLocalSession, 1000);
         };
     </script>
 </body>
