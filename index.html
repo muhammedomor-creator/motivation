@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ইসলামিক লাইফ কাউন্টার ও মোটিভেশনাল উক্তি</title>
+    <!-- Tailwind CSS for Responsive Layouts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for Premium Bengali Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #f4f6f0, #e9edd9);
+            min-height: 100vh;
+        }
+        .serif-bengali {
+            font-family: 'Noto Serif Bengali', serif;
+        }
+        /* Custom White Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(111, 143, 111, 0.15);
+        }
+        .glass-btn {
+            background: rgba(47, 120, 80, 0.1);
+            border: 1px solid rgba(47, 120, 80, 0.2);
+            color: #2f7850;
+        }
+        .glass-btn:hover {
+            background: rgba(47, 120, 80, 0.2);
+        }
+        /* Continuous Counter Neon Pulse */
+        .counter-glow {
+            text-shadow: 0 0 10px rgba(47, 120, 80, 0.1);
+        }
+        /* Smooth Fade Transitions */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Slider Animation */
+        .slide-container {
+            position: relative;
+            overflow: hidden;
+            min-height: 160px;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-between p-4 md:p-8 text-slate-800">
+
+    <!-- Header / Navbar -->
+    <header class="w-full max-w-2xl flex justify-between items-center mb-6 z-10">
+        <div class="flex items-center gap-3">
+            <span class="text-3xl text-emerald-700"><i class="fa-solid fa-kaaba"></i></span>
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold text-emerald-800 serif-bengali">রাহনুমা</h1>
+                <p class="text-xs text-slate-500">আপনার ইসলামিক জীবনসঙ্গী ও মোটিভেশন</p>
+            </div>
+        </div>
+        <div id="userInfoHeader" class="hidden flex items-center gap-2">
+            <span id="headerUserPhone" class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-semibold"></span>
+            <button onclick="logout()" class="text-slate-500 hover:text-red-500 p-2 text-sm transition" title="লগআউট করুন">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-2xl flex-grow flex flex-col justify-center items-center gap-6 z-10">
+
+        <!-- ================= AUTH SYSTEM CARD ================= -->
+        <div id="authCard" class="w-full glass-card rounded-2xl p-6 md:p-8 relative">
+            <!-- Tabs -->
+            <div class="flex justify-center gap-4 mb-6">
+                <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="text-emerald-800 font-bold border-b-2 border-emerald-600 pb-1 px-4 transition">লগইন</button>
+                <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="text-slate-400 font-bold pb-1 px-4 transition">নতুন অ্যাকাউন্ট</button>
+            </div>
+
+            <!-- Login Box -->
+            <div id="loginForm" class="space-y-4">
+                <h3 class="text-lg font-semibold text-center text-slate-700">স্বাগতম! আপনার আইডিতে প্রবেশ করুন</h3>
+                <div>
+                    <label class="block text-sm text-slate-500 mb-1">হোয়াটসঅ্যাপ নম্বর (যেমন: 88015XXXXXXXX)</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-phone"></i></span>
+                        <input type="text" id="loginPhone" value="8801572922663" class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white/50 text-slate-800" placeholder="নম্বর দিন">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-500 mb-1">পাসওয়ার্ড</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" id="loginPass" class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white/50 text-slate-800" placeholder="পাসওয়ার্ড দিন">
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button onclick="showForgetPassword()" class="text-xs text-emerald-700 hover:underline">পাসওয়ার্ড ভুলে গেছেন?</button>
+                </div>
+                <button onclick="handleLogin()" id="loginSubmitBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition shadow-md">
+                    প্রবেশ করুন <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+
+            <!-- Registration Box -->
+            <div id="registerForm" class="space-y-4 hidden">
+                <h3 class="text-lg font-semibold text-center text-slate-700">নতুন অ্যাকাউন্ট তৈরি করুন</h3>
+                
+                <div id="regStepPhone" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-slate-500 mb-1">হোয়াটসঅ্যাপ নম্বর (যেমন: 88015XXXXXXXX)</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-phone"></i></span>
+                            <input type="text" id="regPhone" value="8801572922663" class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white/50 text-slate-800" placeholder="হোয়াটসঅ্যাপ নম্বর">
+                        </div>
+                    </div>
+                    <button onclick="sendOTPCode('register')" id="regSendOtpBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
+                        হোয়াটসঅ্যাপে ওটিপি পাঠান 🚀
+                    </button>
+                </div>
+
+                <div id="regStepOTP" class="space-y-4 hidden">
+                    <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-xs text-emerald-800">
+                        আপনার হোয়াটসঅ্যাপ নম্বরে একটি ৬ ডিজিটের ভেরিফিকেশন কোড পাঠানো হয়েছে। সেটি নিচে দিন।
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-500 mb-1">৬ ডিজিটের ওটিপি কোড (OTP Code)</label>
+                        <input type="text" id="regOTP" class="w-full text-center tracking-[1em] text-lg font-bold py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white/50 text-slate-800" placeholder="------">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-500 mb-1">নতুন পাসওয়ার্ড সেট করুন</label>
+                        <input type="password" id="regPass" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white/50 text-slate-800" placeholder="কমপক্ষে ৬ ডিজিটের পাসওয়ার্ড">
+                    </div>
+                    <button onclick="verifyAndRegister()" id="regVerifyBtn" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-lg transition">
+                        ভেরিফাই ও অ্যাকাউন্ট তৈরি করুন <i class="fa-solid fa-circle-check ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Forget Password Box -->
+            <div id="forgetForm" class="space-y-4 hidden">
+                <button onclick="showLoginTab()" class="text-xs text-slate-500 hover:text-emerald-700"><i class="fa-solid fa-arrow-left"></i> লগইনে ফিরে যান</button>
+                <h3 class="text-lg font-semibold text-center text-slate-700">পাসওয়ার্ড পুনরুদ্ধার করুন</h3>
+                
+                <div id="forgetStepPhone" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-slate-500 mb-1">আপনার নিবন্ধিত হোয়াটসঅ্যাপ নম্বর</label>
+                        <input type="text" id="forgetPhone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white/50 text-slate-800" placeholder="88015XXXXXXXX">
+                    </div>
+                    <button onclick="sendOTPCode('forget')" id="forgetSendOtpBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
+                        হোয়াটসঅ্যাপে রিসেট কোড পাঠান 🚀
+                    </button>
+                </div>
+
+                <div id="forgetStepOTP" class="space-y-4 hidden">
+                    <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-xs text-emerald-800">
+                        হোয়াটসঅ্যাপে পাঠানো ওটিপি দিন এবং নতুন পাসওয়ার্ড নির্ধারণ করুন।
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-500 mb-1">৬ ডিজিটের ওটিপি কোড</label>
+                        <input type="text" id="forgetOTP" class="w-full text-center tracking-[1em] text-lg font-bold py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white/50 text-slate-800" placeholder="------">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-500 mb-1 font-semibold">নতুন পাসওয়ার্ড</label>
+                        <input type="password" id="forgetNewPass" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white/50 text-slate-800" placeholder="নতুন পাসওয়ার্ড দিন">
+                    </div>
+                    <button onclick="verifyAndResetPassword()" id="forgetResetBtn" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-lg transition">
+                        পাসওয়ার্ড পরিবর্তন করুন <i class="fa-solid fa-key ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= CORE APPLICATION CARD ================= -->
+        <div id="appDashboard" class="w-full space-y-6 hidden">
+            
+            <!-- Continuous Counter Card -->
+            <div class="glass-card rounded-2xl p-6 md:p-8 text-center relative overflow-hidden">
+                <!-- Background Pattern -->
+                <div class="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl"></div>
+                
+                <h4 class="text-xs uppercase tracking-widest text-emerald-800 font-semibold mb-2">অনবরত ইসলামিক পথচলা কাউন্টার</h4>
+                
+                <!-- Large Digital Clock Display -->
+                <div class="my-4">
+                    <div id="counterDisplay" class="text-4xl md:text-5xl font-black text-emerald-900 font-mono tracking-wider counter-glow transition-all duration-300">
+                        00:00:00:00
+                    </div>
+                    <div class="grid grid-cols-4 gap-1 text-[10px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider mt-2 max-w-sm mx-auto">
+                        <span>দিন</span>
+                        <span>ঘণ্টা</span>
+                        <span>মিনিট</span>
+                        <span>সেকেন্ড</span>
+                    </div>
+                </div>
+
+                <!-- Reset Timer Notification (When locked) -->
+                <div id="resetTimerContainer" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg py-2 px-4 inline-block mb-4">
+                    <span class="font-bold"><i class="fa-regular fa-clock mr-1"></i> রিসেট লক:</span> আপনি আবার <span id="resetCountdown" class="font-mono font-bold text-sm text-amber-800">05:00</span> মিনিট পর রিসেট করতে পারবেন।
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-center gap-3 mt-2">
+                    <button id="startStopBtn" onclick="toggleCounter()" class="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold shadow-md transition flex items-center gap-2">
+                        <i id="startStopIcon" class="fa-solid fa-play"></i> <span id="startStopText">কাউন্টার শুরু করুন</span>
+                    </button>
+                    <button id="resetBtn" onclick="confirmResetCounter()" class="px-5 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-rotate-left"></i> রিসেট
+                    </button>
+                </div>
+            </div>
+
+            <!-- Islamic Motivational Quote Carousel -->
+            <div class="glass-card rounded-2xl p-6 md:p-8 relative">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest"><i class="fa-solid fa-book-open mr-1"></i> ইসলামিক বাণী ও মোটিভেশন</span>
+                    <span id="quoteProgress" class="text-xs font-mono text-slate-400">১ / ১</span>
+                </div>
+
+                <!-- Carousel Viewport -->
+                <div id="sliderViewport" class="slide-container flex items-center justify-center cursor-grab active:cursor-grabbing">
+                    <div id="quoteDisplayArea" class="text-center py-4 fade-in">
+                        <p id="quoteText" class="serif-bengali text-lg md:text-xl font-bold text-emerald-950 leading-relaxed">
+                            "নিশ্চয়ই কষ্টের সাথেই স্বস্তি রয়েছে।"
+                        </p>
+                        <p id="quoteAuthor" class="text-xs md:text-sm text-slate-500 italic mt-3">
+                            — আল কুরআন (সূরা আল-ইনশিরাহ: ৫)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Slider Indicators / Navigations -->
+                <div class="flex justify-between items-center mt-4 border-t border-slate-200/50 pt-4">
+                    <button onclick="prevQuote()" class="glass-btn w-10 h-10 rounded-full flex items-center justify-center transition" title="পূর্ববর্তী">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <!-- Indicators dots -->
+                    <div id="quoteDots" class="flex gap-1.5 justify-center"></div>
+                    <button onclick="nextQuote()" class="glass-btn w-10 h-10 rounded-full flex items-center justify-center transition" title="পরবর্তী">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Islamic Badges & Achievments -->
+            <div class="glass-card rounded-2xl p-6 md:p-8">
+                <h4 class="text-sm font-bold text-emerald-900 border-b border-slate-200/50 pb-2 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-award text-emerald-700"></i> আপনার অর্জিত ইসলামিক ব্যাজসমূহ
+                </h4>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="badgesContainer">
+                    <!-- Badges dynamic loading -->
+                </div>
+            </div>
+
+            <!-- Quote Upload Dashboard & Management (Txt format upload) -->
+            <div class="glass-card rounded-2xl p-6 md:p-8">
+                <h4 class="text-sm font-bold text-emerald-900 border-b border-slate-200/50 pb-2 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-up text-emerald-700"></i> আপনার পছন্দের উক্তি যোগ করুন (.txt)
+                </h4>
+                <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                    আপনার তৈরি করা একটি <code class="bg-emerald-50 px-1 py-0.5 rounded font-mono text-emerald-800">.txt</code> ফাইল আপলোড করুন। ফাইলটিতে প্রতি লাইনে সিরিয়াল নাম্বার দিয়ে উক্তি লিখুন। উদাহরণ: <br>
+                    <span class="bg-slate-100 p-1 block rounded font-mono mt-1 text-[11px] text-slate-600">১. আল্লাহর উপর ভরসা করুন।<br>২. আলহামদুলিল্লাহ বলুন সব হালতে।</span>
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <label class="flex-grow flex flex-col items-center justify-center border-2 border-dashed border-emerald-300 rounded-xl p-4 bg-emerald-50/20 hover:bg-emerald-50/50 transition cursor-pointer text-center">
+                        <i class="fa-solid fa-file-invoice text-emerald-600 text-2xl mb-1"></i>
+                        <span class="text-xs text-slate-600 font-bold" id="uploadStatusText">ফাইল নির্বাচন করুন (.txt)</span>
+                        <input type="file" id="txtFileUploader" accept=".txt" class="hidden" onchange="handleTxtFileUpload()">
+                    </label>
+                    <button onclick="saveUploadedQuotes()" id="saveUploadedBtn" disabled class="px-6 py-3 bg-slate-400 text-white font-bold rounded-xl transition cursor-not-allowed">
+                        উক্তিগুলো ডাটাবেজে সংরক্ষণ করুন <i class="fa-solid fa-upload ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-2xl text-center text-xs text-slate-500 py-6 z-10">
+        <p>© ২০২৬ রাহনুমা অ্যাপ • উম্মাহর জন্য একটি উপহার</p>
+    </footer>
+
+    <!-- Custom Modals (Never use system alert for clean UI) -->
+    <div id="customModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-slate-100 text-center space-y-4">
+            <div id="modalIcon" class="text-4xl text-emerald-600">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h4 id="modalTitle" class="text-lg font-bold text-slate-800">সাফল্য!</h4>
+            <p id="modalBody" class="text-sm text-slate-600">আপনার ওটিপি রিকোয়েস্ট সফল হয়েছে।</p>
+            <button onclick="closeModal()" class="w-full py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition">ঠিক আছে</button>
+        </div>
+    </div>
+
+    <!-- Confirm Modal for Reset -->
+    <div id="confirmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-slate-100 text-center space-y-4">
+            <div class="text-4xl text-amber-500">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h4 class="text-lg font-bold text-slate-800">আপনি কি নিশ্চিত?</h4>
+            <p class="text-sm text-slate-600">আপনি কাউন্টারটি রিসেট করতে চাচ্ছেন। রিসেট করার পর ৫ মিনিট পর্যন্ত আপনি আর রিসেট করতে পারবেন না!</p>
+            <div class="flex gap-2">
+                <button onclick="closeConfirmModal()" class="flex-1 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg transition">বাতিল</button>
+                <button onclick="resetCounter()" class="flex-1 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition">হ্যাঁ, রিসেট করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, onSnapshot, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase Configuration injected from environment or using your user provided keys
+        const firebaseConfig = {
+            apiKey: "AIzaSyBkoLyBWEdMHZBoSJ3IvCj9C3NtDqQfX2g",
+            authDomain: "ramadan-planner-ddda7.firebaseapp.com",
+            projectId: "ramadan-planner-ddda7",
+            storageBucket: "ramadan-planner-ddda7.firebasestorage.app",
+            messagingSenderId: "88126793642",
+            appId: "1:88126793642:web:d20e1847b613381dcb6dd3",
+            measurementId: "G-GYGLBZ51TX"
+        };
+
+        // Initialize Firebase services
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // App ID detection
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'ramadan-planner-ddda7';
+
+        // Globals for App logic access
+        window.db = db;
+        window.auth = auth;
+        window.appId = appId;
+        
+        // Initial setup
+        const initAuth = async () => {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        };
+        initAuth();
+
+        // Listen for Auth changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // If logged in via WhatsApp user account
+                checkLocalSession();
+            } else {
+                showAuthCard();
+            }
+        });
+    </script>
+
+    <!-- App Frontend Mechanics -->
+    <script>
+        // State variables
+        let currentUser = null;
+        let generatedOTP = null;
+        let pendingPhone = null;
+        let pendingPassword = null;
+        
+        // Counter variables
+        let counterInterval = null;
+        let counterStartTime = 0;
+        let isCounterRunning = false;
+        let lastResetTime = 0;
+        let resetCountdownInterval = null;
+
+        // Custom local quote state (with dynamic load)
+        let localQuotes = [
+            { text: "নিশ্চয়ই কষ্টের সাথেই স্বস্তি রয়েছে।", author: "সূরা আল-ইনশিরাহ: ৫" },
+            { text: "হে ঈমানদারগণ! তোমরা ধৈর্য ও সালাতের মাধ্যমে সাহায্য প্রার্থনা করো। নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন।", author: "সূরা আল-বাকারাহ: ১৫৩" },
+            { text: "বলুন, হে আমার বান্দাগণ যারা নিজেদের ওপর জুলুম করেছ, তোমরা আল্লাহর রহমত থেকে নিরাশ হয়ো না।", author: "সূরা আজ-জুমার: ৫৩" },
+            { text: "যে ব্যক্তি আল্লাহকে ভয় করবে, আল্লাহ তার জন্য কোনো পথ বের করে দেবেন এবং তাকে এমন জায়গা থেকে রিজিক দেবেন যা সে ভাবতেও পারেনি।", author: "সূরা আত-তালাক: ২-৩" },
+            { text: "তোমাদের মাঝে উত্তম ঐ ব্যক্তি, যে কুরআন শেখে এবং অন্যকে শেখায়।", author: "সহীহ বুখারী" }
+        ];
+        let currentQuoteIndex = 0;
+        let quoteAutoSlideInterval = null;
+        let temporaryUploadedQuotes = [];
+
+        // Swipe Gestures for touch support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // Render WhatsApp API Configuration
+        const API_URL = "https://otp-api-hmrz.onrender.com/send-otp";
+
+        // Predefined Islamic Badges based on active counter days
+        const ISLAMIC_BADGES = [
+            { id: "sabireen", name: "আস-সাবিরীন (ধৈর্যশীল)", desc: "কাউন্টার ১০ দিন সচল রাখার জন্য অর্জিত।", days: 10, icon: "fa-certificate", color: "text-amber-600 bg-amber-50" },
+            { id: "muttaqeen", name: "আল-মুত্তাকীন (পরহেজগার)", desc: "কাউন্টার ৩০ দিন সচল রাখার জন্য অর্জিত।", days: 30, icon: "fa-crown", color: "text-emerald-700 bg-emerald-50" },
+            { id: "mushineen", name: "আল-মুহসিনীন (সদাচারী)", desc: "কাউন্টার ৬০ দিন সচল রাখার জন্য অর্জিত।", days: 60, icon: "fa-gem", color: "text-cyan-700 bg-cyan-50" },
+            { id: "muqarrabeen", name: "আল-মুকাররাবীন (নৈকট্য লাভকারী)", desc: "কাউন্টার ৯০ দিন সচল রাখার জন্য অর্জিত।", days: 90, icon: "fa-star-and-crescent", color: "text-indigo-700 bg-indigo-50" },
+            { id: "siddiqeen", name: "আস-সিদ্দীকীন (সত্যবাদী)", desc: "কাউন্টার ৩৬৫ দিন বা ১ বছর সচল রাখার জন্য অর্জিত।", days: 365, icon: "fa-award", color: "text-yellow-600 bg-yellow-50" }
+        ];
+
+        // ---------------- AUTH SYSTEM FUNCTIONS ---------------- //
+        
+        function switchAuthTab(tab) {
+            const tabLoginBtn = document.getElementById('tabLoginBtn');
+            const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const forgetForm = document.getElementById('forgetForm');
+
+            forgetForm.classList.add('hidden');
+
+            if(tab === 'login') {
+                tabLoginBtn.className = "text-emerald-800 font-bold border-b-2 border-emerald-600 pb-1 px-4 transition";
+                tabRegisterBtn.className = "text-slate-400 font-bold pb-1 px-4 transition";
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                tabRegisterBtn.className = "text-emerald-800 font-bold border-b-2 border-emerald-600 pb-1 px-4 transition";
+                tabLoginBtn.className = "text-slate-400 font-bold pb-1 px-4 transition";
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                resetRegForm();
+            }
+        }
+
+        function resetRegForm() {
+            document.getElementById('regStepPhone').classList.remove('hidden');
+            document.getElementById('regStepOTP').classList.add('hidden');
+            document.getElementById('regPhone').value = "8801572922663";
+            document.getElementById('regOTP').value = "";
+            document.getElementById('regPass').value = "";
+        }
+
+        function showForgetPassword() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('forgetForm').classList.remove('hidden');
+            document.getElementById('forgetStepPhone').classList.remove('hidden');
+            document.getElementById('forgetStepOTP').classList.add('hidden');
+        }
+
+        function showLoginTab() {
+            switchAuthTab('login');
+        }
+
+        // Send OTP using the live WhatsApp Render API
+        async function sendOTPCode(type) {
+            const phoneField = type === 'register' ? 'regPhone' : 'forgetPhone';
+            const btnField = type === 'register' ? 'regSendOtpBtn' : 'forgetSendOtpBtn';
+            const phoneNumber = document.getElementById(phoneField).value.trim();
+
+            if(!phoneNumber || phoneNumber.length < 11) {
+                showAlert("সতর্কতা", "দয়া করে একটি সঠিক মোবাইল নম্বর লিখুন!", "fa-triangle-exclamation", "text-amber-500");
+                return;
+            }
+
+            const sendBtn = document.getElementById(btnField);
+            sendBtn.innerText = "ওটিপি কোড পাঠানো হচ্ছে...";
+            sendBtn.disabled = true;
+
+            // Generate random 6-digit OTP
+            generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+            pendingPhone = phoneNumber;
+
+            try {
+                // Fetch request to your live Render API
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        phoneNumber: phoneNumber,
+                        otpCode: generatedOTP
+                    })
+                });
+
+                if (response.ok) {
+                    showAlert("ওটিপি প্রেরিত হয়েছে", "হোয়াটসঅ্যাপে ওটিপি কোড পাঠানো হয়েছে! আপনার ডিভাইসটি চেক করুন।", "fa-paper-plane", "text-emerald-600");
+                    if (type === 'register') {
+                        document.getElementById('regStepPhone').classList.add('hidden');
+                        document.getElementById('regStepOTP').classList.remove('hidden');
+                    } else {
+                        document.getElementById('forgetStepPhone').classList.add('hidden');
+                        document.getElementById('forgetStepOTP').classList.remove('hidden');
+                    }
+                } else {
+                    showAlert("ব্যর্থ হয়েছে", "ওটিপি পাঠাতে সমস্যা হয়েছে। নম্বর সঠিক কিনা এবং সার্ভার চালু আছে কিনা তা চেক করুন।", "fa-circle-xmark", "text-red-500");
+                }
+            } catch (error) {
+                showAlert("সার্ভার ত্রুটি", "সার্ভারের সাথে যোগাযোগ করা যাচ্ছে না। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।", "fa-wifi", "text-red-500");
+            } finally {
+                sendBtn.innerText = "হোয়াটসঅ্যাপে ওটিপি পাঠান 🚀";
+                sendBtn.disabled = false;
+            }
+        }
+
+        // Register Account (Save user details to Firestore)
+        async function verifyAndRegister() {
+            const otpVal = document.getElementById('regOTP').value.trim();
+            const passVal = document.getElementById('regPass').value.trim();
+
+            if (otpVal !== generatedOTP) {
+                showAlert("ভুল ওটিপি", "ওটিপি কোডটি সঠিক নয়। অনুগ্রহ করে আবার চেষ্টা করুন।", "fa-circle-xmark", "text-red-500");
+                return;
+            }
+
+            if (passVal.length < 6) {
+                showAlert("দুর্বল পাসওয়ার্ড", "নিরাপত্তার স্বার্থে পাসওয়ার্ডটি কমপক্ষে ৬ ডিজিটের দিন।", "fa-shield", "text-amber-500");
+                return;
+            }
+
+            try {
+                // Store registration data in Firestore under unique user document
+                // Mandatory Rule: Store in strict paths - Public / Users based on rule. 
+                // Since user credential needs to be globally verifiable to avoid duplicates:
+                const appId = window.appId;
+                const userRef = doc(window.db, 'artifacts', appId, 'public', 'data', 'users', pendingPhone);
+                
+                // Check if user already exists
+                const userDoc = await getDoc(userRef);
+                if (userDoc.exists()) {
+                    showAlert("ইতিমধ্যেই নিবন্ধিত", "এই নম্বর দিয়ে ইতিমধ্যে অ্যাকাউন্ট রয়েছে। লগইন করার চেষ্টা করুন।", "fa-circle-exclamation", "text-amber-500");
+                    return;
+                }
+
+                // Create user profile
+                await setDoc(userRef, {
+                    phone: pendingPhone,
+                    password: passVal,
+                    counterStart: Date.now(),
+                    counterRunning: true,
+                    lastReset: 0,
+                    createdAt: Date.now()
+                });
+
+                showAlert("অভিনন্দন 🎉", "আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! এখন লগইন করুন।", "fa-circle-check", "text-emerald-600");
+                setTimeout(() => {
+                    switchAuthTab('login');
+                    document.getElementById('loginPhone').value = pendingPhone;
+                }, 1500);
+
+            } catch (err) {
+                showAlert("ত্রুটি", "ডাটাবেজে যুক্ত হতে পারেনি: " + err.message, "fa-circle-xmark", "text-red-500");
+            }
+        }
+
+        // Handle Login (Verify from Firestore)
+        async function handleLogin() {
+            const loginPhone = document.getElementById('loginPhone').value.trim();
+            const loginPass = document.getElementById('loginPass').value.trim();
+            const loginBtn = document.getElementById('loginSubmitBtn');
+
+            if (!loginPhone || !loginPass) {
+                showAlert("তথ্য দিন", "হোয়াটসঅ্যাপ নম্বর এবং পাসওয়ার্ড উভয়ই পূরণ করুন!", "fa-asterisk", "text-amber-500");
+                return;
+            }
+
+            loginBtn.innerText = "যাচাই করা হচ্ছে...";
+            loginBtn.disabled = true;
+
+            try {
+                const userRef = doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', loginPhone);
+                const userDoc = await getDoc(userRef);
+
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    if (userData.password === loginPass) {
+                        // Success Login
+                        currentUser = userData;
+                        localStorage.setItem('userPhoneSession', loginPhone);
+                        showAlert("লগইন সফল", "রাহনুমা পোর্টালে আপনাকে স্বাগতম!", "fa-mosque", "text-emerald-700");
+                        setTimeout(() => {
+                            launchApp(userData);
+                        }, 1000);
+                    } else {
+                        showAlert("ভুল পাসওয়ার্ড", "পাসওয়ার্ড সঠিক নয়। দয়া করে আবার চেষ্টা করুন।", "fa-lock", "text-red-500");
+                    }
+                } else {
+                    showAlert("অ্যাকাউন্ট মেলেনি", "এই নম্বরে কোনো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে নতুন অ্যাকাউন্ট তৈরি করুন।", "fa-user-slash", "text-amber-500");
+                }
+            } catch (err) {
+                showAlert("ত্রুটি", "অনাকাঙ্ক্ষিত ত্রুটি: " + err.message, "fa-triangle-exclamation", "text-red-500");
+            } finally {
+                loginBtn.innerText = "প্রবেশ করুন";
+                loginBtn.disabled = false;
+            }
+        }
+
+        // Forget / Reset Password Engine
+        async function verifyAndResetPassword() {
+            const otpVal = document.getElementById('forgetOTP').value.trim();
+            const newPassVal = document.getElementById('forgetNewPass').value.trim();
+
+            if (otpVal !== generatedOTP) {
+                showAlert("ভুল কোড", "ভেরিফিকেশন কোড মেলেনি।", "fa-circle-xmark", "text-red-500");
+                return;
+            }
+
+            if (newPassVal.length < 6) {
+                showAlert("দুর্বল পাসওয়ার্ড", "পাসওয়ার্ড কমপক্ষে ৬ ডিজিটের দিন।", "fa-shield", "text-amber-500");
+                return;
+            }
+
+            try {
+                const userRef = doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', pendingPhone);
+                const userDoc = await getDoc(userRef);
+
+                if (!userDoc.exists()) {
+                    showAlert("ত্রুটি", "কোনো অ্যাকাউন্ট পাওয়া যায়নি।", "fa-circle-xmark", "text-red-500");
+                    return;
+                }
+
+                await updateDoc(userRef, {
+                    password: newPassVal
+                });
+
+                showAlert("পাসওয়ার্ড পরিবর্তিত", "পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে। নতুন পাসওয়ার্ড দিয়ে লগইন করুন।", "fa-circle-check", "text-emerald-600");
+                setTimeout(() => {
+                    switchAuthTab('login');
+                    document.getElementById('loginPhone').value = pendingPhone;
+                }, 1500);
+
+            } catch (err) {
+                showAlert("ত্রুটি", "হালনাগাদ করা যায়নি: " + err.message, "fa-circle-xmark", "text-red-500");
+            }
+        }
+
+        // Check login state on load
+        function checkLocalSession() {
+            const savedSession = localStorage.getItem('userPhoneSession');
+            if (savedSession) {
+                // Fetch fresh from DB
+                const userRef = doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', savedSession);
+                getDoc(userRef).then(docSnap => {
+                    if (docSnap.exists()) {
+                        currentUser = docSnap.data();
+                        launchApp(currentUser);
+                    } else {
+                        showAuthCard();
+                    }
+                }).catch(() => {
+                    showAuthCard();
+                });
+            } else {
+                showAuthCard();
+            }
+        }
+
+        function showAuthCard() {
+            document.getElementById('authCard').classList.remove('hidden');
+            document.getElementById('appDashboard').classList.add('hidden');
+            document.getElementById('userInfoHeader').classList.add('hidden');
+            stopAllTimers();
+        }
+
+        function logout() {
+            localStorage.removeItem('userPhoneSession');
+            currentUser = null;
+            showAuthCard();
+        }
+
+        // ---------------- DASHBOARD & CORE CORE LOGIC ---------------- //
+        
+        function launchApp(user) {
+            document.getElementById('authCard').classList.add('hidden');
+            document.getElementById('appDashboard').classList.remove('hidden');
+            document.getElementById('userInfoHeader').classList.remove('hidden');
+            document.getElementById('headerUserPhone').innerText = `নম্বর: ${user.phone}`;
+
+            // Initialize counter
+            counterStartTime = user.counterStart || Date.now();
+            isCounterRunning = user.counterRunning !== undefined ? user.counterRunning : true;
+            lastResetTime = user.lastReset || 0;
+
+            if (isCounterRunning) {
+                startCounterInterval();
+            } else {
+                updateCounterDisplay(0);
+            }
+
+            // Sync resets and locks
+            startResetCountdown();
+            
+            // Sync Quotes
+            syncQuotesFromDatabase();
+
+            // Render static/unlocked badges
+            renderBadges();
+        }
+
+        // ---------------- CONTINUOUS COUNTER MANAGEMENT ---------------- //
+
+        function toggleCounter() {
+            isCounterRunning = !isCounterRunning;
+            
+            if (isCounterRunning) {
+                counterStartTime = Date.now() - (currentUser.counterAccumulatedTime || 0);
+                startCounterInterval();
+            } else {
+                clearInterval(counterInterval);
+                const accumulated = Date.now() - counterStartTime;
+                currentUser.counterAccumulatedTime = accumulated;
+                updateCounterDisplay(accumulated);
+            }
+
+            // Update Database state
+            const userRef = doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', currentUser.phone);
+            updateDoc(userRef, {
+                counterRunning: isCounterRunning,
+                counterStart: counterStartTime,
+                counterAccumulatedTime: currentUser.counterAccumulatedTime || 0
+            });
+
+            updateStartStopButtonState();
+        }
+
+        function updateStartStopButtonState() {
+            const btnText = document.getElementById('startStopText');
+            const btnIcon = document.getElementById('startStopIcon');
+            const btn = document.getElementById('startStopBtn');
+
+            if (isCounterRunning) {
+                btnText.innerText = "কাউন্টার থামান";
+                btnIcon.className = "fa-solid fa-pause";
+                btn.className = "px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold shadow-md transition flex items-center gap-2";
+            } else {
+                btnText.innerText = "কাউন্টার শুরু করুন";
+                btnIcon.className = "fa-solid fa-play";
+                btn.className = "px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl font-bold shadow-md transition flex items-center gap-2";
+            }
+        }
+
+        function startCounterInterval() {
+            clearInterval(counterInterval);
+            updateStartStopButtonState();
+
+            counterInterval = setInterval(() => {
+                const totalDiff = Date.now() - counterStartTime;
+                updateCounterDisplay(totalDiff);
+                evaluateBadges(totalDiff);
+            }, 1000);
+        }
+
+        function updateCounterDisplay(milliseconds) {
+            const totalSeconds = Math.floor(milliseconds / 1000);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            const dStr = days.toString().padStart(2, '0');
+            const hStr = hours.toString().padStart(2, '0');
+            const mStr = minutes.toString().padStart(2, '0');
+            const sStr = seconds.toString().padStart(2, '0');
+
+            document.getElementById('counterDisplay').innerText = `${dStr}:${hStr}:${mStr}:${sStr}`;
+        }
+
+        // Reset Counter with 5-Minute Safety Limit
+        function confirmResetCounter() {
+            const currentTime = Date.now();
+            const timeSinceLastReset = currentTime - lastResetTime;
+            const fiveMinutes = 5 * 60 * 1000;
+
+            if (timeSinceLastReset < fiveMinutes) {
+                const remaining = Math.ceil((fiveMinutes - timeSinceLastReset) / 1000);
+                const minutes = Math.floor(remaining / 60);
+                const seconds = remaining % 60;
+                showAlert("লক করা হয়েছে", `রিসেট সীমাবদ্ধতা! অনুগ্রহ করে আরো ${minutes} মিনিট ${seconds} সেকেন্ড অপেক্ষা করুন।`, "fa-clock", "text-amber-600");
+                return;
+            }
+
+            document.getElementById('confirmModal').classList.remove('hidden');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.add('hidden');
+        }
+
+        async function resetCounter() {
+            closeConfirmModal();
+            lastResetTime = Date.now();
+            counterStartTime = Date.now();
+            
+            if (isCounterRunning) {
+                startCounterInterval();
+            } else {
+                updateCounterDisplay(0);
+            }
+
+            // Save reset state
+            const userRef = doc(window.db, 'artifacts', window.appId, 'public', 'data', 'users', currentUser.phone);
+            await updateDoc(userRef, {
+                counterStart: counterStartTime,
+                lastReset: lastResetTime,
+                counterAccumulatedTime: 0
+            });
+
+            currentUser.lastReset = lastResetTime;
+            currentUser.counterStart = counterStartTime;
+            currentUser.counterAccumulatedTime = 0;
+
+            startResetCountdown();
+            showAlert("সফলভাবে রিসেট", "আপনার কাউন্টার পুনরায় শূন্য থেকে শুরু করা হয়েছে।", "fa-arrows-rotate", "text-emerald-700");
+        }
+
+        // Reset cooling count visual representation
+        function startResetCountdown() {
+            clearInterval(resetCountdownInterval);
+            const container = document.getElementById('resetTimerContainer');
+            const countdownSpan = document.getElementById('resetCountdown');
+
+            const checkTime = () => {
+                const elapsed = Date.now() - lastResetTime;
+                const limit = 5 * 60 * 1000;
+
+                if (elapsed < limit) {
+                    container.classList.remove('hidden');
+                    const diff = limit - elapsed;
+                    const mins = Math.floor(diff / 60000);
+                    const secs = Math.floor((diff % 60000) / 1000);
+                    countdownSpan.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                } else {
+                    container.classList.add('hidden');
+                    clearInterval(resetCountdownInterval);
+                }
+            };
+
+            checkTime();
+            resetCountdownInterval = setInterval(checkTime, 1000);
+        }
+
+        // ---------------- ISLAMIC MOTIVATIONAL QUOTES & FILE UPLOAD ---------------- //
+
+        async function syncQuotesFromDatabase() {
+            try {
+                // Fetch uploaded public quotes
+                const quoteDocRef = doc(window.db, 'artifacts', window.appId, 'public', 'data', 'uploadedQuotes');
+                const quoteDoc = await getDoc(quoteDocRef);
+
+                if (quoteDoc.exists()) {
+                    const dbQuotes = quoteDoc.data().quotes || [];
+                    if (dbQuotes.length > 0) {
+                        localQuotes = [...localQuotes, ...dbQuotes];
+                    }
+                }
+            } catch (err) {
+                console.log("উক্তি লোড করা যায়নি, ডিফল্টগুলো ব্যবহৃত হচ্ছে।");
+            }
+
+            initializeQuotesSlider();
+        }
+
+        function initializeQuotesSlider() {
+            renderQuote();
+            setupAutoSlider();
+            setupSliderSwipe();
+        }
+
+        function renderQuote() {
+            if (localQuotes.length === 0) return;
+            const currQuote = localQuotes[currentQuoteIndex];
+            
+            const displayArea = document.getElementById('quoteDisplayArea');
+            displayArea.classList.remove('fade-in');
+            
+            // Reflow trigger
+            void displayArea.offsetWidth;
+            
+            displayArea.classList.add('fade-in');
+            document.getElementById('quoteText').innerText = `"${currQuote.text}"`;
+            document.getElementById('quoteAuthor').innerText = currQuote.author ? `— ${currQuote.author}` : "— সংগৃহীত";
+
+            // Update info
+            document.getElementById('quoteProgress').innerText = `${currentQuoteIndex + 1} / ${localQuotes.length}`;
+            renderDots();
+        }
+
+        function renderDots() {
+            const dotsContainer = document.getElementById('quoteDots');
+            dotsContainer.innerHTML = '';
+            
+            // Maximum display 10 dots for clean UI
+            const limit = Math.min(localQuotes.length, 10);
+            for(let i=0; i<limit; i++) {
+                const dot = document.createElement('div');
+                dot.className = `w-2 h-2 rounded-full transition ${i === currentQuoteIndex % limit ? 'bg-emerald-700 scale-125' : 'bg-emerald-700/20'}`;
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function nextQuote() {
+            currentQuoteIndex = (currentQuoteIndex + 1) % localQuotes.length;
+            renderQuote();
+            resetAutoSlider();
+        }
+
+        function prevQuote() {
+            currentQuoteIndex = (currentQuoteIndex - 1 + localQuotes.length) % localQuotes.length;
+            renderQuote();
+            resetAutoSlider();
+        }
+
+        function setupAutoSlider() {
+            clearInterval(quoteAutoSlideInterval);
+            quoteAutoSlideInterval = setInterval(() => {
+                nextQuote();
+            }, 15000); // Autoplay 15 seconds
+        }
+
+        function resetAutoSlider() {
+            setupAutoSlider();
+        }
+
+        // Swipe Gestures Logic for Mobile Accessibility
+        function setupSliderSwipe() {
+            const viewport = document.getElementById('sliderViewport');
+            
+            viewport.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            viewport.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+        }
+
+        function handleSwipe() {
+            const threshold = 50; // swipe length minimum
+            if (touchStartX - touchEndX > threshold) {
+                nextQuote(); // swipe left -> next
+            } else if (touchEndX - touchStartX > threshold) {
+                prevQuote(); // swipe right -> prev
+            }
+        }
+
+        // Process Text File Upload with lines starting like: 1. বা ১.
+        function handleTxtFileUpload() {
+            const uploader = document.getElementById('txtFileUploader');
+            const statusText = document.getElementById('uploadStatusText');
+            const saveBtn = document.getElementById('saveUploadedBtn');
+
+            if (!uploader.files || uploader.files.length === 0) return;
+
+            const file = uploader.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const textContent = e.target.result;
+                const rawLines = textContent.split(/\r?\n/);
+                temporaryUploadedQuotes = [];
+
+                rawLines.forEach(line => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return;
+
+                    // Regex to strip prefix numbering such as: 1., ১২., [১], 1 - etc
+                    const cleaned = trimmed.replace(/^[\d১২৩৪৫৬৭৮৯০\s\.\-\)\]\[]+/g, '').trim();
+                    
+                    if (cleaned) {
+                        temporaryUploadedQuotes.push({
+                            text: cleaned,
+                            author: "ব্যবহারকারীর আপলোড"
+                        });
+                    }
+                });
+
+                if (temporaryUploadedQuotes.length > 0) {
+                    statusText.innerText = `সাফল্য! ${temporaryUploadedQuotes.length}টি উক্তি পাওয়া গেছে।`;
+                    saveBtn.disabled = false;
+                    saveBtn.className = "px-6 py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl transition cursor-pointer";
+                } else {
+                    statusText.innerText = "ফাইল ফরম্যাট মেলেনি বা খালি।";
+                    saveBtn.disabled = true;
+                    saveBtn.className = "px-6 py-3 bg-slate-400 text-white font-bold rounded-xl transition cursor-not-allowed";
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        // Push uploaded quotes into Firebase Database
+        async function saveUploadedQuotes() {
+            if (temporaryUploadedQuotes.length === 0) return;
+
+            const saveBtn = document.getElementById('saveUploadedBtn');
+            saveBtn.innerText = "সংরক্ষণ হচ্ছে...";
+            saveBtn.disabled = true;
+
+            try {
+                const quoteDocRef = doc(window.db, 'artifacts', window.appId, 'public', 'data', 'uploadedQuotes');
+                
+                // Fetch existing to append
+                const snap = await getDoc(quoteDocRef);
+                let currentList = [];
+                if (snap.exists()) {
+                    currentList = snap.data().quotes || [];
+                }
+
+                const updatedList = [...currentList, ...temporaryUploadedQuotes];
+                await setDoc(quoteDocRef, { quotes: updatedList });
+
+                localQuotes = [...localQuotes, ...temporaryUploadedQuotes];
+                showAlert("উক্তি সংরক্ষিত", `${temporaryUploadedQuotes.length}টি নতুন উক্তি যুক্ত হয়েছে এবং স্লাইডারে সংযুক্ত হয়েছে।`, "fa-file-shield", "text-emerald-700");
+                
+                // Reset uploader interface
+                document.getElementById('txtFileUploader').value = '';
+                document.getElementById('uploadStatusText').innerText = "ফাইল নির্বাচন করুন (.txt)";
+                saveBtn.innerText = "উক্তিগুলো ডাটাবেজে সংরক্ষণ করুন";
+                saveBtn.disabled = true;
+                saveBtn.className = "px-6 py-3 bg-slate-400 text-white font-bold rounded-xl transition cursor-not-allowed";
+
+                // Refresh viewport
+                currentQuoteIndex = localQuotes.length - temporaryUploadedQuotes.length;
+                renderQuote();
+
+            } catch (err) {
+                showAlert("ত্রুটি", "ডাটাবেজে যুক্ত করা সম্ভব হয়নি: " + err.message, "fa-triangle-exclamation", "text-red-500");
+                saveBtn.innerText = "উক্তিগুলো ডাটাবেজে সংরক্ষণ করুন";
+                saveBtn.disabled = false;
+            }
+        }
+
+        // ---------------- ISLAMIC BADGES & MEDALS ---------------- //
+
+        function renderBadges() {
+            const container = document.getElementById('badgesContainer');
+            container.innerHTML = '';
+
+            // Render badges states
+            ISLAMIC_BADGES.forEach(badge => {
+                const isUnlocked = isBadgeUnlocked(badge.days);
+                const opacity = isUnlocked ? "opacity-100" : "opacity-40";
+                const lockIndicator = isUnlocked ? "" : `
+                    <div class="absolute top-2 right-2 text-xs text-slate-400">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                `;
+
+                const cardHtml = `
+                    <div class="relative glass-card border border-emerald-100/40 p-4 rounded-xl flex flex-col items-center text-center justify-between transition-all hover:scale-105 duration-200 ${opacity}">
+                        ${lockIndicator}
+                        <div class="w-12 h-12 rounded-full ${badge.color} flex items-center justify-center text-2xl mb-2">
+                            <i class="fa-solid ${badge.icon}"></i>
+                        </div>
+                        <h5 class="text-xs font-bold text-slate-800">${badge.name}</h5>
+                        <p class="text-[10px] text-slate-500 mt-1">${badge.desc}</p>
+                        <span class="text-[9px] font-semibold mt-2 px-2 py-0.5 rounded-full ${isUnlocked ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'}">
+                            ${isUnlocked ? 'অর্জিত' : `${badge.days} দিন লক`}
+                        </span>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+
+        function isBadgeUnlocked(requiredDays) {
+            if (!currentUser) return false;
+            
+            const startTime = currentUser.counterStart || Date.now();
+            const elapsedMs = Date.now() - startTime;
+            const elapsedDays = elapsedMs / (1000 * 60 * 60 * 24);
+            
+            return elapsedDays >= requiredDays;
+        }
+
+        function evaluateBadges(elapsedMs) {
+            // Recalculate badges every second and check if new one is unlocked
+            renderBadges();
+        }
+
+        // ---------------- HELPER UTILITIES ---------------- //
+
+        function showAlert(title, message, iconClass, colorClass) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerText = message;
+            document.getElementById('modalIcon').className = `text-4xl ${colorClass || 'text-emerald-600'}`;
+            document.getElementById('modalIcon').innerHTML = `<i class="fa-solid ${iconClass || 'fa-circle-check'}"></i>`;
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+
+        function stopAllTimers() {
+            clearInterval(counterInterval);
+            clearInterval(quoteAutoSlideInterval);
+            clearInterval(resetCountdownInterval);
+        }
+
+        // Initial check on load
+        window.onload = function() {
+            setTimeout(() => {
+                checkLocalSession();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
