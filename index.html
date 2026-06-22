@@ -56,6 +56,13 @@
             color: #047857;
             font-weight: 700;
         }
+        /* ID Card Preview Constraint Style */
+        #idCardSvgPreviewContainer svg {
+            width: 100%;
+            height: auto;
+            max-height: 240px;
+            display: block;
+        }
     </style>
 </head>
 <body class="flex flex-col items-center justify-between p-4 md:p-8 text-slate-800 relative">
@@ -392,11 +399,11 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs md:text-sm">
                         <thead>
-                            <tr class="border-b border-slate-200 text-slate-500">
-                                <th class="py-2">র‍্যাঙ্ক</th>
-                                <th class="py-2">ব্যক্তিত্ব</th>
-                                <th class="py-2">বর্তমান স্থায়িত্ব</th>
-                                <th class="py-2 text-right">উপাধি</th>
+                            <tr class="border-b border-slate-200 text-slate-500 text-left">
+                                <th class="py-2 pr-2 whitespace-nowrap">র‍্যাঙ্ক</th>
+                                <th class="py-2 pr-2 whitespace-nowrap">ব্যক্তিত্ব</th>
+                                <th class="py-2 pr-2 whitespace-nowrap">বর্তমান স্থায়িত্ব</th>
+                                <th class="py-2 text-right whitespace-nowrap">উপাধি</th>
                             </tr>
                         </thead>
                         <tbody id="rankingTableBody">
@@ -560,7 +567,7 @@
         // Quotes State
         let localQuotes = [
             { text: "নিশ্চয়ই কষ্টের সাথেই স্বস্তি রয়েছে।", author: "সূরা আল-ইনশিরাহ: ৫" },
-            { text: "হে ঈমানدارগণ! তোমরা ধৈর্য ও সালাতের মাধ্যমে সাহায্য প্রার্থনা করো। নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন।", author: "সূরা আল-বাকারাহ: ১৫৩" },
+            { text: "হে ঈমানদারগণ! তোমরা ধৈর্য ও সালাতের মাধ্যমে সাহায্য প্রার্থনা করো। নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন।", author: "সূরা আল-বাকারাহ: ১৫৩" },
             { text: "বলুন, হে আমার বান্দাগণ যারা নিজেদের ওপর জুলুম করেছ, তোমরা আল্লাহর রহমত থেকে নিরাশ হয়ো না।", author: "সূরা আজ-জুমার: ৫৩" },
             { text: "যে ব্যক্তি আল্লাহকে ভয় করবে, আল্লাহ তার জন্য কোনো পথ বের করে দেবেন এবং তাকে এমন জায়গা থেকে রিজিক দেবেন যা সে ভাবতেও পারেনি।", author: "সূরা আত-তালাক: ২-৩" },
             { text: "তোমাদের মাঝে উত্তম ঐ ব্যক্তি, যে কুরআন শেখে এবং অন্যকে শেখায়।", author: "সহীহ বুখারী" }
@@ -731,6 +738,20 @@
 
         function openAuthScreen() {
             document.getElementById('authScreen').classList.remove('hidden');
+            
+            // DYNAMIC REGISTRATION LOCK: Hide register tab if already registered on this device
+            const hasRegistered = localStorage.getItem('hasRegistered');
+            const tabRegBtn = document.getElementById('tabRegisterBtn');
+            if (hasRegistered === 'true') {
+                if (tabRegBtn) {
+                    tabRegBtn.style.display = 'none'; // Lock second account creation
+                }
+                switchAuthTab('login');
+            } else {
+                if (tabRegBtn) {
+                    tabRegBtn.style.display = 'block';
+                }
+            }
         }
 
         function closeAuthScreen() {
@@ -782,8 +803,7 @@
             updateLiveIdPreview();
         }
 
-        // Dynamic SVG Generation Engine (16:9 Youtube Thumbnail / 1280x720 Scale Landscape)
-        // Built to replicate Screenshot_20260622-113020.png exactly
+        // Dynamic SVG Generation Engine (16:9 Scale Landscape - Resolution maintains 1280x720)
         function generateIdCardSvg(theme, name, emoji, days, title) {
             let bgFill = "";
             let borderStroke = "";
@@ -817,7 +837,7 @@
                 subBoxText = "#30d158"; // Vibrant Green
             }
 
-            // High Resolution 1280x720 16:9 Landscape Layout matching Screenshot_20260622-113020.png
+            // High Resolution 1280x720 16:9 Landscape Layout
             return `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
                 <defs>
@@ -894,7 +914,7 @@
             `;
         }
 
-        // Live preview builder triggered on inputs
+        // Live preview builder triggered on inputs (CSS constrains display size cleanly)
         function updateLiveIdPreview() {
             if (!currentUser) return;
             const previewContainer = document.getElementById('idCardSvgPreviewContainer');
@@ -930,7 +950,7 @@
                 canvas.height = 720;
                 const context = canvas.getContext('2d');
                 
-                // Set default background fill based on active selection to prevent white lines
+                // Set default background fill based on active selection to prevent transparent borders
                 context.fillStyle = activeIdTheme === "minimalist" ? "#ffffff" : (activeIdTheme === "sapphire" ? "#0a192f" : "#002a22");
                 context.fillRect(0, 0, 1280, 720);
                 
@@ -1112,6 +1132,9 @@
                     createdAt: Date.now()
                 });
 
+                // LOCK FUTURE REGISTRATIONS ON THIS DEVICE
+                localStorage.setItem('hasRegistered', 'true');
+
                 showAlert("অভিনন্দন 🎉", "আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! এখন লগইন করুন।", "fa-circle-check", "text-emerald-600");
                 setTimeout(() => {
                     switchAuthTab('login');
@@ -1145,6 +1168,10 @@
                     if (userData.password === loginPass) {
                         currentUser = userData;
                         localStorage.setItem('userPhoneSession', loginPhone);
+                        
+                        // Set registered lock as safe measure
+                        localStorage.setItem('hasRegistered', 'true');
+                        
                         closeAuthScreen();
                         showAlert("লগইন সফল", "রাহনুমা পোর্টালে আপনাকে স্বাগতম!", "fa-mosque", "text-emerald-700");
                         setTimeout(() => {
@@ -1341,7 +1368,7 @@
             }
         }
 
-        // ---------------- DYNAMIC ISLAMIC QUOTE PLAYBACK & REGEX ---------------- //
+        // ---------------- DYNAMIC ISLAMIC QUOTE PLAYBACK ---------------- //
         async function syncQuotesFromDatabase() {
             try {
                 const quoteDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'quotes', 'uploadedQuotes');
@@ -1377,7 +1404,6 @@
             } else if (playbackOrder === "backward") {
                 localQuotes = [...originalQuotes].reverse();
             } else if (playbackOrder === "random") {
-                // FIXED REAL RANDOM SELECTION
                 let shuffled = [...originalQuotes];
                 for (let i = shuffled.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -1403,20 +1429,6 @@
             document.getElementById('quoteText').innerText = `"${currQuote.text}"`;
             document.getElementById('quoteAuthor').innerText = currQuote.author ? `— ${currQuote.author}` : "— সংগৃহীত";
             document.getElementById('quoteProgress').innerText = `${currentQuoteIndex + 1} / ${localQuotes.length}`;
-            renderDots();
-        }
-
-        function renderDots() {
-            const dotsContainer = document.getElementById('quoteDots');
-            if(!dotsContainer) return;
-            dotsContainer.innerHTML = '';
-            
-            const limit = Math.min(localQuotes.length, 10);
-            for(let i=0; i<limit; i++) {
-                const dot = document.createElement('div');
-                dot.className = `w-2 h-2 rounded-full transition ${i === currentQuoteIndex % limit ? 'bg-emerald-700 scale-125' : 'bg-emerald-700/20'}`;
-                dotsContainer.appendChild(dot);
-            }
         }
 
         function nextQuote() {
@@ -1595,12 +1607,16 @@
                     const titleBadge = getIslamicTitleByDays(user.days);
                     const rankBadgeClass = index === 0 ? "bg-amber-100 text-amber-800" : (index === 1 ? "bg-slate-200 text-slate-800" : (index === 2 ? "bg-orange-100 text-orange-800" : "bg-emerald-50 text-emerald-800"));
                     
+                    // FIXED: Structured table row with whitespace-nowrap and truncate to guarantee strict one-line rendering
                     const rowHtml = `
                         <tr class="border-b border-slate-100/50 hover:bg-emerald-50/20 transition duration-150">
-                            <td class="py-3"><span class="px-2 py-0.5 rounded-full font-bold text-xs ${rankBadgeClass}">${index + 1}</span></td>
-                            <td class="py-3 font-semibold flex items-center gap-2"><span>${user.emoji}</span> <span class="text-slate-800">${user.name}</span></td>
-                            <td class="py-3 font-mono font-bold text-emerald-700">${user.days} দিন</td>
-                            <td class="py-3 text-right"><span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded font-semibold">${titleBadge}</span></td>
+                            <td class="py-3 pr-2 whitespace-nowrap"><span class="px-2 py-0.5 rounded-full font-bold text-[10px] sm:text-xs ${rankBadgeClass}">${index + 1}</span></td>
+                            <td class="py-3 pr-2 font-semibold flex items-center gap-1.5 whitespace-nowrap">
+                                <span>${user.emoji}</span> 
+                                <span class="text-slate-800 text-[11px] sm:text-xs truncate max-w-[100px] sm:max-w-[140px]">${user.name}</span>
+                            </td>
+                            <td class="py-3 pr-2 font-mono font-bold text-emerald-700 text-[11px] sm:text-xs whitespace-nowrap">${user.days} দিন</td>
+                            <td class="py-3 text-right whitespace-nowrap"><span class="text-[10px] sm:text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-semibold">${titleBadge}</span></td>
                         </tr>
                     `;
                     tableBody.insertAdjacentHTML('beforeend', rowHtml);
