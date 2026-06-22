@@ -224,7 +224,7 @@
     <main class="w-full max-w-2xl flex-grow flex flex-col justify-center items-center gap-6 z-10">
 
         <!-- ================= PERSONAL / PROFILE INTERACTIVE CARD ================= -->
-        <div id="profileSection" class="hidden w-full glass-card rounded-2xl p-6 md:p-8 space-y-4">
+        <div id="profileSection" class="hidden w-full glass-card rounded-2xl p-6 md:p-8 space-y-5">
             <h4 class="text-sm font-bold text-emerald-900 border-b border-slate-200/50 pb-2 flex items-center justify-between">
                 <span><i class="fa-regular fa-user text-emerald-700 mr-1"></i> আপনার আত্মশুদ্ধি প্রোফাইল</span>
                 <span id="unlockedTitleBadge" class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md font-bold">তওবাকারী বান্দা</span>
@@ -232,7 +232,7 @@
             
             <div class="flex flex-col sm:flex-row items-center gap-6">
                 <!-- Editable Emoji Avatar selection -->
-                <div class="relative">
+                <div class="relative flex-shrink-0">
                     <div id="profileEmojiDisplay" class="w-20 h-20 rounded-full bg-emerald-50 border-2 border-emerald-300 flex items-center justify-center text-4xl shadow-inner cursor-pointer" onclick="toggleEmojiPicker()">
                         🕌
                     </div>
@@ -241,7 +241,7 @@
 
                 <div class="flex-grow space-y-3 w-full">
                     <div class="flex gap-2">
-                        <input type="text" id="profileNameInput" class="bg-white/70 border border-slate-300 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-emerald-600" placeholder="আপনার নাম দিন">
+                        <input type="text" id="profileNameInput" oninput="updateLiveIdPreview()" class="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-emerald-600" placeholder="আপনার নাম দিন">
                         <button onclick="saveUserProfile()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-xs font-bold transition">সংরক্ষণ</button>
                     </div>
                     <!-- Emoji Selection Modal/Drawer Inside card -->
@@ -255,11 +255,32 @@
                 </div>
             </div>
 
-            <!-- ID CARD DOWNLOAD PREVIEW ACTION -->
-            <div class="pt-2 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-3">
-                <span class="text-xs text-slate-500"><i class="fa-solid fa-address-card mr-1"></i> আত্মশুদ্ধি আইডি কার্ড ডাউনলোড করুন</span>
-                <button onclick="downloadIdCard()" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-lg text-xs font-bold shadow transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-cloud-arrow-down"></i> আইডি কার্ড (SVG) ডাউনলোড করুন
+            <!-- ================= INTERACTIVE ID CARD THEMED PREVIEW ================= -->
+            <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-200/60 space-y-3">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
+                    <span class="text-xs font-bold text-slate-600"><i class="fa-solid fa-eye"></i> আত্মশুদ্ধি আইডি কার্ড লাইভ প্রিভিউ</span>
+                    <!-- Theme Selector -->
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase">থিম:</span>
+                        <select id="idCardThemeSelect" onchange="changeIdCardTheme()" class="bg-white text-[11px] text-slate-800 border border-slate-300 rounded px-1.5 py-1 font-semibold focus:outline-none">
+                            <option value="royal">রয়্যাল গ্রিন</option>
+                            <option value="minimalist">সলিড হোয়াইট</option>
+                            <option value="sapphire">সাফায়ার ব্লু</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Container hosting the actual SVG rendering to prevent overflows -->
+                <div class="flex justify-center items-center w-full">
+                    <div id="idCardSvgPreviewContainer" class="w-full max-w-[420px] bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                        <!-- Dynamic SVG inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-1 flex flex-col sm:flex-row justify-end items-center gap-3">
+                <button onclick="downloadIdCard()" class="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-extrabold text-xs rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-down text-lg"></i> আইডি কার্ড ডাউনলোড করুন (SVG)
                 </button>
             </div>
         </div>
@@ -305,7 +326,7 @@
             <!-- Islamic Quote Carousel -->
             <div class="glass-card rounded-2xl p-6 md:p-8 relative">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest"><i class="fa-solid fa-book-open mr-1"></i> ইসলামিক বাণী ও মোティブেশন</span>
+                    <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest"><i class="fa-solid fa-book-open mr-1"></i> ইসলামিক বাণী ও মোটিভেশন</span>
                     <span id="quoteProgress" class="text-xs font-mono text-slate-400">১ / ১</span>
                 </div>
 
@@ -403,6 +424,51 @@
             </div>
         </div>
 
+        <!-- ================= JOINT CORNER & FOLLOW SECTIONS ================= -->
+        <div class="w-full space-y-4 mt-2">
+            <!-- Joint Section with Links -->
+            <div class="glass-card rounded-2xl p-6 space-y-4 border border-emerald-100">
+                <h4 class="text-sm font-bold text-emerald-900 border-b border-slate-200/50 pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-nodes text-emerald-700"></i> সমাজ সেবা ও স্বাস্থ্য কর্নার (আমাদের সাথে যুক্ত হোন)
+                </h4>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Health tips card -->
+                    <a href="https://roktertan-veideo.vercel.app" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-emerald-50/50 hover:bg-emerald-50 rounded-xl border border-emerald-100 transition duration-200">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-bold text-emerald-950">গুরুত্বপূর্ণ হেলথ টিপস</h5>
+                            <p class="text-[10px] text-emerald-700 mt-0.5">স্বাস্থ্য সুরক্ষায় ও সচেতনতায় কিছু পরামর্শ</p>
+                        </div>
+                    </a>
+
+                    <!-- Emergency Blood Card -->
+                    <a href="https://emergencyroktolagbe.vercel.app" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-red-50/50 hover:bg-red-50 rounded-xl border border-red-100 transition duration-200">
+                        <div class="w-10 h-10 rounded-full bg-red-100 text-red-800 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-bold text-red-950">ইমার্জেন্সি রক্ত লাগবে</h5>
+                            <p class="text-[10px] text-red-700 mt-0.5">রক্তদান করুন, মানুষের মূল্যবান জীবন বাঁচান</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Follow Us & Developer Corner -->
+            <div class="glass-card rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-3 border border-slate-200">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg text-slate-500"><i class="fa-solid fa-code"></i></span>
+                    <span class="text-xs text-slate-600 font-bold">আমাদের সোশ্যাল মিডিয়া ও আত্মশুদ্ধি প্রচারণায় যুক্ত হোন:</span>
+                </div>
+                <a href="https://hikmah.net/@muhammedomor_official" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg text-xs font-bold shadow transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> ডেভেলপার প্রোফাইল
+                </a>
+            </div>
+        </div>
+
     </main>
 
     <!-- Footer -->
@@ -471,6 +537,8 @@
         window.selectProfileEmoji = selectProfileEmoji;
         window.downloadIdCard = downloadIdCard;
         window.tryStartCounter = tryStartCounter;
+        window.changeIdCardTheme = changeIdCardTheme;
+        window.updateLiveIdPreview = updateLiveIdPreview;
 
         // Application State
         let currentUser = null;
@@ -485,6 +553,9 @@
         let dangerSecondsRemaining = 300;
         let dangerInterval = null;
         let dangerQuoteInterval = null;
+
+        // Custom Id Card Theme state
+        let activeIdTheme = "royal"; // royal, minimalist, sapphire
 
         // Quotes State
         let localQuotes = [
@@ -514,7 +585,7 @@
         const dangerQuotes = [
             { text: "হে আমাদের পালনকর্তা! সরল পথ প্রদর্শনের পর আমাদের অন্তরকে সত্যলঙ্ঘনপ্রবণ করবেন না এবং আপনার পক্ষ থেকে অনুগ্রহ দান করুন।", author: "সূরা আল ইমরান: ৮" },
             { text: "যে ব্যক্তি আল্লাহর ওপর ভরসা করে, আল্লাহই তার জন্য যথেষ্ট হয়ে যান।", author: "সূরা আত-তালাক: ৩" },
-            { text: "আল্লাহ কোনো আত্মার ওপর তার সাধ্যের অতিরিক্ত বোঝা চাপান না।", author: "সূরা আল-বাকারাহ: ২৮কে" },
+            { text: "আল্লাহ কোনো আত্মার ওপর তার সাধ্যের অতিরিক্ত বোঝা চাপান না।", author: "সূরা আল-বাকারাহ: ২৮৬" },
             { text: "ক্ষমা করতে শেখো, আল্লাহও ক্ষমাশীল ও দয়াময়দের ভালোবাসেন।", author: "সূরা আন-নূর: ২২" },
             { text: "দুনিয়ার তুচ্ছ লাভের চেয়ে পরকালের চিরস্থায়ী প্রশান্তি অতি উত্তম।", author: "সূরা আল-আলা: ১৭" }
         ];
@@ -523,7 +594,7 @@
         // Comprehensive 16-level Islamic Title Book (Up to 500 Days)
         const ISLAMIC_TITLES = [
             { days: 0, name: "নবাগত মুসাফির", desc: "আত্মশুদ্ধির অনন্য পথে আপনার প্রথম কদম।" },
-            { days: 1, name: "তওবাকারী বান্দা", desc: " can ও তাওবার পথে ১ দিনের দৃঢ়তা।" },
+            { days: 1, name: "তওবাকারী বান্দা", desc: "নিজের গুনাহের অনুভূতি নিয়ে আল্লাহর দিকে ফিরে আসা।" },
             { days: 3, name: "তওবাকারী বান্দা", desc: "১ম ধাপের পর সালাত ও তাওবার পথে ৩ দিনের দৃঢ়তা।" },
             { days: 5, name: "সংগ্রামী মন", desc: "কুপ্রবৃত্তির বিরুদ্ধে টানা ৫ দিন সফল লড়াই।" },
             { days: 10, name: "সাবিরীন (ধৈর্যশীল)", desc: "ধৈর্যের চমৎকার ১০টি দিন অতিক্রমকারী।" },
@@ -536,7 +607,7 @@
             { days: 200, name: "আস-সিদ্দীকীন", desc: "পরম সত্যের পথে ২০০ দিন পথচলা খাঁটি মুসলিম।" },
             { days: 360, name: "রাব্বানী বান্দা", desc: "আল্লাহমুখী হওয়ার প্রায় ১টি বছর সম্পন্ন করার অবিরাম গৌরব।" },
             { days: 380, name: "নূরে হেদায়েত", desc: "যার কপাল সিজদার আলোয় এবং অন্তর হেদায়েতের নূরে আলোকিত।" },
-            { days: 420, name: "তাসলিমের প্রতীক", desc: "আল্লাহর সব হুকুমের কাছে ও সমর্পণের ৪২০ দিন।" },
+            { days: 420, name: "তাসলিমের প্রতীক", desc: "আল্লাহর সব হুকুমের কাছে নিঃশর্ত সমর্পণের ৪২০ দিন।" },
             { days: 470, name: "আল্লাহর প্রিয় বান্দা", desc: "টানা ৪৭০ দিন নিজেকে আল্লাহর খুশির জন্য উৎসর্গকারী।" },
             { days: 500, name: "আল্লাহর গোলাম (চূড়ান্ত সফলতা)", desc: "সর্বোচ্চ ৫০০ দিনের মাইলফলক অর্জনের চূড়ান্ত মহাসম্মান।" }
         ];
@@ -608,7 +679,7 @@
             document.getElementById('profileSection').classList.add('hidden');
             document.getElementById('adminUploadSection').classList.add('hidden');
 
-            // GUEST LOCK: Show Start Button, Hide Reset Button, Counter is 00:00:00:00 and not running
+            // GUEST LOCK
             document.getElementById('startBtn').classList.remove('hidden');
             document.getElementById('resetBtn').classList.add('hidden');
             
@@ -621,7 +692,6 @@
         }
 
         function tryStartCounter() {
-            // Guest click blocker
             openAuthScreen();
             showAlert("লগইন আবশ্যক", "আত্মশুদ্ধি কাউন্টার শুরু করতে এবং আপনার প্রগ্রেস নিরাপদে ক্লাউডে সংরক্ষণ করতে দয়া করে লগইন বা সাইনআপ করুন।", "fa-lock", "text-amber-600");
         }
@@ -634,16 +704,15 @@
                 </button>
             `;
 
-            // Display Profile Section
+            // Display Profile Section & Preview Card
             document.getElementById('profileSection').classList.remove('hidden');
-            document.getElementById('profileNameInput').value = user.name || '';
+            document.getElementById('profileNameInput').value = user.name || 'রাহনুমা মুসাফির';
             document.getElementById('profileEmojiDisplay').innerText = user.emoji || '🕌';
 
             // Show Reset Button, Hide Start Button for active logged-in users
             document.getElementById('startBtn').classList.add('hidden');
             document.getElementById('resetBtn').classList.remove('hidden');
 
-            // Show Admin Section only if phone matches admin number
             if (user.phone === ADMIN_PHONE) {
                 document.getElementById('adminUploadSection').classList.remove('hidden');
             } else {
@@ -655,6 +724,9 @@
             startCounterInterval();
             syncQuotesFromDatabase();
             updateTitleBadge(counterStartTime);
+            
+            // Build Initial Card Preview
+            updateLiveIdPreview();
         }
 
         function openAuthScreen() {
@@ -665,7 +737,7 @@
             document.getElementById('authScreen').classList.add('hidden');
         }
 
-        // ---------------- PROFILE SETUP CONTROLLERS ---------------- //
+        // ---------------- PROFILE SETUP & THEMED PREVIEW CONTROLLERS ---------------- //
         function toggleEmojiPicker() {
             const picker = document.getElementById('emojiPicker');
             picker.classList.toggle('hidden');
@@ -674,6 +746,7 @@
         function selectProfileEmoji(emoji) {
             document.getElementById('profileEmojiDisplay').innerText = emoji;
             toggleEmojiPicker();
+            updateLiveIdPreview();
         }
 
         async function saveUserProfile() {
@@ -697,53 +770,134 @@
                 currentUser.emoji = chosenEmoji;
 
                 showAlert("প্রোফাইল সংরক্ষিত", "আপনার কাস্টমাইজড প্রোফাইল সফলভাবে সংরক্ষিত হয়েছে।", "fa-user-check", "text-emerald-700");
+                updateLiveIdPreview();
                 loadGlobalRanking(); // Reload ranking view
             } catch (err) {
                 showAlert("ত্রুটি", "প্রোফাইল আপডেট করা যায়নি: " + err.message, "fa-circle-xmark", "text-red-500");
             }
         }
 
+        function changeIdCardTheme() {
+            activeIdTheme = document.getElementById('idCardThemeSelect').value;
+            updateLiveIdPreview();
+        }
+
+        // Dynamic SVG Generation Engine (Ensuring zero-overflow minimal visiting card architecture)
+        function generateIdCardSvg(theme, name, emoji, days, title) {
+            let bgFill = "";
+            let borderStroke = "";
+            let textPrimaryColor = "";
+            let textSecondaryColor = "";
+            let subBoxBg = "";
+            let subBoxText = "";
+            let patternOpacity = "0.08";
+
+            if (theme === "royal") {
+                bgFill = "#022c22"; // Deep Green
+                borderStroke = "#d97706"; // Gold
+                textPrimaryColor = "#f59e0b"; // Golden Amber
+                textSecondaryColor = "#ffffff"; // White
+                subBoxBg = "#064e3b"; // Forest Green
+                subBoxText = "#10b981"; // Bright Green
+            } else if (theme === "minimalist") {
+                bgFill = "#ffffff"; // Minimal White
+                borderStroke = "#475569"; // Steel Slate
+                textPrimaryColor = "#1e293b"; // Dark Slate
+                textSecondaryColor = "#475569"; // Slate
+                subBoxBg = "#f1f5f9"; // Soft Grey
+                subBoxText = "#0f172a"; // Dark Blue-Grey
+                patternOpacity = "0.02";
+            } else if (theme === "sapphire") {
+                bgFill = "#1e3a8a"; // Sapphire Blue
+                borderStroke = "#f59e0b"; // Gold
+                textPrimaryColor = "#fbbf24"; // Bright Amber
+                textSecondaryColor = "#ffffff"; // White
+                subBoxBg = "#172554"; // Dark Navy
+                subBoxText = "#60a5fa"; // Sky Blue
+            }
+
+            // High Precision scale & layout coordinates ensuring zero string cutting inside 420x260 visiting card shape
+            return `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 260" width="100%" height="100%" style="border-radius:12px; display:block;">
+                <!-- Card Background -->
+                <rect width="100%" height="100%" fill="${bgFill}"/>
+                
+                <!-- Geometric Islamic Mesh Art Concept (Pattern) -->
+                <g opacity="${patternOpacity}">
+                    <circle cx="210" cy="130" r="120" fill="none" stroke="${textPrimaryColor}" stroke-width="1.5"/>
+                    <circle cx="210" cy="130" r="100" fill="none" stroke="${textPrimaryColor}" stroke-width="1" stroke-dasharray="6,4"/>
+                    <path d="M 90,130 L 330,130 M 210,10 L 210,250 M 125,45 L 295,215 M 125,215 L 295,45" stroke="${textPrimaryColor}" stroke-width="0.5"/>
+                </g>
+
+                <!-- Professional Border -->
+                <rect x="10" y="10" width="400" height="240" fill="none" stroke="${borderStroke}" stroke-width="1.5" rx="8" stroke-dasharray="4,3"/>
+                
+                <!-- Avatar Circle & Emoji -->
+                <circle cx="55" cy="55" r="28" fill="${subBoxBg}" stroke="${borderStroke}" stroke-width="1"/>
+                <text x="55" y="64" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto" font-size="28" text-anchor="middle">${emoji}</text>
+                
+                <!-- Corporate Styled Title -->
+                <text x="100" y="44" font-family="'Noto Serif Bengali', serif" font-weight="bold" font-size="16" fill="${textPrimaryColor}">রাহনুমা আত্মশুদ্ধি কার্ড</text>
+                <text x="100" y="62" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hind Siliguri', sans-serif" font-size="11" fill="${textSecondaryColor}" opacity="0.8">তাকওয়ার অবিরাম সাধনা</text>
+                
+                <!-- User Identifiers (Visitor details style) -->
+                <text x="30" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hind Siliguri', sans-serif" font-size="10" fill="${textPrimaryColor}" font-weight="bold" letter-spacing="1">ব্যক্তিত্ব:</text>
+                <text x="30" y="134" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hind Siliguri', sans-serif" font-weight="bold" font-size="15" fill="${textSecondaryColor}">${name}</text>
+                
+                <text x="30" y="172" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hind Siliguri', sans-serif" font-size="10" fill="${textPrimaryColor}" font-weight="bold" letter-spacing="1">অর্জিত উপাধি:</text>
+                <text x="30" y="191" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hind Siliguri', sans-serif" font-size="12" fill="${textSecondaryColor}" font-weight="bold">${title}</text>
+                
+                <!-- Achievement Box (Right Side Aligned) -->
+                <rect x="250" y="100" width="140" height="98" fill="${subBoxBg}" rx="8" stroke="${borderStroke}" stroke-width="0.5"/>
+                <text x="320" y="122" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hind Siliguri', sans-serif" font-size="9" fill="${textPrimaryColor}" font-weight="bold" text-anchor="middle" letter-spacing="0.5">সাফল্যের স্থায়িত্ব</text>
+                <text x="320" y="158" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-weight="900" font-size="30" fill="${subBoxText}" text-anchor="middle">${days}</text>
+                <text x="320" y="180" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hind Siliguri', sans-serif" font-size="10" fill="${textSecondaryColor}" font-weight="bold" text-anchor="middle">দিন সম্পূর্ণ</text>
+                
+                <!-- Verified Badge & URL -->
+                <line x1="20" y1="218" x2="400" y2="218" stroke="${borderStroke}" stroke-width="0.5" opacity="0.3"/>
+                <text x="30" y="235" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="9" fill="${textPrimaryColor}" opacity="0.9">ID: ${days}D-VERIFIED</text>
+                <text x="390" y="235" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-weight="bold" font-size="9" fill="${textPrimaryColor}" text-anchor="end">https://rohnumacounter.vercel.app</text>
+            </svg>
+            `;
+        }
+
+        // Live preview builder triggered on inputs
+        function updateLiveIdPreview() {
+            if (!currentUser) return;
+            const previewContainer = document.getElementById('idCardSvgPreviewContainer');
+            if(!previewContainer) return;
+
+            const name = document.getElementById('profileNameInput').value.trim() || "রাহনুমা মুসাফির";
+            const emoji = document.getElementById('profileEmojiDisplay').innerText;
+            const days = Math.floor((Date.now() - counterStartTime) / (1000 * 60 * 60 * 24));
+            const title = getIslamicTitleByDays(days);
+
+            previewContainer.innerHTML = generateIdCardSvg(activeIdTheme, name, emoji, days, title);
+        }
+
         function downloadIdCard() {
             if (!currentUser) return;
 
-            const daysOfCleanliness = Math.floor((Date.now() - counterStartTime) / (1000 * 60 * 60 * 24));
-            const activeTitle = getIslamicTitleByDays(daysOfCleanliness);
-            const userName = currentUser.name || "খাঁটি বান্দা";
-            const userEmoji = currentUser.emoji || "🕌";
+            const name = document.getElementById('profileNameInput').value.trim() || "রাহনুমা মুসাফির";
+            const emoji = document.getElementById('profileEmojiDisplay').innerText;
+            const days = Math.floor((Date.now() - counterStartTime) / (1000 * 60 * 60 * 24));
+            const title = getIslamicTitleByDays(days);
 
-            // SVG Construction
-            const svgContent = `
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 350" width="100%" height="100%">
-                <defs>
-                    <linearGradient id="goldGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#022c22;stop-opacity:1" />
-                        <stop offset="50%" style="stop-color:#064e3b;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#022c22;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#goldGreen)" rx="20"/>
-                <rect x="15" y="15" width="470" height="320" fill="none" stroke="#d97706" stroke-width="2" rx="15" stroke-dasharray="8 4"/>
-                <text x="250" y="65" font-family="'Segoe UI', sans-serif" font-size="40" text-anchor="middle">${userEmoji}</text>
-                <text x="250" y="105" font-family="'Noto Serif Bengali', serif" font-weight="bold" font-size="22" fill="#f59e0b" text-anchor="middle">রাহনুমা আত্মশুদ্ধি সনদ</text>
-                <text x="250" y="155" font-family="'Segoe UI', 'Hind Siliguri', sans-serif" font-size="20" fill="#ffffff" font-weight="bold" text-anchor="middle">${userName}</text>
-                <text x="250" y="200" font-family="'Segoe UI', 'Hind Siliguri', sans-serif" font-size="15" fill="#94a3b8" text-anchor="middle">সফল পথচলার স্থায়িত্ব:</text>
-                <text x="250" y="235" font-family="'Segoe UI', sans-serif" font-size="28" fill="#34d399" font-weight="bold" text-anchor="middle">${daysOfCleanliness} দিন</text>
-                <text x="250" y="275" font-family="'Segoe UI', 'Hind Siliguri', sans-serif" font-size="14" fill="#f59e0b" font-weight="bold" text-anchor="middle">উপাধি: ${activeTitle}</text>
-                <text x="250" y="315" font-family="'Segoe UI', sans-serif" font-size="10" fill="#64748b" text-anchor="middle">rahnumacounter.vercel.app</text>
-            </svg>
-            `;
+            const svgContent = generateIdCardSvg(activeIdTheme, name, emoji, days, title);
 
+            // Trigger safe clean download
             const blob = new Blob([svgContent], { type: 'image/svg+xml' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Rahnuma_Id_Card_${userName}.svg`;
+            a.download = `Rahnuma_Card_${name}.svg`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
 
+        // Helper to calculate Active badge on Profile header
         function updateTitleBadge(startTime) {
             const days = Math.floor((Date.now() - startTime) / (1000 * 60 * 60 * 24));
             document.getElementById('unlockedTitleBadge').innerText = getIslamicTitleByDays(days);
@@ -873,7 +1027,6 @@
                     return;
                 }
 
-                // Clean Slate Start for New Registrations
                 let startTimeToSave = Date.now();
 
                 await setDoc(userRef, {
@@ -1022,7 +1175,6 @@
             dangerQuoteIndex = 0;
             renderDangerQuote();
 
-            // Primary Danger Countdown Timer
             clearInterval(dangerInterval);
             dangerInterval = setInterval(() => {
                 dangerSecondsRemaining--;
@@ -1037,7 +1189,6 @@
                 }
             }, 1000);
 
-            // Transition emotional warnings
             clearInterval(dangerQuoteInterval);
             dangerQuoteInterval = setInterval(() => {
                 dangerQuoteIndex = (dangerQuoteIndex + 1) % dangerQuotes.length;
@@ -1104,6 +1255,7 @@
                 currentUser.counterStart = counterStartTime;
                 showAlert("কাউন্টার রিসেট হয়েছে", "আপনার কাউন্টার সফলভাবে নতুন করে শুরু হলো।", "fa-rotate", "text-emerald-700");
                 updateTitleBadge(counterStartTime);
+                updateLiveIdPreview();
 
                 const btn = document.getElementById('finalResetBtn');
                 btn.disabled = true;
