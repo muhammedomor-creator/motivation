@@ -1,7 +1,7 @@
 {
   "short_name": "Rohnuma",
-  "name": "Rohnuma Counter - ডিজিটাল তাসবীহ",
-  "description": "রোনুমা কাউন্টারের মাধ্যমে সহজেই আপনার দৈনিক জিকির ও তাসবীহ হিসাব রাখুন।",
+  "name": "রাহনুমা - আপনার ইসলামিক জীবনসঙ্গী",
+  "description": "শরিকবিহীন এক আল্লাহর খাঁটি গোলাম হয়ে নিজেকে বিরত রাখার দীর্ঘ পথ। আপনার আত্মশুদ্ধির দিনগুলো ট্র্যাক করুন।",
   "icons": [
     {
       "src": "https://i.postimg.cc/pdyq9mKf/icon.jpg",
@@ -16,7 +16,7 @@
   ],
   "start_url": "/",
   "background_color": "#ffffff",
-  "theme_color": "#2c3e50",
+  "theme_color": "#157347",
   "display": "standalone",
   "orientation": "portrait"
 }
