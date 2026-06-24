@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <style>
         body {
             font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
@@ -73,9 +72,9 @@
             <div class="animate-pulse text-red-500 text-6xl md:text-8xl">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
-            
+
             <h2 class="text-2xl md:text-4xl font-extrabold text-red-100 tracking-wide serif-bengali">আপনি কি আপনার আত্মশুদ্ধি মুছে ফেলতে চান?</h2>
-            
+
             <p class="text-sm md:text-base text-red-300 leading-relaxed max-w-lg mx-auto">
                 ধৈর্য ও সাধনা অত্যন্ত কঠিন। শয়তানের প্ররোচনায় তাড়াহুড়ো করবেন না। ৫ মিনিট আল্লাহর এই অমূল্য বাণীটির দিকে চেয়ে মন শান্ত করুন।
             </p>
@@ -112,7 +111,7 @@
     <div id="authScreen" class="hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-md flex items-center justify-center p-4">
         <div class="w-full max-w-md glass-card rounded-2xl p-6 md:p-8 relative">
             <button onclick="closeAuthScreen()" class="absolute top-4 right-4 text-slate-500 hover:text-emerald-700 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
-            
+
             <div class="flex justify-center gap-4 mb-6">
                 <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="text-emerald-800 font-bold border-b-2 border-emerald-600 pb-1 px-4 transition">লগইন</button>
                 <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="text-slate-400 font-bold pb-1 px-4 transition">নতুন অ্যাকাউন্ট</button>
@@ -122,10 +121,10 @@
             <div id="loginForm" class="space-y-4">
                 <h3 class="text-lg font-semibold text-center text-slate-700">স্বাগতম! আপনার আইডিতে প্রবেশ করুন</h3>
                 <div>
-                    <label class="block text-sm text-slate-500 mb-1">হোয়াটসঅ্যাপ নম্বর (যেমন: 88015XXXXXXXX)</label>
+                    <label class="block text-sm text-slate-500 mb-1">হোয়াটসঅ্যাপ নম্বর (কান্ট্রি কোডসহ, যেমন: +88015XXXXXXXX বা 1212XXXXXXX)</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-phone"></i></span>
-                        <input type="text" id="loginPhone" value="8801572922663" class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
+                        <input type="text" id="loginPhone" placeholder="যেমন: +88017XXXXXXXX" class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
                     </div>
                 </div>
                 <div>
@@ -148,10 +147,10 @@
                 <h3 class="text-lg font-semibold text-center text-slate-700">নতুন অ্যাকাউন্ট তৈরি করুন</h3>
                 <div id="regStepPhone" class="space-y-4">
                     <div>
-                        <label class="block text-sm text-slate-500 mb-1">হোয়াটসঅ্যাপ নম্বর</label>
+                        <label class="block text-sm text-slate-500 mb-1">হোয়াটসঅ্যাপ নম্বর (কান্ট্রি কোডসহ)</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-phone"></i></span>
-                            <input type="text" id="regPhone" value="8801572922663" class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
+                            <input type="text" id="regPhone" placeholder="যেমন: +88017XXXXXXXX" class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
                         </div>
                     </div>
                     <button onclick="sendOTPCode('register')" id="regSendOtpBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
@@ -181,11 +180,11 @@
             <div id="forgetForm" class="space-y-4 hidden">
                 <button onclick="showLoginTab()" class="text-xs text-slate-500 hover:text-emerald-700"><i class="fa-solid fa-arrow-left"></i> লগইনে ফিরে যান</button>
                 <h3 class="text-lg font-semibold text-center text-slate-700">পাসওয়ার্ড পুনরুদ্ধার করুন</h3>
-                
+
                 <div id="forgetStepPhone" class="space-y-4">
                     <div>
-                        <label class="block text-sm text-slate-500 mb-1">আপনার নিবন্ধিত হোয়াটসঅ্যাপ নম্বর</label>
-                        <input type="text" id="forgetPhone" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
+                        <label class="block text-sm text-slate-500 mb-1">আপনার নিবন্ধিত হোয়াটসঅ্যাপ নম্বর (কান্ট্রি কোডসহ)</label>
+                        <input type="text" id="forgetPhone" placeholder="যেমন: +88017XXXXXXXX" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
                     </div>
                     <button onclick="sendOTPCode('forget')" id="forgetSendOtpBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
                         রিসেট কোড পাঠান 🚀
@@ -236,7 +235,7 @@
                 <span><i class="fa-regular fa-user text-emerald-700 mr-1"></i> আপনার আত্মশুদ্ধি প্রোফাইল</span>
                 <span id="unlockedTitleBadge" class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md font-bold">তওবাকারী বান্দা</span>
             </h4>
-            
+
             <div class="flex flex-col sm:flex-row items-center gap-6">
                 <!-- Editable Emoji Avatar selection -->
                 <div class="relative flex-shrink-0">
@@ -295,7 +294,7 @@
         <!-- ================= DIGITAL TIMER & COUNTER ================= -->
         <div class="w-full glass-card rounded-2xl p-6 md:p-8 text-center relative overflow-hidden">
             <h4 class="text-xs uppercase tracking-widest text-emerald-800 font-semibold mb-2"><i class="fa-regular fa-clock"></i> অনবরত ইসলামিক পথচলা কাউন্টার</h4>
-            
+
             <div class="my-4">
                 <div id="counterDisplay" class="text-4xl md:text-5xl font-black text-emerald-900 font-mono tracking-wider counter-glow transition-all duration-300">
                     00:00:00:00
@@ -438,7 +437,7 @@
                 <h4 class="text-sm font-bold text-emerald-900 border-b border-slate-200/50 pb-2 flex items-center gap-2">
                     <i class="fa-solid fa-circle-nodes text-emerald-700"></i> সমাজ সেবা ও স্বাস্থ্য কর্নার (আমাদের সাথে যুক্ত হোন)
                 </h4>
-                
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- Health tips card -->
                     <a href="https://roktertan-veideo.vercel.app" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-emerald-50/50 hover:bg-emerald-50 rounded-xl border border-emerald-100 transition duration-200">
@@ -554,7 +553,7 @@
         let counterInterval = null;
         let counterStartTime = 0;
         let isCounterRunning = false;
-        
+
         // Waiting states for Danger reset
         let isWaitingInDanger = false;
         let dangerSecondsRemaining = 300;
@@ -689,7 +688,7 @@
             // GUEST LOCK
             document.getElementById('startBtn').classList.remove('hidden');
             document.getElementById('resetBtn').classList.add('hidden');
-            
+
             clearInterval(counterInterval);
             isCounterRunning = false;
             updateCounterDisplay(0);
@@ -731,14 +730,14 @@
             startCounterInterval();
             syncQuotesFromDatabase();
             updateTitleBadge(counterStartTime);
-            
+
             // Build Initial Card Preview
             updateLiveIdPreview();
         }
 
         function openAuthScreen() {
             document.getElementById('authScreen').classList.remove('hidden');
-            
+
             // DYNAMIC REGISTRATION LOCK: Hide register tab if already registered on this device
             const hasRegistered = localStorage.getItem('hasRegistered');
             const tabRegBtn = document.getElementById('tabRegisterBtn');
@@ -942,21 +941,21 @@
             const svgBlob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
             const URL = window.URL || window.webkitURL || window;
             const blobURL = URL.createObjectURL(svgBlob);
-            
+
             const image = new Image();
             image.onload = () => {
                 const canvas = document.createElement('canvas');
                 canvas.width = 1280;
                 canvas.height = 720;
                 const context = canvas.getContext('2d');
-                
+
                 // Set default background fill based on active selection to prevent transparent borders
                 context.fillStyle = activeIdTheme === "minimalist" ? "#ffffff" : (activeIdTheme === "sapphire" ? "#0a192f" : "#002a22");
                 context.fillRect(0, 0, 1280, 720);
-                
+
                 // Draw converted vector graphic into PNG canvas context
                 context.drawImage(image, 0, 0, 1280, 720);
-                
+
                 try {
                     // Export cleanly as high-fidelity PNG to work in any gallery app
                     const pngUrl = canvas.toDataURL('image/png');
@@ -1034,7 +1033,7 @@
         function resetRegForm() {
             document.getElementById('regStepPhone').classList.remove('hidden');
             document.getElementById('regStepOTP').classList.add('hidden');
-            document.getElementById('regPhone').value = "8801572922663";
+            document.getElementById('regPhone').value = "";
             document.getElementById('regOTP').value = "";
             document.getElementById('regPass').value = "";
         }
@@ -1054,10 +1053,14 @@
         async function sendOTPCode(type) {
             const phoneField = type === 'register' ? 'regPhone' : 'forgetPhone';
             const btnField = type === 'register' ? 'regSendOtpBtn' : 'forgetSendOtpBtn';
-            const phoneNumber = document.getElementById(phoneField).value.trim();
+            const rawPhoneNumber = document.getElementById(phoneField).value.trim();
 
-            if(!phoneNumber || phoneNumber.length < 11) {
-                showAlert("সতর্কতা", "দয়া করে একটি সঠিক মোবাইল নম্বর লিখুন!", "fa-triangle-exclamation", "text-amber-500");
+            // Sanitize phone number: remove any spaces, dashes, parentheses or leading '+'
+            const phoneNumber = rawPhoneNumber.replace(/[\s\-\(\)\+]/g, '');
+
+            // Validation for global numbers: Minimum 7 digits (e.g. Niue/Saint Helena) and Maximum 15 digits (ITU-T E.164 standard)
+            if(!phoneNumber || phoneNumber.length < 7 || phoneNumber.length > 15 || isNaN(phoneNumber)) {
+                showAlert("সতর্কতা", "দয়া করে আন্তর্জাতিক ফরম্যাটে সঠিক মোবাইল নম্বর লিখুন (যেমন: +88015XXXXXXXX বা 1212XXXXXXX)!", "fa-triangle-exclamation", "text-amber-500");
                 return;
             }
 
@@ -1088,7 +1091,7 @@
                         document.getElementById('forgetStepOTP').classList.remove('hidden');
                     }
                 } else {
-                    showAlert("ব্যর্থ হয়েছে", "ওটিপি পাঠাতে সমস্যা হয়েছে। নম্বর সঠিক কিনা এবং সার্ভার চালু আছে কিনা তা চেক করুন।", "fa-circle-xmark", "text-red-500");
+                    showAlert("ব্যর্থ হয়েছে", "ওটিপি পাঠাতে সমস্যা হয়েছে। নম্বরটি সঠিক কান্ট্রি কোডসহ লিখেছেন কিনা এবং সার্ভার চালু আছে কিনা তা চেক করুন।", "fa-circle-xmark", "text-red-500");
                 }
             } catch (error) {
                 showAlert("সার্ভার ত্রুটি", "সার্ভারের সাথে যোগাযোগ করা যাচ্ছে না। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।", "fa-wifi", "text-red-500");
@@ -1115,7 +1118,7 @@
             try {
                 const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', pendingPhone);
                 const userDoc = await getDoc(userRef);
-                
+
                 if (userDoc.exists()) {
                     showAlert("ইতিমধ্যেই নিবন্ধিত", "এই নম্বর দিয়ে ইতিমধ্যে অ্যাকাউন্ট রয়েছে। লগইন করার চেষ্টা করুন।", "fa-circle-exclamation", "text-amber-500");
                     return;
@@ -1147,9 +1150,12 @@
         }
 
         async function handleLogin() {
-            const loginPhone = document.getElementById('loginPhone').value.trim();
+            const rawLoginPhone = document.getElementById('loginPhone').value.trim();
             const loginPass = document.getElementById('loginPass').value.trim();
             const loginBtn = document.getElementById('loginSubmitBtn');
+
+            // Sanitize phone number: remove any spaces, dashes, parentheses or leading '+'
+            const loginPhone = rawLoginPhone.replace(/[\s\-\(\)\+]/g, '');
 
             if (!loginPhone || !loginPass) {
                 showAlert("তথ্য দিন", "হোয়াটসঅ্যাপ নম্বর এবং পাসওয়ার্ড উভয়ই পূরণ করুন!", "fa-asterisk", "text-amber-500");
@@ -1168,10 +1174,10 @@
                     if (userData.password === loginPass) {
                         currentUser = userData;
                         localStorage.setItem('userPhoneSession', loginPhone);
-                        
+
                         // Set registered lock as safe measure
                         localStorage.setItem('hasRegistered', 'true');
-                        
+
                         closeAuthScreen();
                         showAlert("লগইন সফল", "রাহনুমা পোর্টালে আপনাকে স্বাগতম!", "fa-mosque", "text-emerald-700");
                         setTimeout(() => {
@@ -1181,7 +1187,7 @@
                         showAlert("ভুল পাসওয়ার্ড", "পাসওয়ার্ড সঠিক নয়। দয়া করে আবার চেষ্টা করুন।", "fa-lock", "text-red-500");
                     }
                 } else {
-                    showAlert("অ্যাকাউন্ট মেলেনি", "এই নম্বরে কোনো অ্যাকাউন্ট পাওয়া যায়নি। অনুগ্রহ করে নতুন অ্যাকাউন্ট তৈরি করুন।", "fa-user-slash", "text-amber-500");
+                    showAlert("অ্যাকাউন্ট মেলেনি", "এই নম্বরে কোনো অ্যাকাউন্ট পাওয়া হয়নি। অনুগ্রহ করে সঠিক আন্তর্জাতিক নম্বর দিয়ে নতুন অ্যাকাউন্ট তৈরি করুন।", "fa-user-slash", "text-amber-500");
                 }
             } catch (err) {
                 showAlert("ত্রুটি", "অনাকাঙ্ক্ষিত ত্রুটি: " + err.message, "fa-triangle-exclamation", "text-red-500");
@@ -1269,7 +1275,7 @@
 
             isWaitingInDanger = true;
             dangerSecondsRemaining = 300; // 5 Minutes
-            
+
             const overlay = document.getElementById('dangerResetOverlay');
             overlay.classList.remove('hidden');
 
@@ -1279,7 +1285,7 @@
             clearInterval(dangerInterval);
             dangerInterval = setInterval(() => {
                 dangerSecondsRemaining--;
-                
+
                 const mins = Math.floor(dangerSecondsRemaining / 60);
                 const secs = dangerSecondsRemaining % 60;
                 document.getElementById('dangerTimerDisplay').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
@@ -1301,10 +1307,10 @@
             const quoteObj = dangerQuotes[dangerQuoteIndex];
             const qText = document.getElementById('dangerQuoteText');
             const qAuth = document.getElementById('dangerQuoteAuthor');
-            
+
             qText.style.opacity = 0;
             qAuth.style.opacity = 0;
-            
+
             setTimeout(() => {
                 qText.innerText = `"${quoteObj.text}"`;
                 qAuth.innerText = quoteObj.author ? `— ${quoteObj.author}` : "— সংগৃহীত";
@@ -1325,7 +1331,7 @@
             clearInterval(dangerQuoteInterval);
             isWaitingInDanger = false;
             document.getElementById('dangerResetOverlay').classList.add('hidden');
-            
+
             // Re-establish buttons
             const btn = document.getElementById('finalResetBtn');
             btn.disabled = true;
@@ -1398,7 +1404,7 @@
 
         function changePlaybackOrder() {
             playbackOrder = document.getElementById('playbackOrderSelect').value;
-            
+
             if (playbackOrder === "forward") {
                 localQuotes = [...originalQuotes];
             } else if (playbackOrder === "backward") {
@@ -1420,12 +1426,12 @@
         function renderQuote() {
             if (localQuotes.length === 0) return;
             const currQuote = localQuotes[currentQuoteIndex];
-            
+
             const displayArea = document.getElementById('quoteDisplayArea');
             displayArea.classList.remove('fade-in');
             void displayArea.offsetWidth; // Reflow trigger
             displayArea.classList.add('fade-in');
-            
+
             document.getElementById('quoteText').innerText = `"${currQuote.text}"`;
             document.getElementById('quoteAuthor').innerText = currQuote.author ? `— ${currQuote.author}` : "— সংগৃহীত";
             document.getElementById('quoteProgress').innerText = `${currentQuoteIndex + 1} / ${localQuotes.length}`;
@@ -1455,7 +1461,7 @@
         function setupSliderSwipe() {
             const viewport = document.getElementById('sliderViewport');
             if (!viewport) return;
-            
+
             viewport.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
             }, { passive: true });
@@ -1497,7 +1503,7 @@
 
                     // Strip prefixes cleanly
                     const cleaned = trimmed.replace(/^[\d১২৩৪৫৬৭৮৯০a-zA-Z\s\.\-\)\]\[]+/g, '').trim();
-                    
+
                     if (cleaned && cleaned.length > 3) {
                         temporaryUploadedQuotes.push({
                             text: cleaned,
@@ -1550,7 +1556,7 @@
                 localQuotes = [...localQuotes, ...uniqueNewQuotes];
                 originalQuotes = [...localQuotes];
                 showAlert("উক্তি সংরক্ষিত", `${uniqueNewQuotes.length}টি নতুন উক্তি সফলভাবে ডাটাবেজে আপলোড করা হয়েছে।`, "fa-file-shield", "text-emerald-700");
-                
+
                 resetUploaderUI(saveBtn);
 
                 currentQuoteIndex = localQuotes.length - uniqueNewQuotes.length;
@@ -1585,7 +1591,7 @@
                     const data = docSnap.data();
                     const startTime = data.counterStart || Date.now();
                     const totalDays = Math.floor((Date.now() - startTime) / (1000 * 60 * 60 * 24));
-                    
+
                     allUsers.push({
                         name: data.name || "খাঁটি বান্দা",
                         emoji: data.emoji || "🤲",
@@ -1606,7 +1612,7 @@
                 topTen.forEach((user, index) => {
                     const titleBadge = getIslamicTitleByDays(user.days);
                     const rankBadgeClass = index === 0 ? "bg-amber-100 text-amber-800" : (index === 1 ? "bg-slate-200 text-slate-800" : (index === 2 ? "bg-orange-100 text-orange-800" : "bg-emerald-50 text-emerald-800"));
-                    
+
                     // FIXED: Structured table row with whitespace-nowrap and truncate to guarantee strict one-line rendering
                     const rowHtml = `
                         <tr class="border-b border-slate-100/50 hover:bg-emerald-50/20 transition duration-150">
