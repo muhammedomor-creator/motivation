@@ -4,12 +4,12 @@
   "description": "শরিকবিহীন এক আল্লাহর খাঁটি গোলাম হয়ে নিজেকে বিরত রাখার দীর্ঘ পথ। আপনার আত্মশুদ্ধির দিনগুলো ট্র্যাক করুন।",
   "icons": [
     {
-      "src": "https://i.postimg.cc/pdyq9mKf/icon.jpg",
+      "src": "/icon.jpg",
       "type": "image/jpeg",
       "sizes": "192x192"
     },
     {
-      "src": "https://i.postimg.cc/pdyq9mKf/icon.jpg",
+      "src": "/icon.jpg",
       "type": "image/jpeg",
       "sizes": "512x512"
     }
