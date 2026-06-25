@@ -30,17 +30,17 @@
     <meta name="twitter:description" content="নিজেকে পরিবর্তন করার এবং আল্লাহর পথে অবিচল থাকার এক নতুন সফর। আপনার আত্মশুদ্ধি প্রোফাইল তৈরি করুন এবং অর্জন করুন অনন্য উপাধি!">
     <meta name="twitter:image" content="https://rohnumacounter.vercel.app/thumbnail.jpg">
 
-    <!-- মোবাইল ব্রাউজার ও অ্যাপ অপ্টিমাইজেশন -->
+    <!-- mobile browser and application integration optimization -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Rohnuma">
 
-    <!-- আইফোন এবং সাধারণ ব্রাউজার আইকন (Favicon) লিংক -->
-    <link rel="apple-touch-icon" href="/icon.jpg">
+    <!-- Apple icons links -->
+    <link class="apple-touch-icon" href="/icon.jpg">
     <link rel="icon" type="image/jpeg" href="/icon.jpg">
 
-    <!-- পিডব্লিউএ (PWA) ম্যানিফেস্ট লিংক -->
+    <!-- PWA Manifest link -->
     <link rel="manifest" href="/manifest.json">
 
     <!-- Tailwind CSS -->
@@ -50,7 +50,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- বাহ্যিক দেশের তালিকা ফাইলটি এখানে লোড করা হচ্ছে -->
+    <!-- বাইরের কান্ট্রি লিস্ট ফাইলটি এখানে কানেক্ট করা হলো -->
     <script src="countries.js"></script>
 
     <style>
@@ -62,6 +62,7 @@
         .serif-bengali {
             font-family: 'Noto Serif Bengali', serif;
         }
+        /* Custom White Glassmorphism */
         .glass-card {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(16px);
@@ -97,6 +98,7 @@
             color: #047857;
             font-weight: 700;
         }
+        /* ID Card Preview Constraint Style */
         #idCardSvgPreviewContainer svg {
             width: 100%;
             height: auto;
@@ -205,13 +207,13 @@
                         </div>
                     </div>
                     <button onclick="sendOTPCode('register')" id="regSendOtpBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
-                        হোয়াটসঅ্যাপে ওটিপি পাঠান 🚀
+                        মোবাইলে ওটিপি পাঠান 🚀
                     </button>
                 </div>
 
                 <div id="regStepOTP" class="space-y-4 hidden">
                     <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-xs text-emerald-800">
-                        আপনার হোয়াটসঅ্যাপ নম্বরে পাঠানো ওটিপি দিন।
+                        আপনার নম্বরে এসএমএস-এ পাঠানো ওটিপি দিন।
                     </div>
                     <div>
                         <label class="block text-sm text-slate-500 mb-1">৬ ডিজিটের ওটিপি কোড</label>
@@ -261,6 +263,9 @@
                     </button>
                 </div>
             </div>
+
+            <!-- রিক্যাপচা সিকিউরিটি কন্টেইনার (বট প্রতিরোধ করতে এটি ফায়ারবেসের জন্য বাধ্যতামূলক) -->
+            <div id="recaptcha-container" class="mt-4 flex justify-center"></div>
         </div>
     </div>
 
@@ -306,7 +311,7 @@
                         <input type="text" id="profileNameInput" oninput="updateLiveIdPreview()" class="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-emerald-600" placeholder="আপনার নাম দিন">
                         <button onclick="saveUserProfile()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-xs font-bold transition">সংরক্ষণ</button>
                     </div>
-                    <!-- Emoji Selection Modal Inside card -->
+                    <!-- Emoji Selection Modal/Drawer Inside card -->
                     <div id="emojiPicker" class="hidden grid grid-cols-5 gap-2 p-2 bg-emerald-50 rounded-lg max-w-xs transition-all">
                         <button onclick="selectProfileEmoji('🤲')" class="text-2xl hover:scale-125 transition">🤲</button>
                         <button onclick="selectProfileEmoji('🕌')" class="text-2xl hover:scale-125 transition">🕌</button>
@@ -332,6 +337,7 @@
                     </div>
                 </div>
 
+                <!-- Container hosting the actual SVG rendering to prevent overflows -->
                 <div class="flex justify-center items-center w-full">
                     <div id="idCardSvgPreviewContainer" class="w-full max-w-[420px] bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
                         <!-- Dynamic SVG inserted here -->
@@ -364,9 +370,11 @@
 
             <!-- BUTTON CONTROLS (CONDITIONAL START / RESET) -->
             <div class="flex justify-center gap-3 mt-2">
+                <!-- Guest Start Button -->
                 <button id="startBtn" onclick="tryStartCounter()" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 w-full max-w-xs">
                     <i class="fa-solid fa-circle-play"></i> আত্মশুদ্ধি শুরু করুন
                 </button>
+                <!-- Logged In Reset Button (Initially Hidden) -->
                 <button id="resetBtn" onclick="confirmResetCounter()" class="hidden px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 w-full max-w-xs">
                     <i class="fa-solid fa-rotate-left"></i> আত্মশুদ্ধি রিসেট করুন
                 </button>
@@ -401,7 +409,7 @@
                     </div>
                 </div>
 
-                <!-- Slider Controls -->
+                <!-- Slider Controls & Playback filter -->
                 <div class="flex justify-between items-center mt-4 border-t border-slate-200/50 pt-4">
                     <button onclick="prevQuote()" class="glass-btn w-10 h-10 rounded-full flex items-center justify-center transition" title="পূর্ববর্তী">
                         <i class="fa-solid fa-chevron-left"></i>
@@ -550,7 +558,7 @@
     <!-- Firebase SDK & Integrated Codebase Modules -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, signInWithPhoneNumber, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Configuration
@@ -599,25 +607,22 @@
         window.changeIdCardTheme = changeIdCardTheme;
         window.updateLiveIdPreview = updateLiveIdPreview;
 
-        // Fallback country list in case countries.js fails to load
+        // Fallback internal list in case countries.js fails
         const defaultFallbackCountries = [
             { code: "880", flag: "🇧🇩", name: "Bangladesh (+880)" },
             { code: "91", flag: "🇮🇳", name: "India (+91)" },
             { code: "966", flag: "🇸🇦", name: "Saudi Arabia (+966)" }
         ];
 
-        // Setup Dropdowns dynamically using the imported countriesList
+        // Setup Dropdowns on window load
         function populateCountrySelects() {
-            // Check if external config is successfully loaded, otherwise use fallback
-            const activeCountries = (window.countriesList && window.countriesList.length > 0) 
-                ? window.countriesList 
-                : defaultFallbackCountries;
-
+            // Use window.countriesList if available from countries.js
+            const list = (window.countriesList && window.countriesList.length > 0) ? window.countriesList : defaultFallbackCountries;
             const selects = ['loginCountrySelect', 'regCountrySelect', 'forgetCountrySelect'];
             selects.forEach(selectId => {
                 const selectEl = document.getElementById(selectId);
                 if (selectEl) {
-                    selectEl.innerHTML = activeCountries.map(c => 
+                    selectEl.innerHTML = list.map(c => 
                         `<option value="${c.code}">${c.flag} ${c.name}</option>`
                     ).join('');
                 }
@@ -626,7 +631,7 @@
 
         // Application State
         let currentUser = null;
-        let generatedOTP = null;
+        let confirmationResultObj = null; // Holds Firebase confirmation object
         let pendingPhone = null;
         let counterInterval = null;
         let counterStartTime = 0;
@@ -644,7 +649,7 @@
         // Quotes State
         let localQuotes = [
             { text: "নিশ্চয়ই কষ্টের সাথেই স্বস্তি রয়েছে।", author: "সূরা আল-ইনশিরাহ: ৫" },
-            { text: "হে ঈমানদারগণ! তোমরা ধৈর্য ও সালাতের মাধ্যমে সাহায্য প্রার্থনা করো। নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন।", author: "সূরা আল-বাকারাহ: ১৫৩" },
+            { text: "হে ঈমানدارগণ! তোমরা ধৈর্য ও সালাতের মাধ্যমে সাহায্য প্রার্থনা করো। নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন।", author: "সূরা আল-বাকারাহ: ১৫৩" },
             { text: "বলুন, হে আমার বান্দাগণ যারা নিজেদের ওপর জুলুম করেছ, তোমরা আল্লাহর রহমত থেকে নিরাশ হয়ো না।", author: "সূরা আজ-জুমার: ৫৩" },
             { text: "যে ব্যক্তি আল্লাহকে ভয় করবে, আল্লাহ তার জন্য কোনো পথ বের করে দেবেন এবং তাকে এমন জায়গা থেকে রিজিক দেবেন যা সে ভাবতেও পারেনি।", author: "সূরা আত-তালাক: ২-৩" },
             { text: "তোমাদের মাঝে উত্তম ঐ ব্যক্তি, যে কুরআন শেখে এবং অন্যকে শেখায়।", author: "সহীহ বুখারী" }
@@ -659,13 +664,10 @@
         let touchStartX = 0;
         let touchEndX = 0;
 
-        // WhatsApp Live OTP configuration
-        const API_URL = "https://otp-api-hmrz.onrender.com/send-otp";
-
         // Admin Account details
         const ADMIN_PHONE = "8801949437370";
 
-        // Danger Quotes list
+        // Double checked danger quote selection
         const dangerQuotes = [
             { text: "হে আমাদের পালনকর্তা! সরল পথ প্রদর্শনের পর আমাদের অন্তরকে সত্যলঙ্ঘনপ্রবণ করবেন না এবং আপনার পক্ষ থেকে অনুগ্রহ দান করুন।", author: "সূরা আল ইমরান: ৮" },
             { text: "যে ব্যক্তি আল্লাহর ওপর ভরসা করে, আল্লাহই তার জন্য যথেষ্ট হয়ে যান।", author: "সূরা আত-তালাক: ৩" },
@@ -696,9 +698,26 @@
             { days: 500, name: "আল্লাহর গোলাম (চূড়ান্ত সফলতা)", desc: "সর্বোচ্চ ৫০০ দিনের মাইলফলক অর্জনের চূড়ান্ত মহাসম্মান।" }
         ];
 
+        // Invisible Firebase reCAPTCHA initialization
+        const initRecaptchaVerifier = () => {
+            if (!window.recaptchaVerifier) {
+                window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                    'size': 'invisible',
+                    'callback': (response) => {
+                        // Invisible captcha automatically solved
+                    },
+                    'expired-callback': () => {
+                        window.recaptchaVerifier.clear();
+                        initRecaptchaVerifier();
+                    }
+                });
+            }
+        };
+
         // Auth initialization
         const initAuth = async () => {
             populateCountrySelects();
+            initRecaptchaVerifier();
             if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                 await signInWithCustomToken(auth, __initial_auth_token);
             } else {
@@ -764,6 +783,7 @@
             document.getElementById('profileSection').classList.add('hidden');
             document.getElementById('adminUploadSection').classList.add('hidden');
 
+            // GUEST LOCK
             document.getElementById('startBtn').classList.remove('hidden');
             document.getElementById('resetBtn').classList.add('hidden');
 
@@ -771,6 +791,7 @@
             isCounterRunning = false;
             updateCounterDisplay(0);
 
+            // Fetch Quotes
             syncQuotesFromDatabase();
         }
 
@@ -787,10 +808,12 @@
                 </button>
             `;
 
+            // Display Profile Section & Preview Card
             document.getElementById('profileSection').classList.remove('hidden');
             document.getElementById('profileNameInput').value = user.name || 'রাহনুমা মুসাফির';
             document.getElementById('profileEmojiDisplay').innerText = user.emoji || '🤲';
 
+            // Show Reset Button, Hide Start Button for active logged-in users
             document.getElementById('startBtn').classList.add('hidden');
             document.getElementById('resetBtn').classList.remove('hidden');
 
@@ -806,17 +829,19 @@
             syncQuotesFromDatabase();
             updateTitleBadge(counterStartTime);
 
+            // Build Initial Card Preview
             updateLiveIdPreview();
         }
 
         function openAuthScreen() {
             document.getElementById('authScreen').classList.remove('hidden');
 
+            // DYNAMIC REGISTRATION LOCK: Hide register tab if already registered on this device
             const hasRegistered = localStorage.getItem('hasRegistered');
             const tabRegBtn = document.getElementById('tabRegisterBtn');
             if (hasRegistered === 'true') {
                 if (tabRegBtn) {
-                    tabRegBtn.style.display = 'none';
+                    tabRegBtn.style.display = 'none'; // Lock second account creation
                 }
                 switchAuthTab('login');
             } else {
@@ -864,7 +889,7 @@
 
                 showAlert("প্রোফাইল সংরক্ষিত", "আপনার কাস্টমাইজড প্রোফাইল সফলভাবে সংরক্ষিত হয়েছে।", "fa-user-check", "text-emerald-700");
                 updateLiveIdPreview();
-                loadGlobalRanking();
+                loadGlobalRanking(); // Reload ranking view
             } catch (err) {
                 showAlert("ত্রুটি", "প্রোফাইল আপডেট করা যায়নি: " + err.message, "fa-circle-xmark", "text-red-500");
             }
@@ -875,6 +900,7 @@
             updateLiveIdPreview();
         }
 
+        // Dynamic SVG Generation Engine (16:9 Scale Landscape - Resolution maintains 1280x720)
         function generateIdCardSvg(theme, name, emoji, days, title) {
             let bgFill = "";
             let borderStroke = "";
@@ -885,29 +911,30 @@
             let patternOpacity = "0.05";
 
             if (theme === "royal") {
-                bgFill = "#002a22";
-                borderStroke = "#ff9f0a";
-                textPrimaryColor = "#ff9f0a";
-                textSecondaryColor = "#ffffff";
-                subBoxBg = "#044b3c";
-                subBoxText = "#30d158";
+                bgFill = "#002a22"; // Deep green
+                borderStroke = "#ff9f0a"; // Warm Golden Orange
+                textPrimaryColor = "#ff9f0a"; // Gold/Orange
+                textSecondaryColor = "#ffffff"; // Solid White
+                subBoxBg = "#044b3c"; // Dark Teal Green
+                subBoxText = "#30d158"; // Bright Vibrant Green
             } else if (theme === "minimalist") {
-                bgFill = "#ffffff";
-                borderStroke = "#475569";
-                textPrimaryColor = "#ff9f0a";
-                textSecondaryColor = "#1e293b";
-                subBoxBg = "#f1f5f9";
-                subBoxText = "#10b981";
+                bgFill = "#ffffff"; // Minimal White
+                borderStroke = "#475569"; // Steel Slate
+                textPrimaryColor = "#ff9f0a"; // Accent Gold
+                textSecondaryColor = "#1e293b"; // Dark Slate
+                subBoxBg = "#f1f5f9"; // Soft Grey
+                subBoxText = "#10b981"; // Emerald Green
                 patternOpacity = "0.02";
             } else if (theme === "sapphire") {
-                bgFill = "#0a192f";
-                borderStroke = "#64ffda";
-                textPrimaryColor = "#64ffda";
-                textSecondaryColor = "#ffffff";
-                subBoxBg = "#112240";
-                subBoxText = "#30d158";
+                bgFill = "#0a192f"; // Navy Blue
+                borderStroke = "#64ffda"; // Electric Cyan
+                textPrimaryColor = "#64ffda"; // Cyan
+                textSecondaryColor = "#ffffff"; // White
+                subBoxBg = "#112240"; // Dark Navy Blue
+                subBoxText = "#30d158"; // Vibrant Green
             }
 
+            // High Resolution 1280x720 16:9 Landscape Layout
             return `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
                 <defs>
@@ -924,33 +951,59 @@
                         }
                     </style>
                 </defs>
+                
+                <!-- Main Background Card -->
                 <rect width="1280" height="720" fill="${bgFill}" rx="40"/>
+                
+                <!-- Circular Grid Patterns for visual depth -->
                 <g opacity="${patternOpacity}">
                     <circle cx="640" cy="360" r="320" fill="none" stroke="${borderStroke}" stroke-width="2"/>
                     <circle cx="640" cy="360" r="280" fill="none" stroke="${borderStroke}" stroke-width="1" stroke-dasharray="8,6"/>
                     <path d="M 120,360 L 1160,360 M 640,60 L 640,660" stroke="${borderStroke}" stroke-width="1" opacity="0.5"/>
                 </g>
+
+                <!-- Outer Solid Border -->
                 <rect x="25" y="25" width="1230" height="670" fill="none" stroke="${borderStroke}" stroke-width="8" rx="35"/>
+                
+                <!-- Inner Dashed Border -->
                 <rect x="42" y="42" width="1196" height="636" fill="none" stroke="${borderStroke}" stroke-width="2" rx="25" stroke-dasharray="12,10"/>
+                
+                <!-- Profile Avatar with selected emoji -->
                 <g transform="translate(100, 100)">
                     <circle cx="80" cy="80" r="80" fill="${subBoxBg}" stroke="${borderStroke}" stroke-width="4"/>
                     <text x="80" y="105" class="font-emoji" font-size="80" text-anchor="middle">${emoji}</text>
+                    
+                    <!-- Main Header Text -->
                     <text x="200" y="65" class="font-title" font-weight="bold" font-size="52" fill="${textPrimaryColor}">রাহনুমা আত্মশুদ্ধি কার্ড</text>
                     <text x="200" y="115" class="font-body" font-size="28" fill="${textSecondaryColor}" opacity="0.8">তাকওয়ার অবিরাম সাধনা</text>
                 </g>
+                
+                <!-- Subtle separator line -->
                 <line x1="100" y1="310" x2="1180" y2="310" stroke="${borderStroke}" stroke-width="2" opacity="0.2"/>
+                
+                <!-- Left Side Details Area -->
                 <g transform="translate(100, 360)">
+                    <!-- Personality Name Info -->
                     <text x="0" y="0" class="font-body" font-size="28" font-weight="bold" fill="${textPrimaryColor}">ব্যক্তিত্ব:</text>
                     <text x="0" y="60" class="font-body" font-weight="bold" font-size="46" fill="${textSecondaryColor}">${name}</text>
+                    
+                    <!-- Title Info -->
                     <text x="0" y="160" class="font-body" font-size="28" font-weight="bold" fill="${textPrimaryColor}">অর্জিত উপাধি:</text>
                     <text x="0" y="220" class="font-title" font-weight="bold" font-size="38" fill="${textSecondaryColor}">${title}</text>
                 </g>
+                
+                <!-- Right Side Highlight Status Box -->
                 <g transform="translate(750, 280)">
+                    <!-- Solid stats container -->
                     <rect width="430" height="340" fill="${subBoxBg}" rx="24" stroke="${borderStroke}" stroke-width="2"/>
+                    
+                    <!-- Stats Labels -->
                     <text x="215" y="65" class="font-body" font-size="26" font-weight="bold" fill="${textPrimaryColor}" text-anchor="middle">সাফল্যের স্থায়িত্ব</text>
                     <text x="215" y="200" class="font-body" font-weight="bold" font-size="120" fill="${subBoxText}" text-anchor="middle">${days}</text>
                     <text x="215" y="270" class="font-body" font-size="26" font-weight="bold" fill="${textSecondaryColor}" text-anchor="middle">দিন সম্পূর্ণ</text>
                 </g>
+                
+                <!-- Footer Area -->
                 <line x1="100" y1="640" x2="1180" y2="640" stroke="${borderStroke}" stroke-width="1.5" opacity="0.2"/>
                 <text x="100" y="675" class="font-body" font-size="22" font-weight="bold" fill="${textPrimaryColor}" opacity="0.8">ID: ${days}D-VERIFIED</text>
                 <text x="1180" y="675" class="font-body" font-weight="bold" font-size="22" fill="${textPrimaryColor}" opacity="0.8" text-anchor="end">https://rohnumacounter.vercel.app</text>
@@ -958,6 +1011,7 @@
             `;
         }
 
+        // Live preview builder triggered on inputs (CSS constrains display size cleanly)
         function updateLiveIdPreview() {
             if (!currentUser) return;
             const previewContainer = document.getElementById('idCardSvgPreviewContainer');
@@ -981,6 +1035,7 @@
 
             const svgContent = generateIdCardSvg(activeIdTheme, name, emoji, days, title);
 
+            // Safe high-resolution canvas renderer to convert SVG structure into an authentic PNG Image
             const svgBlob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
             const URL = window.URL || window.webkitURL || window;
             const blobURL = URL.createObjectURL(svgBlob);
@@ -992,11 +1047,15 @@
                 canvas.height = 720;
                 const context = canvas.getContext('2d');
 
+                // Set default background fill based on active selection to prevent transparent borders
                 context.fillStyle = activeIdTheme === "minimalist" ? "#ffffff" : (activeIdTheme === "sapphire" ? "#0a192f" : "#002a22");
                 context.fillRect(0, 0, 1280, 720);
+
+                // Draw converted vector graphic into PNG canvas context
                 context.drawImage(image, 0, 0, 1280, 720);
 
                 try {
+                    // Export cleanly as high-fidelity PNG to work in any gallery app
                     const pngUrl = canvas.toDataURL('image/png');
                     const downloadLink = document.createElement('a');
                     downloadLink.href = pngUrl;
@@ -1005,6 +1064,7 @@
                     downloadLink.click();
                     document.body.removeChild(downloadLink);
                 } catch (err) {
+                    // Fallback to traditional SVG blob download if rendering contexts block
                     fallbackSvgDownload(svgContent, name);
                 }
                 URL.revokeObjectURL(blobURL);
@@ -1028,6 +1088,7 @@
             URL.revokeObjectURL(url);
         }
 
+        // Helper to calculate Active badge on Profile header
         function updateTitleBadge(startTime) {
             const days = Math.floor((Date.now() - startTime) / (1000 * 60 * 60 * 24));
             document.getElementById('unlockedTitleBadge').innerText = getIslamicTitleByDays(days);
@@ -1107,6 +1168,7 @@
             return cleanedCountry + cleanedLocal;
         }
 
+        // ফায়ারবেস ওটিপি কোড পাঠানোর মূল ইন্টিগ্রেশন ফাংশন
         async function sendOTPCode(type) {
             const phoneField = type === 'register' ? 'regPhone' : 'forgetPhone';
             const countrySelectField = type === 'register' ? 'regCountrySelect' : 'forgetCountrySelect';
@@ -1115,58 +1177,69 @@
             const rawPhoneNumber = document.getElementById(phoneField).value.trim();
             const countryCode = document.getElementById(countrySelectField).value;
 
-            // পিউরলি ক্লিনড ও কান্ট্রি কোড সমৃদ্ধ সংখ্যা তৈরি করা হচ্ছে
-            const fullPhoneNumber = buildSanitizedFullNumber(countryCode, rawPhoneNumber);
+            // পিউরলি ক্লিনড কান্ট্রি কোড সমৃদ্ধ সংখ্যা তৈরি করা হলো
+            const sanitizedNumber = buildSanitizedFullNumber(countryCode, rawPhoneNumber);
 
-            // ওটিপি পাঠানোর জন্য একটি স্ট্যান্ডার্ড সংখ্যা দৈর্ঘ্য ভ্যালিডেশন (৭ থেকে ১৫ ডিজিট)
-            if(!rawPhoneNumber || fullPhoneNumber.length < 7 || fullPhoneNumber.length > 15) {
-                showAlert("সতর্কতা", "দয়া করে একটি সঠিক ও সচল মোবাইল নম্বর লিখুন!", "fa-triangle-exclamation", "text-amber-500");
+            // ফায়ারবেসের জন্য ওটিপি পাঠাতে অবশ্যই আন্তর্জাতিক নম্বরের শুরুতে "+" যুক্ত হতে হবে
+            const formattedInternationalNumber = '+' + sanitizedNumber;
+
+            if(!rawPhoneNumber || sanitizedNumber.length < 7 || sanitizedNumber.length > 15) {
+                showAlert("সতর্কতা", "দয়া করে একটি সঠিক মোবাইল নম্বর লিখুন!", "fa-triangle-exclamation", "text-amber-500");
                 return;
             }
 
             const sendBtn = document.getElementById(btnField);
-            sendBtn.innerText = "ওটিপি কোড পাঠানো হচ্ছে...";
+            sendBtn.innerText = "ওটিপি পাঠানো হচ্ছে...";
             sendBtn.disabled = true;
 
-            generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
-            pendingPhone = fullPhoneNumber;
+            pendingPhone = sanitizedNumber; // ফায়ারস্টোরে ইনডেক্স করার জন্য প্লাস চিহ্ন ছাড়া নম্বর সংরক্ষণ করা হলো
 
             try {
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        phoneNumber: fullPhoneNumber, // সম্পূর্ণ চিহ্নবিহীন সংখ্যা
-                        otpCode: generatedOTP
-                    })
-                });
+                initRecaptchaVerifier();
+                const appVerifier = window.recaptchaVerifier;
 
-                if (response.ok) {
-                    showAlert("ওটিপি প্রেরিত হয়েছে", "হোয়াটসঅ্যাপে ওটিপি কোড পাঠানো হয়েছে! আপনার ফোনটি চেক করুন।", "fa-paper-plane", "text-emerald-600");
-                    if (type === 'register') {
-                        document.getElementById('regStepPhone').classList.add('hidden');
-                        document.getElementById('regStepOTP').classList.remove('hidden');
-                    } else {
-                        document.getElementById('forgetStepPhone').classList.add('hidden');
-                        document.getElementById('forgetStepOTP').classList.remove('hidden');
-                    }
+                // ফায়ারবেস ফোন এপিআই ট্রিগার
+                const confirmationResult = await signInWithPhoneNumber(auth, formattedInternationalNumber, appVerifier);
+                
+                // সফল হলে গ্লোবাল অবজেক্টে ওটিপি কনফার্মেশন স্টেট জমা রাখা হলো
+                confirmationResultObj = confirmationResult;
+
+                showAlert("ওটিপি প্রেরিত হয়েছে", "আপনার নম্বরে এসএমএস-এর মাধ্যমে ওটিপি কোড পাঠানো হয়েছে! দয়া করে আপনার ফোন চেক করুন।", "fa-paper-plane", "text-emerald-600");
+                
+                if (type === 'register') {
+                    document.getElementById('regStepPhone').classList.add('hidden');
+                    document.getElementById('regStepOTP').classList.remove('hidden');
                 } else {
-                    showAlert("ব্যর্থ হয়েছে", "ওটিপি পাঠাতে সমস্যা হয়েছে। নম্বর সঠিক কিনা তা চেক করুন।", "fa-circle-xmark", "text-red-500");
+                    document.getElementById('forgetStepPhone').classList.add('hidden');
+                    document.getElementById('forgetStepOTP').classList.remove('hidden');
                 }
             } catch (error) {
-                showAlert("সার্ভার ত্রুটি", "সার্ভারের সাথে যোগাযোগ করা যাচ্ছে না। দয়া করে কিছুক্ষণ পর আবার চেষ্টা করুন।", "fa-wifi", "text-red-500");
+                console.error("Firebase SMS dispatch error:", error);
+                showAlert("ব্যর্থ হয়েছে", "ওটিপি পাঠাতে সমস্যা হয়েছে। ফায়ারবেস কনসোলে এসএমএস কোটা চেক করুন বা নম্বর সঠিক কিনা পুনরায় যাচাই করুন।", "fa-circle-xmark", "text-red-500");
+                
+                // রিসেট রিক্যাপচা ভেরিফায়ার
+                if (window.recaptchaVerifier) {
+                    window.recaptchaVerifier.clear();
+                    window.recaptchaVerifier = null;
+                }
             } finally {
-                sendBtn.innerText = "হোয়াটসঅ্যাপে ওটিপি পাঠান 🚀";
+                sendBtn.innerText = type === 'register' ? "মোবাইলে ওটিপি পাঠান 🚀" : "রিসেট কোড পাঠান 🚀";
                 sendBtn.disabled = false;
             }
         }
 
+        // ফায়ারবেসের মাধ্যমে ওটিপি কনফার্ম করে নতুন ইউজার তৈরি করার ফাংশন
         async function verifyAndRegister() {
             const otpVal = document.getElementById('regOTP').value.trim();
             const passVal = document.getElementById('regPass').value.trim();
 
-            if (otpVal !== generatedOTP) {
-                showAlert("ভুল ওটিপি", "ওটিপি কোডটি সঠিক নয়। অনুগ্রহ করে আবার চেষ্টা করুন।", "fa-circle-xmark", "text-red-500");
+            if (!confirmationResultObj) {
+                showAlert("ত্রুটি", "পূর্বে কোনো বৈধ ওটিপি রিকোয়েস্ট পাওয়া যায়নি। দয়া করে আবার নম্বর দিন।", "fa-circle-xmark", "text-red-500");
+                return;
+            }
+
+            if (otpVal.length !== 6) {
+                showAlert("অসম্পূর্ণ ওটিপি", "দয়া করে ৬ ডিজিটের ওটিপি কোডটি টাইপ করুন।", "fa-circle-xmark", "text-red-500");
                 return;
             }
 
@@ -1175,12 +1248,22 @@
                 return;
             }
 
+            const regVerifyBtn = document.getElementById('regVerifyBtn');
+            regVerifyBtn.innerText = "যাচাই করা হচ্ছে...";
+            regVerifyBtn.disabled = true;
+
             try {
+                // ১. ফায়ারবেস ক্লাউডে রিয়েলটাইম ওটিপি কনফার্মেশন কোড ভেরিফিকেশন
+                await confirmationResultObj.confirm(otpVal);
+
+                // ২. ওটিপি সফলভাবে ভেরিফাই হলে ফায়ারস্টোরে ব্যবহারকারীর প্রোফাইল ডকুমেন্ট তৈরি করা হচ্ছে
                 const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', pendingPhone);
                 const userDoc = await getDoc(userRef);
 
                 if (userDoc.exists()) {
                     showAlert("ইতিমধ্যেই নিবন্ধিত", "এই নম্বর দিয়ে ইতিমধ্যে অ্যাকাউন্ট রয়েছে। লগইন করার চেষ্টা করুন।", "fa-circle-exclamation", "text-amber-500");
+                    regVerifyBtn.innerText = "ভেরিফাই ও অ্যাকাউন্ট তৈরি করুন";
+                    regVerifyBtn.disabled = false;
                     return;
                 }
 
@@ -1195,6 +1278,7 @@
                     createdAt: Date.now()
                 });
 
+                // LOCK FUTURE REGISTRATIONS ON THIS DEVICE
                 localStorage.setItem('hasRegistered', 'true');
 
                 showAlert("অভিনন্দন 🎉", "আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! এখন লগইন করুন।", "fa-circle-check", "text-emerald-600");
@@ -1204,7 +1288,11 @@
                 }, 1500);
 
             } catch (err) {
-                showAlert("ত্রুটি", "ডাটাবেজে যুক্ত হতে পারেনি: " + err.message, "fa-circle-xmark", "text-red-500");
+                console.error("Verification/Registration error:", err);
+                showAlert("ভুল ওটিপি", "ওটিপি কোডটি সঠিক নয় অথবা কোডটির মেয়াদ শেষ হয়ে গেছে। অনুগ্রহ করে আবার চেষ্টা করুন।", "fa-circle-xmark", "text-red-500");
+            } finally {
+                regVerifyBtn.innerText = "ভেরিফাই ও অ্যাকাউন্ট তৈরি করুন";
+                regVerifyBtn.disabled = false;
             }
         }
 
@@ -1214,11 +1302,11 @@
             const countryCode = document.getElementById('loginCountrySelect').value;
             const loginBtn = document.getElementById('loginSubmitBtn');
 
-            // লগইন নাম্বারের জন্যও একই শক্তিশালী ক্লিনিং পলিসি প্রয়োগ করা হচ্ছে
+            // লগইন নাম্বারের জন্যও শক্তিশালী ক্লিনিং লজিক প্রয়োগ
             const loginPhone = buildSanitizedFullNumber(countryCode, rawLoginPhone);
 
             if (!rawLoginPhone || !loginPass) {
-                showAlert("정보 দিন", "হোয়াটসঅ্যাপ নম্বর এবং পাসওয়ার্ড উভয়ই পূরণ করুন!", "fa-asterisk", "text-amber-500");
+                showAlert("তথ্য দিন", "হোয়াটসঅ্যাপ নম্বর এবং পাসওয়ার্ড উভয়ই পূরণ করুন!", "fa-asterisk", "text-amber-500");
                 return;
             }
 
@@ -1234,6 +1322,8 @@
                     if (userData.password === loginPass) {
                         currentUser = userData;
                         localStorage.setItem('userPhoneSession', loginPhone);
+
+                        // Set registered lock as safe measure
                         localStorage.setItem('hasRegistered', 'true');
 
                         closeAuthScreen();
@@ -1255,12 +1345,18 @@
             }
         }
 
+        // ওটিপি কনফার্ম করে পাসওয়ার্ড রিসেট করার ফাংশন
         async function verifyAndResetPassword() {
             const otpVal = document.getElementById('forgetOTP').value.trim();
             const newPassVal = document.getElementById('forgetNewPass').value.trim();
 
-            if (otpVal !== generatedOTP) {
-                showAlert("ভুল কোড", "ভেরিফিকেশন কোড মেলেনি।", "fa-circle-xmark", "text-red-500");
+            if (!confirmationResultObj) {
+                showAlert("ত্রুটি", "পূর্বে কোনো ওটিপি রিকোয়েস্ট পাঠানো হয়নি। আবার চেষ্টা করুন।", "fa-circle-xmark", "text-red-500");
+                return;
+            }
+
+            if (otpVal.length !== 6) {
+                showAlert("ভুল কোড", "দয়া করে ৬ ডিজিটের ওটিপি কোড দিন।", "fa-circle-xmark", "text-red-500");
                 return;
             }
 
@@ -1269,12 +1365,21 @@
                 return;
             }
 
+            const forgetResetBtn = document.getElementById('forgetResetBtn');
+            forgetResetBtn.innerText = "পাসওয়ার্ড পরিবর্তন হচ্ছে...";
+            forgetResetBtn.disabled = true;
+
             try {
+                // ফায়ারবেস ওটিপি ভেরিফিকেশন চেক
+                await confirmationResultObj.confirm(otpVal);
+
                 const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', pendingPhone);
                 const userDoc = await getDoc(userRef);
 
                 if (!userDoc.exists()) {
-                    showAlert("ত্রুটি", "কোনো অ্যাকাউন্ট পাওয়া যায়নি।", "fa-circle-xmark", "text-red-500");
+                    showAlert("ত্রুটি", "এই নম্বরে কোনো নিবন্ধিত অ্যাকাউন্ট পাওয়া যায়নি।", "fa-circle-xmark", "text-red-500");
+                    forgetResetBtn.innerText = "পাসওয়ার্ড পরিবর্তন করুন";
+                    forgetResetBtn.disabled = false;
                     return;
                 }
 
@@ -1287,7 +1392,11 @@
                 }, 1500);
 
             } catch (err) {
-                showAlert("ত্রুটি", "হালনাগাদ করা যায়নি: " + err.message, "fa-circle-xmark", "text-red-500");
+                console.error("Password reset confirmation error:", err);
+                showAlert("ভুল কোড", "ওটিপি ভেরিফিকেশন কোডটি সঠিক নয়। অনুগ্রহ করে পুনরায় সঠিক কোড দিন।", "fa-circle-xmark", "text-red-500");
+            } finally {
+                forgetResetBtn.innerText = "পাসওয়ার্ড পরিবর্তন করুন";
+                forgetResetBtn.disabled = false;
             }
         }
 
@@ -1390,6 +1499,7 @@
             isWaitingInDanger = false;
             document.getElementById('dangerResetOverlay').classList.add('hidden');
 
+            // Re-establish buttons
             const btn = document.getElementById('finalResetBtn');
             btn.disabled = true;
             btn.innerText = "অপেক্ষা করুন... (৫ মিনিট পর সচল হবে)";
@@ -1409,6 +1519,7 @@
             counterStartTime = Date.now();
             startCounterInterval();
 
+            // Update user document
             try {
                 const userRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.phone);
                 await updateDoc(userRef, {
@@ -1446,6 +1557,7 @@
                 console.log("উক্তি লোড করা যায়নি, ডিফল্টগুলো ব্যবহৃত হচ্ছে।", err);
             }
 
+            // Save baseline for order configurations
             originalQuotes = [...localQuotes];
             initializeQuotesSlider();
         }
@@ -1484,7 +1596,7 @@
 
             const displayArea = document.getElementById('quoteDisplayArea');
             displayArea.classList.remove('fade-in');
-            void displayArea.offsetWidth;
+            void displayArea.offsetWidth; // Reflow trigger
             displayArea.classList.add('fade-in');
 
             document.getElementById('quoteText').innerText = `"${currQuote.text}"`;
@@ -1492,6 +1604,7 @@
             document.getElementById('quoteProgress').innerText = `${currentQuoteIndex + 1} / ${localQuotes.length}`;
         }
 
+        // Slider Navigation handlers
         function nextQuote() {
             currentQuoteIndex = (currentQuoteIndex + 1) % localQuotes.length;
             renderQuote();
@@ -1536,6 +1649,7 @@
             }
         }
 
+        // Txt File Parser for Uploading quotes
         function handleTxtFileUpload() {
             const uploader = document.getElementById('txtFileUploader');
             const statusText = document.getElementById('uploadStatusText');
@@ -1555,6 +1669,7 @@
                     const trimmed = line.trim();
                     if (!trimmed) return;
 
+                    // Strip prefixes cleanly
                     const cleaned = trimmed.replace(/^[\d১২৩৪৫৬৭৮৯০a-zA-Z\s\.\-\)\]\[]+/g, '').trim();
 
                     if (cleaned && cleaned.length > 3) {
