@@ -378,7 +378,7 @@
 
         <!-- ================= DIGITAL TIMER & COUNTER ================= -->
         <div class="w-full glass-card rounded-2xl p-6 md:p-8 text-center relative overflow-hidden">
-            <h4 class="text-xs uppercase tracking-widest text-emerald-800 font-semibold mb-2"><i class="fa-regular fa-clock"></i> অনবরত ইসলামিক পথচলা কাউন্টার</h4>
+            <h4 class="text-xs uppercase tracking-widest text-emerald-800 font-semibold mb-2"><i class="fa-regular fa-clock"></i> On-going Islamic Path Counter</h4>
 
             <div class="my-4">
                 <div id="counterDisplay" class="text-4xl md:text-5xl font-black text-emerald-900 font-mono tracking-wider counter-glow transition-all duration-300">
@@ -708,7 +708,7 @@
             { text: "হে আমাদের পালনকর্তা! সরল পথ প্রদর্শনের পর আমাদের অন্তরকে সত্যলঙ্ঘনপ্রবণ করবেন না এবং আপনার পক্ষ থেকে অনুগ্রহ দান করুন।", author: "সূরা আল ইমরান: ৮" },
             { text: "যে ব্যক্তি আল্লাহর ওপর ভরসা করে, আল্লাহই তার জন্য যথেষ্ট হয়ে যান।", author: "সূরা আত-তালাক: ৩" },
             { text: "আল্লাহ কোনো আত্মার ওপর তার সাধ্যের অতিরিক্ত বোঝা চাপান না।", author: "সূরা আল-বাকারাহ: ২৮৬" },
-            { text: "ক্ষমা করতে শেখো, আল্লাহও ক্ষমাশীল ও দয়াময়দের ভালোবাসেন।", author: "সূরা আন-নূর: ২২" },
+            { text: "ক্ষমা করতে শেখো, আল্লাহও ক্ষমাশীল ও دয়াময়দের ভালোবাসেন।", author: "সূরা আন-নূর: ২২" },
             { text: "দুনিয়ার তুচ্ছ লাভের চেয়ে পরকালের চিরস্থায়ী প্রশান্তি অতি উত্তম।", author: "সূরা আল-আলা: ১৭" }
         ];
         let dangerQuoteIndex = 0;
@@ -1423,6 +1423,7 @@
         let linkEmailPending = null;
         let linkPasswordPending = null;
 
+        // আপডেট করা ডায়নামিক লিঙ্ক সিস্টেম (যদি ইমেইল আগে থেকেই অথেনটিকেশনে থেকে থাকে তবুও কাজ করবে)
         async function handleLinkEmailSubmit() {
             const emailInput = document.getElementById('linkEmailInput').value.trim();
             const passwordInput = document.getElementById('linkPasswordInput').value.trim();
@@ -1446,28 +1447,55 @@
             linkPasswordPending = passwordInput;
 
             try {
-                // ফায়ারস্টোরে ইমেইলটি আগে ব্যবহৃত হয়েছে কিনা চেক
+                // ১. ফায়ারস্টোরে ইমেইলটি অন্য কারও অ্যাকাউন্টে ইতিমধ্যে ব্যবহৃত হয়েছে কিনা চেক
                 const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
                 const q = query(usersRef, where('email', '==', linkEmailPending));
                 const snap = await getDocs(q);
 
                 if (!snap.empty) {
-                    showAlert("ইমেইল ইতিমধ্যে ব্যবহৃত", "এই ইমেইলটি অন্য একটি অ্যাকাউন্টে ইতিমধ্যে যুক্ত করা রয়েছে। অন্য ইমেইল ব্যবহার করুন।", "fa-triangle-exclamation", "text-amber-500");
-                    sendBtn.innerText = "ইমেইল সংযুক্ত করুন ও লিঙ্ক পাঠান 🚀";
-                    sendBtn.disabled = false;
-                    return;
+                    const matchedUser = snap.docs[0].data();
+                    if (matchedUser.phone !== currentUser.phone) {
+                        showAlert("ইমেইল ইতিমধ্যে ব্যবহৃত", "এই ইমেইলটি অন্য একটি অ্যাকাউন্টে ইতিমধ্যে যুক্ত করা রয়েছে। অন্য ইমেইল ব্যবহার করুন।", "fa-triangle-exclamation", "text-amber-500");
+                        sendBtn.innerText = "ইমেইল সংযুক্ত করুন ও লিঙ্ক পাঠান 🚀";
+                        sendBtn.disabled = false;
+                        return;
+                    }
                 }
 
-                // ফায়ারবেস অথেন্টিকেশনে নতুন ইউজার তৈরি ও ভেরিফিকেশন পাঠানো
-                const userCred = await createUserWithEmailAndPassword(auth, linkEmailPending, linkPasswordPending);
-                await sendEmailVerification(userCred.user);
+                // ২. ফায়ারবেস অথেন্টিকেশনে নতুন ইউজার তৈরি অথবা আগের ক্রিয়েট করা ডুপ্লিকেট সিস্টেমে লগইন ট্রাই
+                let userToVerify = null;
+                try {
+                    const userCred = await createUserWithEmailAndPassword(auth, linkEmailPending, linkPasswordPending);
+                    userToVerify = userCred.user;
+                } catch (createErr) {
+                    // যদি ইমেইল অলরেডি ফায়ারবেস অথেন্টিকেশন ডাটাবেজে ক্রিয়েট হয়ে থাকে (কিন্তু এখনও ভেরিফাইড নয়)
+                    if (createErr.code === 'auth/email-already-in-use') {
+                        try {
+                            const loginCred = await signInWithEmailAndPassword(auth, linkEmailPending, linkPasswordPending);
+                            userToVerify = loginCred.user;
+                        } catch (loginErr) {
+                            showAlert("ব্যর্থ হয়েছে ⚠️", "এই ইমেইলটি ইতিমধ্যে অন্য কোথাও ফায়ারবেসে ব্যবহৃত হচ্ছে। ভিন্ন ইমেইল ব্যবহার করুন।", "fa-circle-xmark", "text-red-500");
+                            sendBtn.innerText = "ইমেইল সংযুক্ত করুন ও লিঙ্ক পাঠান 🚀";
+                            sendBtn.disabled = false;
+                            return;
+                        }
+                    } else {
+                        throw createErr;
+                    }
+                }
 
-                document.getElementById('linkStepInput').classList.add('hidden');
-                document.getElementById('linkStepOTP').classList.remove('hidden');
-                
-                showAlert("ভেরিফিকেশন লিঙ্ক প্রেরিত 📧", "আপনার টাইপ করা ইমেইলটিতে কনফার্মেশন লিঙ্ক পাঠানো হয়েছে। মেইলে ক্লিক করার পর নিচে চেক করুন।", "fa-paper-plane", "text-emerald-700");
+                // ৩. সফল লগইন বা রেজিস্ট্রেশন শেষ হলে সরাসরি ভেরিফিকেশন মেইল পাঠানো
+                if (userToVerify) {
+                    await sendEmailVerification(userToVerify);
+
+                    document.getElementById('linkStepInput').classList.add('hidden');
+                    document.getElementById('linkStepOTP').classList.remove('hidden');
+                    
+                    showAlert("ভেরিফিকেশন লিঙ্ক প্রেরিত 📧", "আপনার টাইপ করা ইমেইলটিতে কনফার্মেশন লিঙ্ক পাঠানো হয়েছে। মেইলে ক্লিক করার পর নিচে চেক করুন।", "fa-paper-plane", "text-emerald-700");
+                }
 
             } catch (err) {
+                console.error("Link Email Error:", err);
                 showAlert("ত্রুটি", "ইমেইল ভেরিফিকেশন লিঙ্ক পাঠাতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।", "fa-triangle-exclamation", "text-red-500");
             } finally {
                 sendBtn.innerText = "ইমেইল সংযুক্ত করুন ও লিঙ্ক পাঠান 🚀";
@@ -1503,7 +1531,7 @@
                             currentUser.password = linkPasswordPending;
                             localStorage.setItem('userSessionKey', linkEmailPending); 
 
-                    document.getElementById('linkEmailModal').classList.add('hidden');
+                            document.getElementById('linkEmailModal').classList.add('hidden');
                             showAlert("সাফল্য! 🎉", "আপনার অ্যাকাউন্টের সাথে সফলভাবে ইমেইল আইডি সংযুক্ত করা হয়েছে। আপনার পূর্বের সমস্ত দিন অক্ষুণ্ণ রয়েছে।", "fa-circle-check", "text-emerald-600");
                             launchAuthenticatedApp(currentUser);
                         }
