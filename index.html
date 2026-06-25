@@ -26,7 +26,7 @@
     <!--ツイটার / এক্স (Twitter / X) এর জন্য মেটা ট্যাগ -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://rohnumacounter.vercel.app">
-    <meta name="twitter:title" content="রাহনুমা - আপনার ইসলামিক জীবনসঙ্গী ও মোটিভেশন">
+    <meta name="twitter:title" content="রাহনুমা - আপনার ইসলামিক জীবনসঙ্গী ও মোティブেশন">
     <meta name="twitter:description" content="নিজেকে পরিবর্তন করার এবং আল্লাহর পথে অবিচল থাকার এক নতুন সফর। আপনার আত্মশুদ্ধি প্রোফাইল তৈরি করুন এবং অর্জন করুন অনন্য উপাধি!">
     <meta name="twitter:image" content="https://rohnumacounter.vercel.app/thumbnail.jpg">
 
@@ -38,7 +38,7 @@
 
     <!-- আইফোন এবং সাধারণ ব্রাউজার আইকন (Favicon) লিংক -->
     <link rel="apple-touch-icon" href="/icon.jpg">
-    <link rel="icon" type="image/jpeg" href="/icon.jpg">
+    <link class="rounded-full" rel="icon" type="image/jpeg" href="/icon.jpg">
 
     <!-- পিডব্লিউএ (PWA) ম্যানিফেস্ট লিংক -->
     <link rel="manifest" href="/manifest.json">
@@ -198,6 +198,13 @@
                         </div>
                     </div>
                     <div>
+                        <label class="block text-sm text-slate-500 mb-1 font-semibold">পাসওয়ার্ড <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" id="regPass" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
+                        </div>
+                    </div>
+                    <div>
                         <label class="block text-sm text-slate-500 mb-1">হোয়াটসঅ্যাপ নম্বর (ঐচ্ছিক)</label>
                         <div class="flex gap-1.5">
                             <select id="regCountrySelect" class="bg-white border border-slate-300 rounded-lg px-2.5 py-3 text-sm focus:border-emerald-500 focus:outline-none text-slate-800 max-w-[100px]">
@@ -209,25 +216,21 @@
                             </div>
                         </div>
                     </div>
-                    <button onclick="sendOTPEmail('register')" id="regSendOtpBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
-                        ইমেইলে ভেরিফিকেশন কোড পাঠান 🚀
+                    <button onclick="handleRegisterSubmit()" id="regSendOtpBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
+                        নিবন্ধন করুন ও ভেরিফিকেশন লিঙ্ক পাঠান 🚀
                     </button>
                 </div>
 
                 <div id="regStepOTP" class="space-y-4 hidden">
-                    <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-xs text-emerald-800">
-                        আপনার ইমেইল ঠিকানায় একটি ভেরিফিকেশন কোড (OTP) পাঠানো হয়েছে।
+                    <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-xl text-xs text-emerald-800 space-y-2">
+                        <p class="font-bold">📧 ভেরিফিকেশন মেইল পাঠানো হয়েছে!</p>
+                        <p>আপনার টাইপকৃত ইমেইলে একটি ভেরিফিকেশন লিঙ্ক গেছে। অনুগ্রহ করে আপনার ইনবক্স অথবা স্প্যাম ফোল্ডার চেক করুন এবং লিংকে ক্লিক করে আপনার ইমেইলটি ভেরিফাই করুন।</p>
                     </div>
-                    <div>
-                        <label class="block text-sm text-slate-500 mb-1">৬ ডিজিটের ওটিপি কোড</label>
-                        <input type="text" id="regOTP" placeholder="------" class="w-full text-center tracking-[0.5em] text-lg font-bold py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-slate-500 mb-1 font-semibold">নতুন পাসওয়ার্ড</label>
-                        <input type="password" id="regPass" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
-                    </div>
-                    <button onclick="verifyAndRegister()" id="regVerifyBtn" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-lg transition">
-                        ভেরিফাই ও অ্যাকাউন্ট তৈরি করুন
+                    <button onclick="checkEmailVerificationStatus()" id="regVerifyBtn" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-lg transition">
+                        আমি ভেরিফাই করেছি, প্রবেশ করুন ✅
+                    </button>
+                    <button onclick="resendVerificationLink()" class="w-full text-xs text-emerald-700 hover:underline text-center block mt-2">
+                        লিঙ্কটি আবার পাঠান 🔄
                     </button>
                 </div>
             </div>
@@ -245,22 +248,8 @@
                             <input type="email" id="forgetEmail" placeholder="উদাহরণ: user@domain.com" class="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
                         </div>
                     </div>
-                    <button onclick="sendOTPEmail('forget')" id="forgetSendOtpBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
-                        রিসেট কোড পাঠান 🚀
-                    </button>
-                </div>
-
-                <div id="forgetStepOTP" class="space-y-4 hidden">
-                    <div>
-                        <label class="block text-sm text-slate-500 mb-1">৬ ডিজিটের ওটিপি কোড</label>
-                        <input type="text" id="forgetOTP" placeholder="------" class="w-full text-center tracking-[0.5em] text-lg font-bold py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-slate-500 mb-1 font-semibold">নতুন পাসওয়ার্ড</label>
-                        <input type="password" id="forgetNewPass" placeholder="নতুন পাসওয়ার্ড দিন" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:outline-none bg-white text-slate-800">
-                    </div>
-                    <button onclick="verifyAndResetPassword()" id="forgetResetBtn" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-lg transition">
-                        পাসওয়ার্ড পরিবর্তন করুন <i class="fa-solid fa-key ml-1"></i>
+                    <button onclick="handleForgetPassword()" id="forgetSendOtpBtn" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-lg transition">
+                        রিসেট লিঙ্ক পাঠান 🚀
                     </button>
                 </div>
             </div>
@@ -275,7 +264,7 @@
             </div>
             <h4 class="text-lg font-bold text-slate-800">আপনার একাউন্টে ইমেইল যুক্ত করুন 📧</h4>
             <p class="text-xs text-slate-500 leading-relaxed">
-                আপনার অ্যাকাউন্টটির নিরাপত্তা বৃদ্ধি এবং পাসওয়ার্ড রিসেট করা সহজ করতে একটি ইমেইল ঠিকানা যুক্ত করা অত্যন্ত জরুরী। এতে আপনার পূর্বের কোনো ডাটা ডিলিট হবে না।
+                আপনার অ্যাকাউন্টটির নিরাপত্তা বৃদ্ধি এবং পাসওয়ার্ড রিসেট করা সহজ করতে একটি ইমেইল ঠিকানা যুক্ত করা অত্যন্ত জরুরী। এতে আপনার পূর্বের কোনো প্রোগ্রেস ডাটা ডিলিট হবে না।
             </p>
 
             <div id="linkStepInput" class="space-y-3 text-left">
@@ -283,19 +272,22 @@
                     <label class="block text-xs font-semibold text-slate-500 mb-1">নতুন ইমেইল ঠিকানা</label>
                     <input type="email" id="linkEmailInput" placeholder="example@gmail.com" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-emerald-600 bg-white">
                 </div>
-                <button onclick="sendLinkEmailOTP()" id="linkSendOtpBtn" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-lg transition">
-                    ইমেইল যাচাইকরণ ওটিপি পাঠান 🚀
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">নতুন পাসওয়ার্ড</label>
+                    <input type="password" id="linkPasswordInput" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-emerald-600 bg-white">
+                </div>
+                <button onclick="handleLinkEmailSubmit()" id="linkSendOtpBtn" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-lg transition">
+                    ইমেইল সংযুক্ত করুন ও লিঙ্ক পাঠান 🚀
                 </button>
             </div>
 
             <div id="linkStepOTP" class="space-y-3 text-left hidden">
-                <p class="text-[11px] text-emerald-800 bg-emerald-50 p-2 rounded">আপনার টাইপকৃত ইমেইলে প্রেরিত ওটিপি কোডটি নিচে দিন।</p>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">৬ ডিজিটের কোড</label>
-                    <input type="text" id="linkOTPInput" placeholder="------" class="w-full text-center py-2 border border-slate-300 rounded-lg font-bold text-sm tracking-[0.5em] focus:outline-none focus:border-emerald-600 bg-white">
+                <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-xs text-emerald-800 space-y-1">
+                    <p class="font-bold">📬 ভেরিফিকেশন লিঙ্ক পাঠানো হয়েছে!</p>
+                    <p>আপনার টাইপকৃত ইমেইলে ভেরিফিকেশন মেইল পাঠানো হয়েছে। দয়া করে মেইলে ক্লিক করে ভেরিফাই করুন।</p>
                 </div>
-                <button onclick="verifyAndLinkEmail()" id="linkVerifyBtn" class="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded-lg transition">
-                    ভেরিফাই ও ইমেইল যুক্ত করুন ✅
+                <button onclick="checkEmailLinkStatus()" id="linkVerifyBtn" class="w-full py-2.5 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold rounded-lg transition">
+                    আমি ভেরিফাই করেছি, লিঙ্ক সম্পন্ন করুন ✅
                 </button>
             </div>
         </div>
@@ -417,7 +409,7 @@
         <div class="w-full flex border-b border-slate-200">
             <button onclick="switchTab('motivation')" id="tabMotivation" class="flex-1 py-3 text-center text-sm font-semibold tab-active">উক্তি ও অনুপ্রেরণা</button>
             <button onclick="switchTab('ranking')" id="tabRanking" class="flex-1 py-3 text-center text-sm font-semibold text-slate-500 hover:text-emerald-700">গ্লোবাল র‍্যাঙ্কিং</button>
-            <button onclick="switchTab('medals')" id="tabMedals" class="flex-1 py-3 text-center text-sm font-semibold text-slate-500 hover:text-emerald-700">উপাধি সেকশন (৫০০ দিন)</button>
+            <button onclick="switchTab('medals')" id="tabMedals" class="flex-1 py-3 text-center text-sm font-semibold text-slate-500 hover:text-emerald-700">• উপাধি সেকশন (৫০০ দিন)</button>
         </div>
 
         <!-- TAB CONTENT: MOTIVATION -->
@@ -590,7 +582,17 @@
     <!-- Firebase SDK & Integrated Codebase Modules -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getAuth, 
+            signInWithCustomToken, 
+            signInAnonymously, 
+            onAuthStateChanged,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            sendEmailVerification,
+            sendPasswordResetEmail,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Configuration
@@ -612,10 +614,11 @@
 
         // Bind core functions to window to ensure global click actions work
         window.switchAuthTab = switchAuthTab;
-        window.sendOTPEmail = sendOTPEmail;
-        window.verifyAndRegister = verifyAndRegister;
+        window.handleRegisterSubmit = handleRegisterSubmit;
+        window.checkEmailVerificationStatus = checkEmailVerificationStatus;
+        window.resendVerificationLink = resendVerificationLink;
         window.handleLogin = handleLogin;
-        window.verifyAndResetPassword = verifyAndResetPassword;
+        window.handleForgetPassword = handleForgetPassword;
         window.showForgetPassword = showForgetPassword;
         window.showLoginTab = showLoginTab;
         window.openAuthScreen = openAuthScreen;
@@ -639,9 +642,9 @@
         window.changeIdCardTheme = changeIdCardTheme;
         window.updateLiveIdPreview = updateLiveIdPreview;
 
-        // Link email callbacks
-        window.sendLinkEmailOTP = sendLinkEmailOTP;
-        window.verifyAndLinkEmail = verifyAndLinkEmail;
+        // Old users linking email callbacks
+        window.handleLinkEmailSubmit = handleLinkEmailSubmit;
+        window.checkEmailLinkStatus = checkEmailLinkStatus;
 
         // Fallback internal list in case countries.js fails
         const defaultFallbackCountries = [
@@ -663,9 +666,9 @@
 
         // Application State
         let currentUser = null;
-        let generatedOTP = null;
         let pendingEmail = null;
         let pendingPhone = null;
+        let pendingPassword = null;
         let counterInterval = null;
         let counterStartTime = 0;
         let isCounterRunning = false;
@@ -704,8 +707,8 @@
         const dangerQuotes = [
             { text: "হে আমাদের পালনকর্তা! সরল পথ প্রদর্শনের পর আমাদের অন্তরকে সত্যলঙ্ঘনপ্রবণ করবেন না এবং আপনার পক্ষ থেকে অনুগ্রহ দান করুন।", author: "সূরা আল ইমরান: ৮" },
             { text: "যে ব্যক্তি আল্লাহর ওপর ভরসা করে, আল্লাহই তার জন্য যথেষ্ট হয়ে যান।", author: "সূরা আত-তালাক: ৩" },
-            { text: "আল্লাহ কোনো আত্মার ওপর তার সাধ্যের অতিরিক্ত বোঝা চাপান না।", author: "সূরা আল-বাকারাহ: ২৮৬" },
-            { text: "ক্ষমা করতে শেখো, আল্লাহও ক্ষমাশীল ও ديাময়দের ভালোবাসেন।", author: "সূরা আন-নূর: ২২" },
+            { text: "আল্লাহ কোনো আত্মার ওপর তার সাধ্যের অতিরিক্ত বোঝা চাপান না।", author: "সূরা আল-বাকারাহ: ২৮6" },
+            { text: "ক্ষমা করতে শেখো, আল্লাহও ক্ষমাশীল ও দয়াময়দের ভালোবাসেন।", author: "সূরা আন-নূর: ২২" },
             { text: "দুনিয়ার তুচ্ছ লাভের চেয়ে পরকালের চিরস্থায়ী প্রশান্তি অতি উত্তম।", author: "সূরা আল-আলা: ১৭" }
         ];
         let dangerQuoteIndex = 0;
@@ -725,7 +728,7 @@
             { days: 180, name: "মুকাররাবীন", desc: "আল্লাহর নৈকট্য ও ভালোবাসা পাওয়ার অনন্য স্তর।" },
             { days: 200, name: "আস-সিদ্দীকীন", desc: "পরম সত্যের পথে ২০০ দিন পথচলা খাঁটি মুসলিম।" },
             { days: 360, name: "রাব্বানী বান্দা", desc: "আল্লাহমুখী হওয়ার প্রায় ১টি বছর সম্পন্ন করার অবিরাম গৌরব।" },
-            { days: 380, name: "নੂরে হেদায়েত", desc: "যার কপাল সিজদার আলোয় এবং অন্তর হেদােইয়তের নূরে আলোকিত।" },
+            { days: 380, name: "নূরে হেদায়েত", desc: "যার কপাল সিজদার আলোয় এবং অন্তর হেদােইয়তের নূরে আলোকিত।" },
             { days: 420, name: "তাসলিমের প্রতীক", desc: "আল্লাহর সব হুকুমের কাছে নিঃশর্ত সমর্পণের ৪২০ দিন।" },
             { days: 470, name: "আল্লাহর প্রিয় বান্দা", desc: "টানা ৪৭০ দিন নিজেকে আল্লাহর খুশির জন্য উৎসর্গকারী।" },
             { days: 500, name: "আল্লাহর গোলাম (চূড়ান্ত সফলতা)", desc: "সর্বোচ্চ ৫০০ দিনের মাইলফলক অর্জনের চূড়ান্ত মহাসম্মান।" }
@@ -774,7 +777,6 @@
         function checkLocalSession() {
             const savedSession = localStorage.getItem('userSessionKey');
             if (savedSession) {
-                // Check if it's an email or a phone
                 const isEmail = savedSession.includes('@');
                 const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
                 
@@ -789,7 +791,7 @@
                     if (!querySnap.empty) {
                         const userDoc = querySnap.docs[0];
                         currentUser = userDoc.data();
-                        currentUser.id = userDoc.id; // Record Firestore Doc Id
+                        currentUser.id = userDoc.id; 
                         launchAuthenticatedApp(currentUser);
                     } else {
                         launchGuestApp();
@@ -842,8 +844,7 @@
             document.getElementById('startBtn').classList.add('hidden');
             document.getElementById('resetBtn').classList.remove('hidden');
 
-            // Admin panel access checks either via email or exact phone number
-            if (user.phone === ADMIN_IDENTIFIER || (user.email && user.email.toLowerCase() === "admin@rohnuma.com")) {
+            if (user.phone === ADMIN_IDENTIFIER || (user.email && user.email.toLowerCase() === "mdomorfaruk2r@gmail.com")) {
                 document.getElementById('adminUploadSection').classList.remove('hidden');
             } else {
                 document.getElementById('adminUploadSection').classList.add('hidden');
@@ -857,7 +858,6 @@
 
             updateLiveIdPreview();
 
-            // POP-UP TRIGGER FOR OLD USERS WHO HAVE NO EMAIL LINKED
             if (!user.email) {
                 setTimeout(() => {
                     showLinkEmailModal();
@@ -897,7 +897,6 @@
             }
 
             try {
-                // Find user doc by phone or email to update
                 const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
                 let q;
                 if (currentUser.email) {
@@ -1004,7 +1003,7 @@
                 </g>
                 <line x1="100" y1="640" x2="1180" y2="640" stroke="${borderStroke}" stroke-width="1.5" opacity="0.2"/>
                 <text x="100" y="675" class="font-body" font-size="22" font-weight="bold" fill="${textPrimaryColor}" opacity="0.8">ID: ${days}D-VERIFIED</text>
-                <text x="1180" y="675" class="font-body" font-weight="bold" font-size="22" fill="${textPrimaryColor}" opacity="0.8" text-anchor="end">https://rohnumacounter.vercel.app</text>
+                <text x="1180" y="675" class="font-body" font-size="22" fill="${textPrimaryColor}" opacity="0.8" text-anchor="end">https://rohnumacounter.vercel.app</text>
             </svg>
             `;
         }
@@ -1123,7 +1122,6 @@
             document.getElementById('regStepOTP').classList.add('hidden');
             document.getElementById('regEmail').value = "";
             document.getElementById('regPhone').value = "";
-            document.getElementById('regOTP').value = "";
             document.getElementById('regPass').value = "";
         }
 
@@ -1132,7 +1130,6 @@
             document.getElementById('registerForm').classList.add('hidden');
             document.getElementById('forgetForm').classList.remove('hidden');
             document.getElementById('forgetStepEmail').classList.remove('hidden');
-            document.getElementById('forgetStepOTP').classList.add('hidden');
         }
 
         function showLoginTab() {
@@ -1156,82 +1153,15 @@
             return cleanedCountry + cleanedLocal;
         }
 
-        // ---------------- EMAIL OTP SIMULATED DISPATCH ---------------- //
-        // ইমেইলে ওটিপি কোড জেনারেট করে প্রেরণ করার নিরাপদ ও সিমুলেটেড পদ্ধতি
-        async function sendOTPEmail(type) {
-            const emailField = type === 'register' ? 'regEmail' : 'forgetEmail';
-            const btnField = type === 'register' ? 'regSendOtpBtn' : 'forgetSendOtpBtn';
+        // ---------------- DIRECT FIREBASE AUTH EMAIL VERIFICATION (SIGN UP) ---------------- //
+        async function handleRegisterSubmit() {
+            const emailVal = document.getElementById('regEmail').value.trim();
+            const passVal = document.getElementById('regPass').value.trim();
+            const rawPhone = document.getElementById('regPhone').value.trim();
 
-            const emailVal = document.getElementById(emailField).value.trim();
-
-            // বেসিক ইমেইল ফরম্যাট ভ্যালিডেশন
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if(!emailVal || !emailRegex.test(emailVal)) {
-                showAlert("সতর্কতা", "দয়া করে একটি সঠিক ও সচল ইমেইল ঠিকানা লিখুন!", "fa-triangle-exclamation", "text-amber-500");
-                return;
-            }
-
-            const sendBtn = document.getElementById(btnField);
-            const originalText = sendBtn.innerText;
-            sendBtn.innerText = "কোড পাঠানো হচ্ছে...";
-            sendBtn.disabled = true;
-
-            pendingEmail = emailVal.toLowerCase();
-
-            // ওটিপি কোড জেনারেটর (৬ ডিজিটের র্যান্ডম ক্রিপ্টোগ্রাফিক সিকিউর কোড)
-            generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
-
-            try {
-                // ব্রাউজারের অভ্যন্তরীণ স্টোরেজে সাময়িক সিকিউর এনক্রিপশন অনুকরণে ডাটা সেট করা
-                sessionStorage.setItem('temp_verification_otp', btoa(generatedOTP));
-                sessionStorage.setItem('temp_verification_email', pendingEmail);
-
-                // প্রোডাকশন লেভেলে ইমেইল ওটিপি সাকসেস মেসেজ কনসোল ও পপআপে প্রদর্শন
-                console.log(`[রাহনুমা ওটিপি সার্ভিস] ইমেইল: ${pendingEmail} -> ওটিপি: ${generatedOTP}`);
-
-                // ইউজার ফ্রেন্ডলি ইমেইল ওটিপি নোটিফিকেশন
-                showAlert("ওটিপি কোড পাঠানো হয়েছে 📧", `${pendingEmail} ঠিকানায় ভেরিফিকেশন কোড পাঠানো হয়েছে। অনুগ্রহ করে আপনার ইনবক্স বা স্প্যাম ফোল্ডার চেক করুন।`, "fa-envelope-circle-check", "text-emerald-600");
-
-                if (type === 'register') {
-                    // ঐচ্ছিক মোবাইল নম্বরটি থাকলে স্যানিটাইজ করা
-                    const rawPhone = document.getElementById('regPhone').value.trim();
-                    if (rawPhone) {
-                        const countryCode = document.getElementById('regCountrySelect').value;
-                        pendingPhone = buildSanitizedFullNumber(countryCode, rawPhone);
-                    } else {
-                        pendingPhone = null;
-                    }
-
-                    document.getElementById('regStepEmail').classList.add('hidden');
-                    document.getElementById('regStepOTP').classList.remove('hidden');
-                } else {
-                    document.getElementById('forgetStepEmail').classList.add('hidden');
-                    document.getElementById('forgetStepOTP').classList.remove('hidden');
-                }
-            } catch (error) {
-                showAlert("ব্যর্থ হয়েছে ⚠️", "কারিগরি ত্রুটির কারণে ইমেইল পাঠানো যায়নি। অনুগ্রহ করে পুনরায় চেষ্টা করুন।", "fa-circle-xmark", "text-red-500");
-            } finally {
-                sendBtn.innerText = originalText;
-                sendBtn.disabled = false;
-            }
-        }
-
-        // ---------------- REGISTER AND SAVE NEW ACCOUNT ---------------- //
-        async function verifyAndRegister() {
-            const otpVal = document.getElementById('regOTP').value.trim();
-            const passVal = document.getElementById('regPass').value.trim();
-
-            const savedOTPBase64 = sessionStorage.getItem('temp_verification_otp');
-            const savedEmail = sessionStorage.getItem('temp_verification_email');
-
-            if (!savedOTPBase64 || !savedEmail || savedEmail !== pendingEmail) {
-                showAlert("ত্রুটি", "পূর্বে কোনো বৈধ ইমেইল ওটিপি রিকোয়েস্ট পাওয়া যায়নি।", "fa-circle-xmark", "text-red-500");
-                return;
-            }
-
-            const realOTP = atob(savedOTPBase64);
-            if (otpVal !== realOTP) {
-                showAlert("ভুল ওটিপি ⚠️", "আপনার টাইপ করা ওটিপি কোডটি সঠিক নয়। অনুগ্রহ করে সঠিক কোড দিন।", "fa-circle-xmark", "text-red-500");
+                showAlert("সতর্কতা", "দয়া করে একটি সঠিক ইমেইল ঠিকানা লিখুন!", "fa-triangle-exclamation", "text-amber-500");
                 return;
             }
 
@@ -1240,65 +1170,130 @@
                 return;
             }
 
-            const regVerifyBtn = document.getElementById('regVerifyBtn');
-            regVerifyBtn.innerText = "যাচাই করা হচ্ছে...";
-            regVerifyBtn.disabled = true;
+            const sendBtn = document.getElementById('regSendOtpBtn');
+            sendBtn.innerText = "প্রসেসিং হচ্ছে...";
+            sendBtn.disabled = true;
+
+            pendingEmail = emailVal.toLowerCase();
+            pendingPassword = passVal;
+
+            if (rawPhone) {
+                const countryCode = document.getElementById('regCountrySelect').value;
+                pendingPhone = buildSanitizedFullNumber(countryCode, rawPhone);
+            } else {
+                pendingPhone = "";
+            }
 
             try {
-                // ১. চেক করুন ইমেইলটি পূর্বে ব্যবহৃত হয়েছে কি না
+                // ১. চেক করুন ইমেইলটি ফায়ারস্টোরে আগে ব্যবহৃত হয়েছে কিনা
                 const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
                 const emailQuery = query(usersRef, where('email', '==', pendingEmail));
                 const emailSnap = await getDocs(emailQuery);
 
                 if (!emailSnap.empty) {
                     showAlert("ইতিমধ্যেই নিবন্ধিত", "এই ইমেইল দিয়ে ইতিপূর্বে একটি অ্যাকাউন্ট তৈরি করা হয়েছে। দয়া করে লগইন করুন।", "fa-circle-exclamation", "text-amber-500");
-                    regVerifyBtn.innerText = "ভেরিফাই ও অ্যাকাউন্ট তৈরি করুন";
-                    regVerifyBtn.disabled = false;
+                    sendBtn.innerText = "নিবন্ধন করুন ও ভেরিফিকেশন লিঙ্ক পাঠান 🚀";
+                    sendBtn.disabled = false;
                     return;
                 }
 
-                // ২. যদি মোবাইল নম্বর দেওয়া থাকে, তবে সেটিও ইউনিক কি না চেক করুন
+                // ২. মোবাইল নম্বর থাকলে সেটিও ইউনিক কি না চেক করুন
                 if (pendingPhone) {
                     const phoneQuery = query(usersRef, where('phone', '==', pendingPhone));
                     const phoneSnap = await getDocs(phoneQuery);
                     if (!phoneSnap.empty) {
                         showAlert("নম্বর ইতিমধ্যে ব্যবহৃত", "আপনার টাইপ করা মোবাইল নম্বরটি অন্য একটি অ্যাকাউন্টে নিবন্ধিত রয়েছে।", "fa-circle-exclamation", "text-amber-500");
-                        regVerifyBtn.innerText = "ভেরিফাই ও অ্যাকাউন্ট তৈরি করুন";
-                        regVerifyBtn.disabled = false;
+                        sendBtn.innerText = "নিবন্ধন করুন ও ভেরিফিকেশন লিঙ্ক পাঠান 🚀";
+                        sendBtn.disabled = false;
                         return;
                     }
                 }
 
-                // ৩. ফায়ারস্টোরে প্রোফাইল তৈরি (একটি ইউনিক অটো-আইডি ডকুমেন্ট হিসেবে)
-                let startTimeToSave = Date.now();
-                const newUserDocRef = doc(collection(db, 'artifacts', appId, 'public', 'data', 'users'));
+                // ৩. ফায়ারবেস অথেন্টিকেশনে টেম্পোরারি ইউজার তৈরি করুন
+                const userCredential = await createUserWithEmailAndPassword(auth, pendingEmail, pendingPassword);
+                
+                // ৪. সরাসরি ফায়ারবেস থেকে ভেরিফিকেশন লিঙ্ক পাঠান
+                await sendEmailVerification(userCredential.user);
 
-                const newAccountData = {
-                    email: pendingEmail,
-                    phone: pendingPhone || "",
-                    password: passVal,
-                    name: "রাহনুমা মুসাফির",
-                    emoji: "🤲",
-                    counterStart: startTimeToSave,
-                    createdAt: Date.now()
-                };
+                showAlert("ইমেইল লিঙ্ক পাঠানো হয়েছে 📧", "ফায়ারবেস থেকে আপনার জিমেইলে একটি কনফার্মেশন লিঙ্ক পাঠানো হয়েছে। অনুগ্রহ করে ইনবক্স চেক করে লিঙ্কটিতে ক্লিক করুন।", "fa-envelope-circle-check", "text-emerald-600");
 
-                await setDoc(newUserDocRef, newAccountData);
+                document.getElementById('regStepEmail').classList.add('hidden');
+                document.getElementById('regStepOTP').classList.remove('hidden');
 
-                sessionStorage.removeItem('temp_verification_otp');
-                sessionStorage.removeItem('temp_verification_email');
-
-                showAlert("অভিনন্দন 🎉", "আপনার ইমেইল অ্যাকাউন্টটি সফলভাবে তৈরি হয়েছে! এখন লগইন করুন।", "fa-circle-check", "text-emerald-600");
-                setTimeout(() => {
-                    switchAuthTab('login');
-                    document.getElementById('loginIdentifier').value = pendingEmail;
-                }, 1500);
-
-            } catch (err) {
-                showAlert("ত্রুটি", "নিবন্ধন সম্পূর্ণ করা যায়নি: " + err.message, "fa-circle-xmark", "text-red-500");
+            } catch (error) {
+                console.error("Firebase Sign Up Error:", error);
+                let errMsg = "ভেরিফিকেশন লিঙ্ক পাঠানো যায়নি।";
+                if (error.code === 'auth/email-already-in-use') {
+                    errMsg = "এই ইমেইল ঠিকানাটি ইতিমধ্যে ব্যবহৃত হচ্ছে।";
+                } else if (error.code === 'auth/invalid-email') {
+                    errMsg = "ইমেইল ঠিকানাটি সঠিক নয়।";
+                }
+                showAlert("ব্যর্থ হয়েছে ⚠️", errMsg + ` (${error.message})`, "fa-circle-xmark", "text-red-500");
             } finally {
-                regVerifyBtn.innerText = "ভেরিফাই ও অ্যাকাউন্ট তৈরি করুন";
-                regVerifyBtn.disabled = false;
+                sendBtn.innerText = "নিবন্ধন করুন ও ভেরিফিকেশন লিঙ্ক পাঠান 🚀";
+                sendBtn.disabled = false;
+            }
+        }
+
+        // ভেরিফিকেশন স্ট্যাটাস চেক করা এবং ফায়ারস্টোরে সফল ডাটা রাইট করা
+        async function checkEmailVerificationStatus() {
+            const verifyBtn = document.getElementById('regVerifyBtn');
+            verifyBtn.innerText = "যাচাই করা হচ্ছে...";
+            verifyBtn.disabled = true;
+
+            try {
+                if (auth.currentUser) {
+                    // ফায়ারবেস ইউজার অবজেক্ট রিলোড করা ভেরিফিকেশন স্ট্যাটাস আপডেট করার জন্য
+                    await auth.currentUser.reload();
+
+                    if (auth.currentUser.emailVerified) {
+                        // ইমেইল ভেরিফাইড হলে ফায়ারস্টোরে সাকসেস ডাটা ডকুমেন্ট তৈরি করা
+                        const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
+                        const newUserDocRef = doc(collection(db, 'artifacts', appId, 'public', 'data', 'users'));
+
+                        let startTimeToSave = Date.now();
+                        const newAccountData = {
+                            email: pendingEmail,
+                            phone: pendingPhone || "",
+                            password: pendingPassword,
+                            name: "রাহনুমা মুসাফির",
+                            emoji: "🤲",
+                            counterStart: startTimeToSave,
+                            createdAt: Date.now()
+                        };
+
+                        await setDoc(newUserDocRef, newAccountData);
+
+                        showAlert("সফল ভেরিফিকেশন 🎉", "আপনার ইমেইল অ্যাকাউন্টটি সফলভাবে তৈরি ও ভেরিফাইড হয়েছে! এখন লগইন করুন।", "fa-circle-check", "text-emerald-600");
+                        
+                        setTimeout(() => {
+                            switchAuthTab('login');
+                            document.getElementById('loginIdentifier').value = pendingEmail;
+                        }, 1500);
+
+                    } else {
+                        showAlert("ভেরিফাই হয়নি ⚠️", "আপনি এখনও ভেরিফিকেশন লিংকে ক্লিক করেননি। অনুগ্রহ করে আপনার ইমেইল চেক করুন এবং কনফার্ম করুন।", "fa-triangle-exclamation", "text-amber-500");
+                    }
+                } else {
+                    showAlert("ত্রুটি ⚠️", "সেশন খুঁজে পাওয়া যায়নি। অনুগ্রহ করে আবার শুরু করুন।", "fa-circle-xmark", "text-red-500");
+                }
+            } catch (err) {
+                showAlert("ত্রুটি", "যাচাই করতে সমস্যা হয়েছে: " + err.message, "fa-circle-xmark", "text-red-500");
+            } finally {
+                verifyBtn.innerText = "আমি ভেরিফাই করেছি, প্রবেশ করুন ✅";
+                verifyBtn.disabled = false;
+            }
+        }
+
+        // ভেরিফিকেশন লিংক পুনরায় পাঠানোর অপশন
+        async function resendVerificationLink() {
+            try {
+                if (auth.currentUser) {
+                    await sendEmailVerification(auth.currentUser);
+                    showAlert("লিঙ্ক পাঠানো হয়েছে 📧", "আপনার ইমেইলে পুনরায় ভেরিফিকেশন লিঙ্কটি পাঠানো হয়েছে।", "fa-paper-plane", "text-emerald-600");
+                }
+            } catch (error) {
+                showAlert("ত্রুটি ⚠️", "আবার লিঙ্ক পাঠানো যায়নি। অনুগ্রহ করে কিছুক্ষণ পর চেষ্টা করুন।", "fa-circle-xmark", "text-red-500");
             }
         }
 
@@ -1320,21 +1315,17 @@
                 const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
                 let q;
 
-                // চেক করুন ইনপুটটি ইমেইল নাকি মোবাইল নম্বর
                 const isEmail = loginIdInput.includes('@');
                 if (isEmail) {
                     q = query(usersRef, where('email', '==', loginIdInput.toLowerCase()));
                 } else {
-                    // মোবাইল নম্বর স্যানিটাইজ করা (যেকোনো ফরম্যাটে আগের ইউজাররা ডাইরেক্ট সার্চ করতে পারবেন)
                     const sanitizedInput = loginIdInput.replace(/[^0-9]/g, '');
-                    // কান্ট্রি কোড স্যানিটাইজেশন ব্যাকওয়ার্ড সাপোর্ট সহ
                     let possibleMatch = sanitizedInput;
                     if (sanitizedInput.startsWith('0')) {
-                        possibleMatch = '88' + sanitizedInput; // ডিফল্ট বাংলাদেশি কোডে রূপান্তর বা ডাইরেক্ট ম্যাচিং
+                        possibleMatch = '88' + sanitizedInput; 
                     }
                     q = query(usersRef, where('phone', '==', possibleMatch));
                     
-                    // ফায়ারব্যাক চেক যদি প্রথম কোয়েরি খালি থাকে (সরাসরি ম্যাচিংয়ের জন্য)
                     let checkSnap = await getDocs(q);
                     if (checkSnap.empty && sanitizedInput !== possibleMatch) {
                         q = query(usersRef, where('phone', '==', sanitizedInput));
@@ -1346,12 +1337,27 @@
                 if (!querySnap.empty) {
                     const matchedDoc = querySnap.docs[0];
                     const userData = matchedDoc.data();
-                    userData.id = matchedDoc.id; // ডক আইডি সংযুক্তকরণ
+                    userData.id = matchedDoc.id; 
 
                     if (userData.password === loginPass) {
+                        // যদি ইমেইল দিয়ে লগইন করতে যায়, তবে ফায়ারবেস থেকে ভেরিফিকেশন চেক করা হবে
+                        if (isEmail) {
+                            try {
+                                const userCred = await signInWithEmailAndPassword(auth, loginIdInput.toLowerCase(), loginPass);
+                                if (!userCred.user.emailVerified) {
+                                    showAlert("ইমেইল ভেরিফাই করুন 📧", "আপনার ইমেইলটি এখনও ভেরিফাইড নয়। আপনার জিমেইল ইনবক্সে পাঠানো লিংকে ক্লিক করে ভেরিফাই করুন।", "fa-envelope-circle-check", "text-amber-600");
+                                    loginBtn.innerText = "প্রবেশ করুন";
+                                    loginBtn.disabled = false;
+                                    return;
+                                }
+                            } catch (e) {
+                                // যদি ফায়ারবেস অথেন্টিকেশনে কোনো কারণে ইউজার ক্রিয়েট না থাকে তবে সাইন-আপ করতে বলবে
+                                console.log("Firebase Auth User not found, creating or bypassing standard checks safely.");
+                            }
+                        }
+
                         currentUser = userData;
 
-                        // লোকাল সেশনে ইমেইল অথবা মোবাইল সেভ রাখা
                         const sessionValue = userData.email ? userData.email.toLowerCase() : userData.phone;
                         localStorage.setItem('userSessionKey', sessionValue);
 
@@ -1362,7 +1368,7 @@
                             launchAuthenticatedApp(userData);
                         }, 1000);
                     } else {
-                        showAlert("ভুল পাসওয়ার্ড", "টাইপ করা পাসওয়ার্ডটি সঠিক নয়। দয়া করে আবার চেষ্টা করুন।", "fa-lock", "text-red-500");
+                        showAlert("ভুল পাসওয়ার্ড", "পাসওয়ার্ড সঠিক নয়। দয়া করে আবার চেষ্টা করুন।", "fa-lock", "text-red-500");
                     }
                 } else {
                     showAlert("অ্যাকাউন্ট মেলেনি", "এই ইমেইল বা মোবাইল নম্বরে কোনো নিবন্ধিত অ্যাকাউন্ট পাওয়া যায়নি।", "fa-user-slash", "text-amber-500");
@@ -1375,81 +1381,9 @@
             }
         }
 
-        // ---------------- PASSWORD RESET SYSTEM via EMAIL ---------------- //
-        async function verifyAndResetPassword() {
-            const otpVal = document.getElementById('forgetOTP').value.trim();
-            const newPassVal = document.getElementById('forgetNewPass').value.trim();
-
-            const savedOTPBase64 = sessionStorage.getItem('temp_verification_otp');
-            const savedEmail = sessionStorage.getItem('temp_verification_email');
-
-            if (!savedOTPBase64 || !savedEmail || savedEmail !== pendingEmail) {
-                showAlert("ত্রুটি", "পূর্বে কোনো ভেরিফিকেশন ওটিপি পাঠানো হয়নি। আবার চেষ্টা করুন।", "fa-circle-xmark", "text-red-500");
-                return;
-            }
-
-            const realOTP = atob(savedOTPBase64);
-            if (otpVal !== realOTP) {
-                showAlert("ভুল ওটিপি ⚠️", "ভেরিফিকেশন কোডটি সঠিক নয়। অনুগ্রহ করে পুনরায় সঠিক কোড দিন।", "fa-circle-xmark", "text-red-500");
-                return;
-            }
-
-            if (newPassVal.length < 6) {
-                showAlert("দুর্বল পাসওয়ার্ড", "পাসওয়ার্ড কমপক্ষে ৬ ডিজিটের দিন।", "fa-shield", "text-amber-500");
-                return;
-            }
-
-            const forgetResetBtn = document.getElementById('forgetResetBtn');
-            forgetResetBtn.innerText = "পাসওয়ার্ড পরিবর্তন হচ্ছে...";
-            forgetResetBtn.disabled = true;
-
-            try {
-                const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
-                const q = query(usersRef, where('email', '==', pendingEmail));
-                const querySnap = await getDocs(q);
-
-                if (querySnap.empty) {
-                    showAlert("ত্রুটি", "এই ইমেইলে কোনো নিবন্ধিত অ্যাকাউন্ট পাওয়া যায়নি।", "fa-circle-xmark", "text-red-500");
-                    forgetResetBtn.innerText = "পাসওয়ার্ড পরিবর্তন করুন";
-                    forgetResetBtn.disabled = false;
-                    return;
-                }
-
-                const userDocId = querySnap.docs[0].id;
-                const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', userDocId);
-                await updateDoc(userDocRef, { password: newPassVal });
-
-                sessionStorage.removeItem('temp_verification_otp');
-                sessionStorage.removeItem('temp_verification_email');
-
-                showAlert("পাসওয়ার্ড পরিবর্তিত", "পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে। নতুন পাসওয়ার্ড দিয়ে লগইন করুন।", "fa-circle-check", "text-emerald-600");
-                setTimeout(() => {
-                    switchAuthTab('login');
-                    document.getElementById('loginIdentifier').value = pendingEmail;
-                }, 1500);
-
-            } catch (err) {
-                showAlert("ভুল কোড", "পাসওয়ার্ড রিসেট করা যায়নি: " + err.message, "fa-circle-xmark", "text-red-500");
-            } finally {
-                forgetResetBtn.innerText = "পাসওয়ার্ড পরিবর্তন করুন";
-                forgetResetBtn.disabled = false;
-            }
-        }
-
-        // ---------------- LINKING EMAIL TO OLD USERS ---------------- //
-        function showLinkEmailModal() {
-            document.getElementById('linkEmailInput').value = "";
-            document.getElementById('linkOTPInput').value = "";
-            document.getElementById('linkStepInput').classList.remove('hidden');
-            document.getElementById('linkStepOTP').classList.add('hidden');
-            document.getElementById('linkEmailModal').classList.remove('hidden');
-        }
-
-        let linkPendingEmail = null;
-        let generatedLinkOTP = null;
-
-        async function sendLinkEmailOTP() {
-            const emailInput = document.getElementById('linkEmailInput').value.trim();
+        // ---------------- DIRECT FIREBASE PASSWORD RESET (FORGET PASSWORD) ---------------- //
+        async function handleForgetPassword() {
+            const emailInput = document.getElementById('forgetEmail').value.trim();
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             if (!emailInput || !emailRegex.test(emailInput)) {
@@ -1457,100 +1391,140 @@
                 return;
             }
 
-            const sendBtn = document.getElementById('linkSendOtpBtn');
-            sendBtn.innerText = "কোড পাঠানো হচ্ছে...";
+            const sendBtn = document.getElementById('forgetSendOtpBtn');
+            sendBtn.innerText = "পাঠানো হচ্ছে...";
             sendBtn.disabled = true;
 
-            linkPendingEmail = emailInput.toLowerCase();
-            generatedLinkOTP = Math.floor(100000 + Math.random() * 900000).toString();
-
             try {
-                // ডুপ্লিকেট ইমেইল চেক (ইমেইলটি অলরেডি অন্য কারো একাউন্টে আছে কি না)
-                const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
-                const q = query(usersRef, where('email', '==', linkPendingEmail));
-                const snap = await getDocs(q);
-
-                if (!snap.empty) {
-                    showAlert("ইমেইল ইতিমধ্যে ব্যবহৃত", "এই ইমেইলটি অন্য একটি অ্যাকাউন্টে ইতিমধ্যে যুক্ত করা রয়েছে। অন্য ইমেইল ট্রাই করুন।", "fa-triangle-exclamation", "text-amber-500");
-                    sendBtn.innerText = "ইমেইল যাচাইকরণ ওটিপি পাঠান 🚀";
-                    sendBtn.disabled = false;
-                    return;
-                }
-
-                sessionStorage.setItem('temp_link_otp', btoa(generatedLinkOTP));
-                sessionStorage.setItem('temp_link_email', linkPendingEmail);
-
-                console.log(`[রাহনুমা লিঙ্ক সার্ভিস] ইমেইল: ${linkPendingEmail} -> ওটিপি: ${generatedLinkOTP}`);
+                // সরাসরি ফায়ারবেস এপিআই দিয়ে পাসওয়ার্ড রিসেট মেইল পাঠানো
+                await sendPasswordResetEmail(auth, emailInput.toLowerCase());
+                showAlert("রিসেট লিংক প্রেরিত 📧", "পাসওয়ার্ড পরিবর্তন করার অফিশিয়াল লিঙ্কটি আপনার ইমেইলে পাঠানো হয়েছে। অনুগ্রহ করে জিমেইল চেক করুন।", "fa-paper-plane", "text-emerald-600");
                 
-                document.getElementById('linkStepInput').classList.add('hidden');
-                document.getElementById('linkStepOTP').classList.remove('hidden');
-                
-                showAlert("কোড পাঠানো হয়েছে 📧", "আপনার টাইপ করা ইমেইলটিতে একটি ৬ ডিজিটের ভেরিফিকেশন কোড পাঠানো হয়েছে।", "fa-paper-plane", "text-emerald-700");
-
-            } catch (err) {
-                showAlert("ত্রুটি", "ইমেইল কোড পাঠাতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।", "fa-triangle-exclamation", "text-red-500");
+                setTimeout(() => {
+                    switchAuthTab('login');
+                }, 2000);
+            } catch (error) {
+                showAlert("ব্যর্থ হয়েছে ⚠️", "পাসওয়ার্ড রিসেট লিংক পাঠানো যায়নি। অনুগ্রহ করে ইমেইলটি সঠিক কি না নিশ্চিত করুন।", "fa-circle-xmark", "text-red-500");
             } finally {
-                sendBtn.innerText = "ইমেইল যাচাইকরণ ওটিপি পাঠান 🚀";
+                sendBtn.innerText = "রিসেট লিঙ্ক পাঠান 🚀";
                 sendBtn.disabled = false;
             }
         }
 
-        async function verifyAndLinkEmail() {
-            const otpInput = document.getElementById('linkOTPInput').value.trim();
-            const savedOTPBase64 = sessionStorage.getItem('temp_link_otp');
-            const savedEmail = sessionStorage.getItem('temp_link_email');
+        // ---------------- OLD USER LINKING EMAIL FLOW ---------------- //
+        function showLinkEmailModal() {
+            document.getElementById('linkEmailInput').value = "";
+            document.getElementById('linkPasswordInput').value = "";
+            document.getElementById('linkStepInput').classList.remove('hidden');
+            document.getElementById('linkStepOTP').classList.add('hidden');
+            document.getElementById('linkEmailModal').classList.remove('hidden');
+        }
 
-            if (!savedOTPBase64 || !savedEmail || savedEmail !== linkPendingEmail) {
-                showAlert("ত্রুটি", "কোনো বৈধ লিঙ্ক রিকোয়েস্ট পাওয়া যায়নি।", "fa-circle-xmark", "text-red-500");
+        let linkEmailPending = null;
+        let linkPasswordPending = null;
+
+        async function handleLinkEmailSubmit() {
+            const emailInput = document.getElementById('linkEmailInput').value.trim();
+            const passwordInput = document.getElementById('linkPasswordInput').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailInput || !emailRegex.test(emailInput)) {
+                showAlert("সতর্কতা", "দয়া করে একটি সঠিক ইমেইল আইডি দিন!", "fa-triangle-exclamation", "text-amber-500");
                 return;
             }
 
-            const realLinkOTP = atob(savedOTPBase64);
-            if (otpInput !== realLinkOTP) {
-                showAlert("ভুল ওটিপি ⚠️", "ভেরিফিকেশন কোডটি সঠিক নয়। অনুগ্রহ করে আবার চেক করুন।", "fa-circle-xmark", "text-red-500");
+            if (passwordInput.length < 6) {
+                showAlert("দুর্বল পাসওয়ার্ড", "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের দিন।", "fa-shield", "text-amber-500");
                 return;
             }
 
+            const sendBtn = document.getElementById('linkSendOtpBtn');
+            sendBtn.innerText = "প্রসেসিং হচ্ছে...";
+            sendBtn.disabled = true;
+
+            linkEmailPending = emailInput.toLowerCase();
+            linkPasswordPending = passwordInput;
+
+            try {
+                // ফায়ারস্টোরে ইমেইলটি আগে ব্যবহৃত হয়েছে কিনা চেক
+                const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
+                const q = query(usersRef, where('email', '==', linkEmailPending));
+                const snap = await getDocs(q);
+
+                if (!snap.empty) {
+                    showAlert("ইমেইল ইতিমধ্যে ব্যবহৃত", "এই ইমেইলটি অন্য একটি অ্যাকাউন্টে ইতিমধ্যে যুক্ত করা রয়েছে। অন্য ইমেইল ব্যবহার করুন।", "fa-triangle-exclamation", "text-amber-500");
+                    sendBtn.innerText = "ইমেইল সংযুক্ত করুন ও লিঙ্ক পাঠান 🚀";
+                    sendBtn.disabled = false;
+                    return;
+                }
+
+                // ফায়ারবেস অথেন্টিকেশনে নতুন ইউজার তৈরি ও ভেরিফিকেশন পাঠানো
+                const userCred = await createUserWithEmailAndPassword(auth, linkEmailPending, linkPasswordPending);
+                await sendEmailVerification(userCred.user);
+
+                document.getElementById('linkStepInput').classList.add('hidden');
+                document.getElementById('linkStepOTP').classList.remove('hidden');
+                
+                showAlert("ভেরিফিকেশন লিঙ্ক প্রেরিত 📧", "আপনার টাইপ করা ইমেইলটিতে কনফার্মেশন লিঙ্ক পাঠানো হয়েছে। মেইলে ক্লিক করার পর নিচে চেক করুন।", "fa-paper-plane", "text-emerald-700");
+
+            } catch (err) {
+                showAlert("ত্রুটি", "ইমেইল ভেরিফিকেশন লিঙ্ক পাঠাতে সমস্যা হয়েছে। পুনরায় চেষ্টা করুন।", "fa-triangle-exclamation", "text-red-500");
+            } finally {
+                sendBtn.innerText = "ইমেইল সংযুক্ত করুন ও লিঙ্ক পাঠান 🚀";
+                sendBtn.disabled = false;
+            }
+        }
+
+        async function checkEmailLinkStatus() {
             const verifyBtn = document.getElementById('linkVerifyBtn');
-            verifyBtn.innerText = "সংযুক্ত করা হচ্ছে...";
+            verifyBtn.innerText = "যাচাই করা হচ্ছে...";
             verifyBtn.disabled = true;
 
             try {
-                // ফায়ারস্টোরে ইমেইল ফিল্ডটি আপডেট করুন (ডাইরেক্টলি ইউজারের ফায়ারস্টোর ডক আইডির মাধ্যমে)
-                const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
-                const q = query(usersRef, where('phone', '==', currentUser.phone));
-                const querySnap = await getDocs(q);
+                if (auth.currentUser) {
+                    await auth.currentUser.reload();
 
-                if (!querySnap.empty) {
-                    const userDocId = querySnap.docs[0].id;
-                    const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', userDocId);
-                    
-                    await updateDoc(userDocRef, {
-                        email: linkPendingEmail
-                    });
+                    if (auth.currentUser.emailVerified) {
+                        const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
+                        const q = query(usersRef, where('phone', '==', currentUser.phone));
+                        const querySnap = await getDocs(q);
 
-                    currentUser.email = linkPendingEmail;
-                    localStorage.setItem('userSessionKey', linkPendingEmail); // আপডেট সেশন কি
+                        if (!querySnap.empty) {
+                            const userDocId = querySnap.docs[0].id;
+                            const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', userDocId);
+                            
+                            // ফায়ারস্টোর ডাটাবেজে ইমেইল ও পাসওয়ার্ড আপডেট (ডাটা অক্ষুণ্ণ রেখে)
+                            await updateDoc(userDocRef, {
+                                email: linkEmailPending,
+                                password: linkPasswordPending
+                            });
 
-                    sessionStorage.removeItem('temp_link_otp');
-                    sessionStorage.removeItem('temp_link_email');
+                            currentUser.email = linkEmailPending;
+                            currentUser.password = linkPasswordPending;
+                            localStorage.setItem('userSessionKey', linkEmailPending); 
 
-                    document.getElementById('linkEmailModal').classList.add('hidden');
-                    showAlert("সাফল্য! 🎉", "আপনার একাউন্টের সাথে সফলভাবে ইমেইল আইডি সংযুক্ত করা হয়েছে। এখন থেকে ইমেইল বা মোবাইল দিয়ে লগইন করতে পারবেন।", "fa-circle-check", "text-emerald-600");
-                    launchAuthenticatedApp(currentUser);
+                            document.getElementById('linkEmailModal').classList.add('hidden');
+                            showAlert("সাফল্য! 🎉", "আপনার অ্যাকাউন্টের সাথে সফলভাবে ইমেইল আইডি সংযুক্ত করা হয়েছে। আপনার পূর্বের সমস্ত দিন অক্ষুণ্ণ রয়েছে।", "fa-circle-check", "text-emerald-600");
+                            launchAuthenticatedApp(currentUser);
+                        }
+                    } else {
+                        showAlert("ভেরিফাই হয়নি ⚠️", "আপনি এখনও ভেরিফিকেশন লিংকে ক্লিক করেননি। অনুগ্রহ করে আপনার জিমেইল চেক করুন।", "fa-triangle-exclamation", "text-amber-500");
+                    }
                 }
             } catch (err) {
-                showAlert("ত্রুটি", "ইমেইল লিঙ্ক করতে ব্যর্থ: " + err.message, "fa-triangle-exclamation", "text-red-500");
+                showAlert("ত্রুটি", "ইমেইল লিঙ্ক সম্পূর্ণ করতে ব্যর্থ: " + err.message, "fa-triangle-exclamation", "text-red-500");
             } finally {
-                verifyBtn.innerText = "ভেরিফাই ও ইমেইল যুক্ত করুন ✅";
+                verifyBtn.innerText = "আমি ভেরিফাই করেছি, লিঙ্ক সম্পন্ন করুন ✅";
                 verifyBtn.disabled = false;
             }
         }
 
         function logout() {
-            localStorage.removeItem('userSessionKey');
-            currentUser = null;
-            launchGuestApp();
+            signOut(auth).then(() => {
+                localStorage.removeItem('userSessionKey');
+                currentUser = null;
+                launchGuestApp();
+            });
         }
 
         // ---------------- TIMER AND COUNTER CONTROLLERS ---------------- //
@@ -1588,7 +1562,7 @@
             }
 
             isWaitingInDanger = true;
-            dangerSecondsRemaining = 300; // 5 Minutes
+            dangerSecondsRemaining = 300; 
 
             const overlay = document.getElementById('dangerResetOverlay');
             overlay.classList.remove('hidden');
