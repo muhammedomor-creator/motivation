@@ -23,7 +23,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
-    <!--ツイটার / এক্স (Twitter / X) এর জন্য মেটা ট্যাগ -->
+    <!-- টুইটার / এক্স (Twitter / X) এর জন্য মেটা ট্যাগ -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://rohnumacounter.vercel.app">
     <meta name="twitter:title" content="রাহনুমা - আপনার ইসলামিক জীবনসঙ্গী ও মোটিভেশন">
@@ -50,7 +50,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- বাহ্যিক দেশের তালিকা ফাইলটি এখানে লোড করা হচ্ছে -->
+    <!-- বাহ্যিক দেশের তালিকা ফাইল -->
     <script src="countries.js"></script>
 
     <style>
@@ -185,7 +185,7 @@
                 </button>
             </div>
 
-            <!-- Registration Box -->
+            <!-- Registration Box (Mandatory Email, Optional Phone) -->
             <div id="registerForm" class="space-y-4 hidden">
                 <h3 class="text-lg font-semibold text-center text-slate-700">নতুন অ্যাকাউন্ট তৈরি করুন</h3>
                 
@@ -208,7 +208,7 @@
                         <label class="block text-sm text-slate-500 mb-1">হোয়াটসঅ্যাপ নম্বর (ঐচ্ছিক)</label>
                         <div class="flex gap-1.5">
                             <select id="regCountrySelect" class="bg-white border border-slate-300 rounded-lg px-2.5 py-3 text-sm focus:border-emerald-500 focus:outline-none text-slate-800 max-w-[100px]">
-                                <!-- Options rendered dynamically -->
+                                <!-- Dynamic values -->
                             </select>
                             <div class="relative flex-grow">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fa-solid fa-phone"></i></span>
@@ -224,7 +224,7 @@
                 <div id="regStepOTP" class="space-y-4 hidden">
                     <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-xl text-xs text-emerald-800 space-y-2">
                         <p class="font-bold">📧 ভেরিফিকেশন মেইল পাঠানো হয়েছে!</p>
-                        <p>আপনার টাইপকৃত ইমেইলে একটি নিরাপদ ভেরিফিকেশন লিঙ্ক পাঠানো হয়েছে। অনুগ্রহ করে আপনার জিমেইল ইনবক্স বা স্প্যাম ফোল্ডার চেক করুন এবং লিংকে ক্লিক করে ভেরিফিকেশন সম্পন্ন করুন।</p>
+                        <p>আপনার জিমেইল ইনবক্স বা স্প্যাম ফোল্ডার চেক করুন এবং লিংকে ক্লিক করে ভেরিফিকেশন সম্পন্ন করুন।</p>
                     </div>
                     <button onclick="checkEmailVerificationStatus()" id="regVerifyBtn" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-lg transition">
                         আমি ভেরিফাই করেছি, প্রবেশ করুন ✅
@@ -264,17 +264,17 @@
             </div>
             <h4 class="text-lg font-bold text-slate-800">আপনার একাউন্টে ইমেইল যুক্ত করুন 📧</h4>
             <p class="text-xs text-slate-500 leading-relaxed">
-                নিরাপত্তা বৃদ্ধি এবং সহজে পাসওয়ার্ড রিসেট করতে অ্যাকাউন্টের সাথে ইমেইল যুক্ত করা আবশ্যক। এতে আপনার পূর্বের কোনো প্রোগ্রেস ডাটা ডিলিট হবে না।
+                নিরাপত্তা বৃদ্ধি এবং ইমেইলের মাধ্যমে সহজে পাসওয়ার্ড রিসেট করতে অ্যাকাউন্টে ইমেইল যুক্ত করা আবশ্যক। এতে আপনার পূর্বের কোনো প্রোগ্রেস ডাটা ডিলিট হবে না।
             </p>
 
             <div id="linkStepInput" class="space-y-3 text-left">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">নতুন ইমেইল ঠিকানা</label>
-                    <input type="email" id="linkEmailInput" placeholder="example@gmail.com" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-emerald-600 bg-white">
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">নতুন ইমেইল ঠিকানা <span class="text-red-500">*</span></label>
+                    <input type="email" id="linkEmailInput" placeholder="example@gmail.com" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-emerald-600 bg-white text-slate-800">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">নতুন পাসওয়ার্ড</label>
-                    <input type="password" id="linkPasswordInput" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-emerald-600 bg-white">
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">নতুন পাসওয়ার্ড <span class="text-red-500">*</span></label>
+                    <input type="password" id="linkPasswordInput" placeholder="কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-emerald-600 bg-white text-slate-800">
                 </div>
                 <button onclick="handleLinkEmailSubmit()" id="linkSendOtpBtn" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-lg transition">
                     ইমেইল সংযুক্ত করুন ও লিঙ্ক পাঠান 🚀
@@ -332,10 +332,10 @@
 
                 <div class="flex-grow space-y-3 w-full">
                     <div class="flex gap-2">
-                        <input type="text" id="profileNameInput" oninput="updateLiveIdPreview()" class="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-emerald-600" placeholder="আপনার নাম দিন">
+                        <input type="text" id="profileNameInput" oninput="updateLiveIdPreview()" class="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-emerald-600 text-slate-800" placeholder="আপনার নাম দিন">
                         <button onclick="saveUserProfile()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2 rounded-lg text-xs font-bold transition">সংরক্ষণ</button>
                     </div>
-                    <!-- Emoji Selection Modal/Drawer Inside card -->
+                    <!-- Emoji Selection Drawer -->
                     <div id="emojiPicker" class="hidden grid grid-cols-5 gap-2 p-2 bg-emerald-50 rounded-lg max-w-xs transition-all">
                         <button onclick="selectProfileEmoji('🤲')" class="text-2xl hover:scale-125 transition">🤲</button>
                         <button onclick="selectProfileEmoji('🕌')" class="text-2xl hover:scale-125 transition">🕌</button>
@@ -353,7 +353,7 @@
                     <!-- Theme Selector -->
                     <div class="flex items-center gap-1.5">
                         <span class="text-[10px] font-bold text-slate-400 uppercase">থিম:</span>
-                        <select id="idCardThemeSelect" onchange="changeIdCardTheme()" class="bg-white text-[11px] text-slate-16 border border-slate-9 rounded px-1.5 py-1 font-semibold focus:outline-none">
+                        <select id="idCardThemeSelect" onchange="changeIdCardTheme()" class="bg-white text-[11px] text-slate-600 border border-slate-200 rounded px-1.5 py-1 font-semibold focus:outline-none">
                             <option value="royal">রয়্যাল গ্রিন</option>
                             <option value="minimalist">সলিড হোয়াইট</option>
                             <option value="sapphire">সাফায়ার ব্লু</option>
@@ -361,7 +361,7 @@
                     </div>
                 </div>
 
-                <!-- Container hosting the actual SVG rendering to prevent overflows -->
+                <!-- Container hosting the actual SVG rendering -->
                 <div class="flex justify-center items-center w-full">
                     <div id="idCardSvgPreviewContainer" class="w-full max-w-[420px] bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
                         <!-- Dynamic SVG inserted here -->
@@ -392,13 +392,11 @@
                 </div>
             </div>
 
-            <!-- BUTTON CONTROLS (CONDITIONAL START / RESET) -->
+            <!-- BUTTON CONTROLS -->
             <div class="flex justify-center gap-3 mt-2">
-                <!-- Guest Start Button -->
                 <button id="startBtn" onclick="tryStartCounter()" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 w-full max-w-xs">
                     <i class="fa-solid fa-circle-play"></i> আত্মশুদ্ধি শুরু করুন
                 </button>
-                <!-- Logged In Reset Button (Initially Hidden) -->
                 <button id="resetBtn" onclick="confirmResetCounter()" class="hidden px-8 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 w-full max-w-xs">
                     <i class="fa-solid fa-rotate-left"></i> আত্মশুদ্ধি রিসেট করুন
                 </button>
@@ -414,7 +412,6 @@
 
         <!-- TAB CONTENT: MOTIVATION -->
         <div id="tabContentMotivation" class="w-full space-y-6">
-            <!-- Islamic Quote Carousel -->
             <div class="glass-card rounded-2xl p-6 md:p-8 relative">
                 <div class="flex justify-between items-center mb-3">
                     <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest"><i class="fa-solid fa-book-open mr-1"></i> ইসলামিক বাণী ও মোটিভেশন</span>
@@ -433,7 +430,6 @@
                     </div>
                 </div>
 
-                <!-- Slider Controls & Playback filter -->
                 <div class="flex justify-between items-center mt-4 border-t border-slate-200/50 pt-4">
                     <button onclick="prevQuote()" class="glass-btn w-10 h-10 rounded-full flex items-center justify-center transition" title="পূর্ববর্তী">
                         <i class="fa-solid fa-chevron-left"></i>
@@ -453,13 +449,13 @@
                 </div>
             </div>
 
-            <!-- ADMIN ONLY - Quote Upload Dashboard (.txt format upload) -->
+            <!-- ADMIN PANEL - Quote Upload Dashboard (.txt format upload) -->
             <div id="adminUploadSection" class="hidden glass-card rounded-2xl p-6 md:p-8 space-y-4">
                 <h4 class="text-sm font-bold text-amber-900 border-b border-amber-200 pb-2 mb-3 flex items-center gap-2">
                     <i class="fa-solid fa-circle-user text-amber-600 animate-pulse"></i> অ্যাডমিন প্যানেল - পছন্দের উক্তি যোগ করুন (.txt)
                 </h4>
                 <p class="text-xs text-slate-500 leading-relaxed">
-                    নিচের ফাইল সিলেকশন ব্যবহার করে ১টি টেক্সট ফাইল আপলোড করুন। ফাইলটিতে প্রতি লাইনে সিরিয়াল নাম্বার দিয়ে উক্তি লিখুন।
+                    টেক্সট ফাইল আপলোড করুন। ফাইলটিতে প্রতি লাইনে সিরিয়াল নাম্বার দিয়ে উক্তি লিখুন।
                 </p>
                 <div class="flex flex-col sm:flex-row gap-3">
                     <label class="flex-grow flex flex-col items-center justify-center border-2 border-dashed border-amber-300 rounded-xl p-4 bg-amber-50/20 hover:bg-amber-50/50 transition cursor-pointer text-center">
@@ -510,7 +506,7 @@
                     শরিকবিহীন এক আল্লাহর খাঁটি গোলাম হয়ে নিজেকে বিরত রাখার দীর্ঘ পথ। নিচে আপনার অর্জিত এবং অর্জনের বাকি উপাধিগুলোর তালিকা রয়েছে।
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="allMedalsContainer">
-                    <!-- Dynamic rendering of 16 detailed levels -->
+                    <!-- Dynamic rendering -->
                 </div>
             </div>
         </div>
@@ -524,7 +520,6 @@
                 </h4>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Health tips card -->
                     <a href="https://roktertan-veideo.vercel.app" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-emerald-50/50 hover:bg-emerald-50 rounded-xl border border-emerald-100 transition duration-200">
                         <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-lg">
                             <i class="fa-solid fa-heart-pulse"></i>
@@ -535,7 +530,6 @@
                         </div>
                     </a>
 
-                    <!-- Emergency Blood Card -->
                     <a href="https://emergencyroktolagbe.vercel.app" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-4 bg-red-50/50 hover:bg-red-50 rounded-xl border border-red-100 transition duration-200">
                         <div class="w-10 h-10 rounded-full bg-red-100 text-red-800 flex items-center justify-center text-lg">
                             <i class="fa-solid fa-droplet"></i>
@@ -567,19 +561,19 @@
         <p>© ২০২৬ রাহনুমা অ্যাপ • উম্মাহর জন্য একটি উপহার</p>
     </footer>
 
-    <!-- Custom Modals -->
+    <!-- Custom Alerts Modal -->
     <div id="customModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
         <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-slate-100 text-center space-y-4">
             <div id="modalIcon" class="text-4xl text-emerald-600">
                 <i class="fa-solid fa-circle-check"></i>
             </div>
             <h4 id="modalTitle" class="text-lg font-bold text-slate-800">সাফল্য!</h4>
-            <p id="modalBody" class="text-sm text-slate-600">আপনার কাজ সফল হয়েছে।</p>
-            <button onclick="closeModal()" class="w-full py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition">ঠিক আছে</button>
+            <p id="modalBody" class="text-sm text-slate-600 text-center leading-relaxed">আপনার কাজ সফল হয়েছে।</p>
+            <button onclick="closeModal()" class="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg transition shadow-md">ঠিক আছে</button>
         </div>
     </div>
 
-    <!-- Firebase SDK & Integrated Codebase Modules -->
+    <!-- Firebase SDK & Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
@@ -606,13 +600,12 @@
             measurementId: "G-GYGLBZ51TX"
         };
 
-        // Initialize Firebase services
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'ramadan-planner-ddda7';
 
-        // Bind core functions to window to ensure global click actions work
+        // Globals mapping
         window.switchAuthTab = switchAuthTab;
         window.handleRegisterSubmit = handleRegisterSubmit;
         window.checkEmailVerificationStatus = checkEmailVerificationStatus;
@@ -642,18 +635,16 @@
         window.changeIdCardTheme = changeIdCardTheme;
         window.updateLiveIdPreview = updateLiveIdPreview;
 
-        // Old users linking email callbacks
         window.handleLinkEmailSubmit = handleLinkEmailSubmit;
         window.checkEmailLinkStatus = checkEmailLinkStatus;
 
-        // Fallback internal list in case countries.js fails
+        // Country List Fallback
         const defaultFallbackCountries = [
             { code: "880", flag: "🇧🇩", name: "Bangladesh (+880)" },
             { code: "91", flag: "🇮🇳", name: "India (+91)" },
             { code: "966", flag: "🇸🇦", name: "Saudi Arabia (+966)" }
         ];
 
-        // Setup Dropdowns on window load
         function populateCountrySelects() {
             const list = (window.countriesList && window.countriesList.length > 0) ? window.countriesList : defaultFallbackCountries;
             const selectEl = document.getElementById('regCountrySelect');
@@ -664,7 +655,7 @@
             }
         }
 
-        // Application State
+        // App States
         let currentUser = null;
         let pendingEmail = null;
         let pendingPhone = null;
@@ -673,47 +664,40 @@
         let counterStartTime = 0;
         let isCounterRunning = false;
 
-        // Waiting states for Danger reset
         let isWaitingInDanger = false;
         let dangerSecondsRemaining = 300;
         let dangerInterval = null;
         let dangerQuoteInterval = null;
 
-        // Custom Id Card Theme state
-        let activeIdTheme = "royal"; // royal, minimalist, sapphire
+        let activeIdTheme = "royal";
 
-        // Quotes State
         let localQuotes = [
             { text: "নিশ্চয়ই কষ্টের সাথেই স্বস্তি রয়েছে।", author: "সূরা আল-ইনশিরাহ: ৫" },
-            { text: "হে ঈমানدارগণ! তোমরা ধৈর্য ও সালাতের মাধ্যমে সাহায্য প্রার্থনা করো। নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন।", author: "সূরা আল-বাকারাহ: ১৫৩" },
+            { text: "হে ঈমানদারগণ! তোমরা ধৈর্য ও সালাতের মাধ্যমে সাহায্য প্রার্থনা করো। নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন।", author: "সূরা আল-বাকারাহ: ১৫৩" },
             { text: "বলুন, হে আমার বান্দাগণ যারা নিজেদের ওপর জুলুম করেছ, তোমরা আল্লাহর রহমত থেকে নিরাশ হয়ো না।", author: "সূরা আজ-জুমার: ৫৩" },
             { text: "যে ব্যক্তি আল্লাহকে ভয় করবে, আল্লাহ তার জন্য কোনো পথ বের করে দেবেন এবং তাকে এমন জায়গা থেকে রিজিক দেবেন যা সে ভাবতেও পারেনি।", author: "সূরা আত-তালাক: ২-৩" },
             { text: "তোমাদের মাঝে উত্তম ঐ ব্যক্তি, যে কুরআন শেখে এবং অন্যকে শেখায়।", author: "সহীহ বুখারী" }
         ];
-        let originalQuotes = []; // Cloned baseline for ordering
+        let originalQuotes = [];
         let currentQuoteIndex = 0;
         let quoteAutoSlideInterval = null;
         let temporaryUploadedQuotes = [];
-        let playbackOrder = "forward"; // forward, backward, random
+        let playbackOrder = "forward";
 
-        // Swipe Gestures
         let touchStartX = 0;
         let touchEndX = 0;
 
-        // Admin Account details
         const ADMIN_IDENTIFIER = "8801949437370";
 
-        // Danger Quotes list
         const dangerQuotes = [
             { text: "হে আমাদের পালনকর্তা! সরল পথ প্রদর্শনের পর আমাদের অন্তরকে সত্যলঙ্ঘনপ্রবণ করবেন না এবং আপনার পক্ষ থেকে অনুগ্রহ দান করুন।", author: "সূরা আল ইমরান: ৮" },
             { text: "যে ব্যক্তি আল্লাহর ওপর ভরসা করে, আল্লাহই তার জন্য যথেষ্ট হয়ে যান।", author: "সূরা আত-তালাক: ৩" },
             { text: "আল্লাহ কোনো আত্মার ওপর তার সাধ্যের অতিরিক্ত বোঝা চাপান না।", author: "সূরা আল-বাকারাহ: ২৮৬" },
-            { text: "ক্ষма করতে শেখো, আল্লাহও ক্ষমাশীল ও দয়াময়দের ভালোবাসেন।", author: "সূরা আন-নূর: ২২" },
+            { text: "ক্ষমা করতে শেখো, আল্লাহও ক্ষমাশীল ও দয়াময়দের ভালোবাসেন।", author: "সূরা আন-নূর: ২২" },
             { text: "দুনিয়ার তুচ্ছ লাভের চেয়ে পরকালের চিরস্থায়ী প্রশান্তি অতি উত্তম।", author: "সূরা আল-আলা: ১৭" }
         ];
         let dangerQuoteIndex = 0;
 
-        // Comprehensive 16-level Islamic Title Book (Up to 500 Days)
         const ISLAMIC_TITLES = [
             { days: 0, name: "নবাগত মুসাফির", desc: "আত্মশুদ্ধির অনন্য পথে আপনার প্রথম কদম।" },
             { days: 1, name: "তওবাকারী বান্দা", desc: "নিজের গুনাহের অনুভূতি নিয়ে আল্লাহর দিকে ফিরে আসা।" },
@@ -734,7 +718,6 @@
             { days: 500, name: "আল্লাহর গোলাম (চূড়ান্ত সফলতা)", desc: "সর্বোচ্চ ৫০০ দিনের মাইলফলক অর্জনের চূড়ান্ত মহাসম্মান।" }
         ];
 
-        // Auth initialization
         const initAuth = async () => {
             populateCountrySelects();
             if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -749,7 +732,6 @@
             checkLocalSession();
         });
 
-        // ---------------- TAB CONTROLLERS ---------------- //
         function switchTab(tabId) {
             document.getElementById('tabContentMotivation').classList.add('hidden');
             document.getElementById('tabContentRanking').classList.add('hidden');
@@ -773,7 +755,7 @@
             }
         }
 
-        // ---------------- LOCAL SESSION VALIDATION ---------------- //
+        // Validate localStorage sessions
         function checkLocalSession() {
             const savedSession = localStorage.getItem('userSessionKey');
             if (savedSession) {
@@ -844,7 +826,6 @@
             document.getElementById('startBtn').classList.add('hidden');
             document.getElementById('resetBtn').classList.remove('hidden');
 
-            // Admin panel security checks
             if (user.phone === ADMIN_IDENTIFIER || (user.email && user.email.toLowerCase() === "mdomorfaruk2r@gmail.com")) {
                 document.getElementById('adminUploadSection').classList.remove('hidden');
             } else {
@@ -859,13 +840,12 @@
 
             updateLiveIdPreview();
 
-            // Force hide linked modal if email already exists
-            if (user.email) {
+            // POPUP Logic: Only display if email is missing
+            if (user.email && user.email.trim() !== "") {
                 document.getElementById('linkEmailModal').classList.add('hidden');
             } else {
                 setTimeout(() => {
-                    // Double check before launching popup
-                    if (currentUser && !currentUser.email) {
+                    if (currentUser && (!currentUser.email || currentUser.email.trim() === "")) {
                         showLinkEmailModal();
                     }
                 }, 1200);
@@ -881,7 +861,7 @@
             document.getElementById('authScreen').classList.add('hidden');
         }
 
-        // ---------------- PROFILE SETUP & THEMED PREVIEW CONTROLLERS ---------------- //
+        // Profile updates and emoji selectors
         function toggleEmojiPicker() {
             const picker = document.getElementById('emojiPicker');
             picker.classList.toggle('hidden');
@@ -1100,7 +1080,7 @@
             return title;
         }
 
-        // ---------------- AUTHENTICATION SYSTEMS ---------------- //
+        // Authentication State View Toggler
         function switchAuthTab(tab) {
             const tabLoginBtn = document.getElementById('tabLoginBtn');
             const tabRegisterBtn = document.getElementById('tabRegisterBtn');
@@ -1143,7 +1123,7 @@
             switchAuthTab('login');
         }
 
-        // ---------------- SANITIZED NUMBER BUILDER ---------------- //
+        // Sanitized mobile helper
         function buildSanitizedFullNumber(countryCode, rawNumber) {
             if (!rawNumber) return "";
             let cleanedLocal = rawNumber.replace(/[^0-9]/g, '');
@@ -1160,7 +1140,7 @@
             return cleanedCountry + cleanedLocal;
         }
 
-        // ---------------- DIRECT FIREBASE AUTH EMAIL VERIFICATION (SIGN UP) ---------------- //
+        // REGISTRATION SYSTEM (MANDATORY EMAIL, OPTIONAL PHONE)
         async function handleRegisterSubmit() {
             const emailVal = document.getElementById('regEmail').value.trim();
             const passVal = document.getElementById('regPass').value.trim();
@@ -1192,7 +1172,7 @@
             }
 
             try {
-                // ১. চেক করুন ইমেইলটি ফায়ারস্টোরে আগে ব্যবহৃত হয়েছে কিনা
+                // 1. Check if email already exists in Firestore 'users'
                 const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
                 const emailQuery = query(usersRef, where('email', '==', pendingEmail));
                 const emailSnap = await getDocs(emailQuery);
@@ -1204,7 +1184,7 @@
                     return;
                 }
 
-                // ২. মোবাইল নম্বর থাকলে সেটিও ইউনিক কি না চেক করুন
+                // 2. Check if phone is provided and exists in Firestore
                 if (pendingPhone) {
                     const phoneQuery = query(usersRef, where('phone', '==', pendingPhone));
                     const phoneSnap = await getDocs(phoneQuery);
@@ -1216,10 +1196,10 @@
                     }
                 }
 
-                // ৩. ফায়ারবেস অথেন্টিকেশনে টেম্পোরারি ইউজার তৈরি করুন
+                // 3. Register user temporary credential in Firebase Auth
                 const userCredential = await createUserWithEmailAndPassword(auth, pendingEmail, pendingPassword);
                 
-                // ৪. সরাসরি ফায়ারবেস থেকে ভেরিফিকেশন লিঙ্ক পাঠান (আপনার rohnumacounter@gmail.com থেকে যাবে)
+                // 4. Send official verification link directly via Firebase Auth
                 await sendEmailVerification(userCredential.user);
 
                 showAlert("ইমেইল লিঙ্ক পাঠানো হয়েছে 📧", "ফায়ারবেস থেকে আপনার জিমেইলে একটি কনফার্মেশন লিঙ্ক পাঠানো হয়েছে। অনুগ্রহ করে ইনবক্স চেক করে লিঙ্কটিতে ক্লিক করুন।", "fa-envelope-circle-check", "text-emerald-600");
@@ -1242,7 +1222,7 @@
             }
         }
 
-        // ভেরিফিকেশন স্ট্যাটাস চেক করা এবং ফায়ারস্টোরে সফল ডাটা রাইট করা
+        // Validate verification status of new email and write Firestore data
         async function checkEmailVerificationStatus() {
             const verifyBtn = document.getElementById('regVerifyBtn');
             verifyBtn.innerText = "যাচাই করা হচ্ছে...";
@@ -1250,11 +1230,9 @@
 
             try {
                 if (auth.currentUser) {
-                    // ফায়ারবেস ইউজার অবজেক্ট রিলোড করা ভেরিফিকেশন স্ট্যাটাস আপডেট করার জন্য
                     await auth.currentUser.reload();
 
                     if (auth.currentUser.emailVerified) {
-                        // ইমেইল ভেরিফাইড হলে ফায়ারস্টোরে সাকসেস ডাটা ডকুমেন্ট তৈরি করা
                         const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
                         const newUserDocRef = doc(collection(db, 'artifacts', appId, 'public', 'data', 'users'));
 
@@ -1271,11 +1249,18 @@
 
                         await setDoc(newUserDocRef, newAccountData);
 
-                        showAlert("সফল ভেরিফিকেশন 🎉", "আপনার ইমেইল অ্যাকাউন্টটি সফলভাবে তৈরি ও ভেরিফাইড হয়েছে! এখন লগইন করুন।", "fa-circle-check", "text-emerald-600");
+                        currentUser = {
+                            id: newUserDocRef.id,
+                            ...newAccountData
+                        };
+
+                        localStorage.setItem('userSessionKey', pendingEmail);
+
+                        showAlert("সফল ভেরিফিকেশন 🎉", "আপনার ইমেইল অ্যাকাউন্টটি সফলভাবে তৈরি ও ভেরিফাইড হয়েছে!", "fa-circle-check", "text-emerald-600");
                         
                         setTimeout(() => {
-                            switchAuthTab('login');
-                            document.getElementById('loginIdentifier').value = pendingEmail;
+                            closeAuthScreen();
+                            launchAuthenticatedApp(currentUser);
                         }, 1500);
 
                     } else {
@@ -1292,7 +1277,6 @@
             }
         }
 
-        // ভেরিফিকেশন লিংক পুনরায় পাঠানোর অপশন
         async function resendVerificationLink() {
             try {
                 if (auth.currentUser) {
@@ -1304,7 +1288,7 @@
             }
         }
 
-        // ---------------- UNIVERSAL SMART LOGIN (EMAIL / MOBILE) ---------------- //
+        // UNIVERSAL SMART LOGIN FOR BOTH (EMAIL OR MOBILE)
         async function handleLogin() {
             const loginIdInput = document.getElementById('loginIdentifier').value.trim();
             const loginPass = document.getElementById('loginPass').value.trim();
@@ -1324,8 +1308,46 @@
 
                 const isEmail = loginIdInput.includes('@');
                 if (isEmail) {
-                    q = query(usersRef, where('email', '==', loginIdInput.toLowerCase()));
+                    const searchEmail = loginIdInput.toLowerCase();
+                    q = query(usersRef, where('email', '==', searchEmail));
+                    const querySnap = await getDocs(q);
+
+                    if (!querySnap.empty) {
+                        const matchedDoc = querySnap.docs[0];
+                        const userData = matchedDoc.data();
+                        userData.id = matchedDoc.id; 
+
+                        if (userData.password === loginPass) {
+                            // Run Auth signin to enforce verification check
+                            try {
+                                const userCred = await signInWithEmailAndPassword(auth, searchEmail, loginPass);
+                                if (!userCred.user.emailVerified) {
+                                    showAlert("ইমেইল ভেরিফাই করুন 📧", "আপনার ইমেইলটি এখনও ভেরিফাইড নয়। জিমেইল ইনবক্সে পাঠানো ভেরিফিকেশন লিংকে ক্লিক করুন।", "fa-envelope-circle-check", "text-amber-600");
+                                    loginBtn.innerText = "প্রবেশ করুন";
+                                    loginBtn.disabled = false;
+                                    return;
+                                }
+                            } catch (e) {
+                                console.log("Standard firebase auth session fallback run.");
+                            }
+
+                            currentUser = userData;
+                            localStorage.setItem('userSessionKey', searchEmail);
+
+                            closeAuthScreen();
+                            showAlert("লগইন সফল", "রাহনুমা পোর্টালে আপনাকে স্বাগতম!", "fa-mosque", "text-emerald-700");
+                            
+                            setTimeout(() => {
+                                launchAuthenticatedApp(userData);
+                            }, 1000);
+                        } else {
+                            showAlert("ভুল পাসওয়ার্ড", "পাসওয়ার্ড সঠিক নয়। দয়া করে আবার চেষ্টা করুন।", "fa-lock", "text-red-500");
+                        }
+                    } else {
+                        showAlert("অ্যাকাউন্ট মেলেনি", "এই ইমেইল ঠিকানায় কোনো নিবন্ধিত অ্যাকাউন্ট পাওয়া যায়নি।", "fa-user-slash", "text-amber-500");
+                    }
                 } else {
+                    // Mobile login
                     const sanitizedInput = loginIdInput.replace(/[^0-9]/g, '');
                     let possibleMatch = sanitizedInput;
                     if (sanitizedInput.startsWith('0')) {
@@ -1333,51 +1355,33 @@
                     }
                     q = query(usersRef, where('phone', '==', possibleMatch));
                     
-                    let checkSnap = await getDocs(q);
-                    if (checkSnap.empty && sanitizedInput !== possibleMatch) {
+                    let querySnap = await getDocs(q);
+                    if (querySnap.empty && sanitizedInput !== possibleMatch) {
                         q = query(usersRef, where('phone', '==', sanitizedInput));
+                        querySnap = await getDocs(q);
                     }
-                }
 
-                const querySnap = await getDocs(q);
+                    if (!querySnap.empty) {
+                        const matchedDoc = querySnap.docs[0];
+                        const userData = matchedDoc.data();
+                        userData.id = matchedDoc.id;
 
-                if (!querySnap.empty) {
-                    const matchedDoc = querySnap.docs[0];
-                    const userData = matchedDoc.data();
-                    userData.id = matchedDoc.id; 
+                        if (userData.password === loginPass) {
+                            currentUser = userData;
+                            localStorage.setItem('userSessionKey', userData.phone);
 
-                    if (userData.password === loginPass) {
-                        // যদি ইমেইল দিয়ে লগইন করতে যায়, তবে ফায়ারবেস থেকে ভেরিফিকেশন চেক করা হবে
-                        if (isEmail) {
-                            try {
-                                const userCred = await signInWithEmailAndPassword(auth, loginIdInput.toLowerCase(), loginPass);
-                                if (!userCred.user.emailVerified) {
-                                    showAlert("ইমেইল ভেরিফাই করুন 📧", "আপনার ইমেইলটি এখনও ভেরিফাইড নয়। আপনার জিমেইল ইনবক্সে পাঠানো লিংকে ক্লিক করে ভেরিফাই করুন।", "fa-envelope-circle-check", "text-amber-600");
-                                    loginBtn.innerText = "প্রবেশ করুন";
-                                    loginBtn.disabled = false;
-                                    return;
-                                }
-                            } catch (e) {
-                                console.log("Bypassing standard firebase validation smoothly.");
-                            }
+                            closeAuthScreen();
+                            showAlert("লগইন সফল", "রাহনুমা পোর্টালে আপনাকে স্বাগতম!", "fa-mosque", "text-emerald-700");
+                            
+                            setTimeout(() => {
+                                launchAuthenticatedApp(userData);
+                            }, 1000);
+                        } else {
+                            showAlert("ভুল পাসওয়ার্ড", "পাসওয়ার্ড সঠিক নয়। দয়া করে আবার চেষ্টা করুন।", "fa-lock", "text-red-500");
                         }
-
-                        currentUser = userData;
-
-                        const sessionValue = userData.email ? userData.email.toLowerCase() : userData.phone;
-                        localStorage.setItem('userSessionKey', sessionValue);
-
-                        closeAuthScreen();
-                        showAlert("লগইন সফল", "রাহনুমা পোর্টালে আপনাকে স্বাগতম!", "fa-mosque", "text-emerald-700");
-                        
-                        setTimeout(() => {
-                            launchAuthenticatedApp(userData);
-                        }, 1000);
                     } else {
-                        showAlert("ভুল পাসওয়ার্ড", "পাসওয়ার্ড সঠিক নয়। দয়া করে আবার চেষ্টা করুন।", "fa-lock", "text-red-500");
+                        showAlert("অ্যাকাউন্ট মেলেনি", "এই মোবাইল নম্বরে কোনো নিবন্ধিত অ্যাকাউন্ট পাওয়া যায়নি।", "fa-user-slash", "text-amber-500");
                     }
-                } else {
-                    showAlert("অ্যাকাউন্ট মেলেনি", "এই ইমেইল বা মোবাইল নম্বরে কোনো নিবন্ধিত অ্যাকাউন্ট পাওয়া যায়নি।", "fa-user-slash", "text-amber-500");
                 }
             } catch (err) {
                 showAlert("ত্রুটি", "অনাকাঙ্ক্ষিত ত্রুটি: " + err.message, "fa-triangle-exclamation", "text-red-500");
@@ -1387,7 +1391,7 @@
             }
         }
 
-        // ---------------- DIRECT FIREBASE PASSWORD RESET (FORGET PASSWORD) ---------------- //
+        // DIRECT FIREBASE PASSWORD RESET (FORGET PASSWORD)
         async function handleForgetPassword() {
             const emailInput = document.getElementById('forgetEmail').value.trim();
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1402,7 +1406,6 @@
             sendBtn.disabled = true;
 
             try {
-                // সরাসরি ফায়ারবেস এপিআই দিয়ে পাসওয়ার্ড রিসেট মেইল পাঠানো (যা যাবে rohnumacounter@gmail.com থেকে)
                 await sendPasswordResetEmail(auth, emailInput.toLowerCase());
                 showAlert("রিসেট লিংক প্রেরিত 📧", "পাসওয়ার্ড পরিবর্তন করার অফিশিয়াল লিঙ্কটি আপনার ইমেইলে পাঠানো হয়েছে। অনুগ্রহ করে জিমেইল চেক করুন।", "fa-paper-plane", "text-emerald-600");
                 
@@ -1417,7 +1420,7 @@
             }
         }
 
-        // ---------------- OLD USER LINKING EMAIL FLOW ---------------- //
+        // ---------------- OLD PHONE-USER LINKING EMAIL FLOW ---------------- //
         function showLinkEmailModal() {
             document.getElementById('linkEmailInput').value = "";
             document.getElementById('linkPasswordInput').value = "";
@@ -1429,7 +1432,6 @@
         let linkEmailPending = null;
         let linkPasswordPending = null;
 
-        // আপডেট করা ডায়নামিক লিঙ্ক সিস্টেম (যদি ইমেইল আগে থেকেই অথেনটিকেশনে থেকে থাকে তবুও কাজ করবে)
         async function handleLinkEmailSubmit() {
             const emailInput = document.getElementById('linkEmailInput').value.trim();
             const passwordInput = document.getElementById('linkPasswordInput').value.trim();
@@ -1453,7 +1455,7 @@
             linkPasswordPending = passwordInput;
 
             try {
-                // ১. ফায়ারস্টোরে ইমেইলটি অন্য কারও অ্যাকাউন্টে ইতিমধ্যে ব্যবহৃত হয়েছে কিনা চেক
+                // Check if this email is already linked in Firestore users
                 const usersRef = collection(db, 'artifacts', appId, 'public', 'data', 'users');
                 const q = query(usersRef, where('email', '==', linkEmailPending));
                 const snap = await getDocs(q);
@@ -1468,13 +1470,12 @@
                     }
                 }
 
-                // ২. ফায়ারবেস অথেন্টিকেশনে নতুন ইউজার তৈরি অথবা আগের ক্রিয়েট করা ডুপ্লিকেট সিস্টেমে লগইন ট্রাই
+                // Register standard user in Auth
                 let userToVerify = null;
                 try {
                     const userCred = await createUserWithEmailAndPassword(auth, linkEmailPending, linkPasswordPending);
                     userToVerify = userCred.user;
                 } catch (createErr) {
-                    // যদি ইমেইল অলরেডি ফায়ারবেস অথেন্টিকেশন ডাটাবেজে ক্রিয়েট হয়ে থাকে (কিন্তু এখনও ভেরিভাইড নয়)
                     if (createErr.code === 'auth/email-already-in-use') {
                         try {
                             const loginCred = await signInWithEmailAndPassword(auth, linkEmailPending, linkPasswordPending);
@@ -1490,7 +1491,6 @@
                     }
                 }
 
-                // ৩. সফল লগইন বা রেজিস্ট্রেশন শেষ হলে সরাসরি ভেরিফিকেশন মেইল পাঠানো
                 if (userToVerify) {
                     await sendEmailVerification(userToVerify);
 
@@ -1523,26 +1523,16 @@
                         const q = query(usersRef, where('phone', '==', currentUser.phone));
                         const querySnap = await getDocs(q);
 
+                        let userDocRef = null;
                         if (!querySnap.empty) {
                             const userDocId = querySnap.docs[0].id;
-                            const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', userDocId);
-                            
-                            // ফায়ারস্টোর ডাটাবেজে ইমেইল ও পাসওয়ার্ড আপডেট (ডাটা অক্ষুণ্ণ রেখে)
-                            await updateDoc(userDocRef, {
-                                email: linkEmailPending,
-                                password: linkPasswordPending
-                            });
-
-                            currentUser.email = linkEmailPending;
-                            currentUser.password = linkPasswordPending;
-                            localStorage.setItem('userSessionKey', linkEmailPending); 
-
-                            document.getElementById('linkEmailModal').classList.add('hidden');
-                            showAlert("সাফল্য! 🎉", "আপনার অ্যাকাউন্টের সাথে সফলভাবে ইমেইল আইডি সংযুক্ত করা হয়েছে। আপনার পূর্বের সমস্ত দিন অক্ষুণ্ণ রয়েছে।", "fa-circle-check", "text-emerald-600");
-                            launchAuthenticatedApp(currentUser);
+                            userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', userDocId);
                         } else if (currentUser && currentUser.id) {
-                            // ব্যাকআপ ফ্যালব্যাক সরাসরি ডকুমেন্ট আইডি ট্র্যাকিং
-                            const userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.id);
+                            userDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'users', currentUser.id);
+                        }
+
+                        if (userDocRef) {
+                            // Update Firestore document with email + password (enabling login for both options)
                             await updateDoc(userDocRef, {
                                 email: linkEmailPending,
                                 password: linkPasswordPending
@@ -1553,7 +1543,7 @@
                             localStorage.setItem('userSessionKey', linkEmailPending); 
 
                             document.getElementById('linkEmailModal').classList.add('hidden');
-                            showAlert("সাফল্য! 🎉", "আপনার অ্যাকাউন্টের সাথে সফলভাবে ইমেইল আইডি সংযুক্ত করা হয়েছে।", "fa-circle-check", "text-emerald-600");
+                            showAlert("সাফল্য! 🎉", "আপনার অ্যাকাউন্টের সাথে সফলভাবে ইমেইল আইডি সংযুক্ত করা হয়েছে। আপনার পূর্বের সমস্ত দিন ও প্রোগ্রেস অক্ষুণ্ণ রয়েছে।", "fa-circle-check", "text-emerald-600");
                             launchAuthenticatedApp(currentUser);
                         }
                     } else {
@@ -1581,7 +1571,7 @@
             });
         }
 
-        // ---------------- TIMER AND COUNTER CONTROLLERS ---------------- //
+        // Timer Interval controller
         function startCounterInterval() {
             clearInterval(counterInterval);
             counterInterval = setInterval(() => {
@@ -1608,7 +1598,7 @@
             if (displayEl) displayEl.innerText = `${dStr}:${hStr}:${mStr}:${sStr}`;
         }
 
-        // ---------------- DANGER STRATEGIC OVERLAY ---------------- //
+        // STRATEGIC 5 MIN RESET PROTECTION
         function confirmResetCounter() {
             if (!currentUser) {
                 openAuthScreen();
@@ -1726,7 +1716,7 @@
             }
         }
 
-        // ---------------- DYNAMIC ISLAMIC QUOTE PLAYBACK ---------------- //
+        // Fetch custom admin uploaded quotes from Firestore
         async function syncQuotesFromDatabase() {
             try {
                 const quoteDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'quotes', 'uploadedQuotes');
@@ -1788,7 +1778,6 @@
             document.getElementById('quoteProgress').innerText = `${currentQuoteIndex + 1} / ${localQuotes.length}`;
         }
 
-        // Swipe & Navigation quotes
         function nextQuote() {
             currentQuoteIndex = (currentQuoteIndex + 1) % localQuotes.length;
             renderQuote();
@@ -1927,7 +1916,7 @@
             saveBtn.className = "px-6 py-3 bg-slate-400 text-white font-bold rounded-xl transition cursor-not-allowed";
         }
 
-        // ---------------- GLOBAL RANKING CONTROLLER (Top 10) ---------------- //
+        // Global Leaderboard generator
         async function loadGlobalRanking() {
             const tableBody = document.getElementById('rankingTableBody');
             tableBody.innerHTML = `<tr><td colspan="4" class="py-4 text-center text-slate-400">র‍্যাঙ্কিং লোড হচ্ছে...</td></tr>`;
@@ -1983,7 +1972,7 @@
             }
         }
 
-        // ---------------- UPADHI / MEDALS RENDERING ---------------- //
+        // Unlock Medals / Levels calculation
         function renderMedalsSection() {
             const container = document.getElementById('allMedalsContainer');
             if(!container) return;
@@ -2017,7 +2006,7 @@
             });
         }
 
-        // ---------------- HELPER UTILITIES ---------------- //
+        // Modal triggers
         function showAlert(title, message, iconClass, colorClass) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalBody').innerText = message;
